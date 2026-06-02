@@ -1,0 +1,17 @@
+export const TIEMPO_REDIRECCION = 5000
+export const MENSAJE_GUARDADO_EXITOSO = 'Se grabo correctamente'
+export const MENSAJE_MODIFICADO_EXITOSO = 'Se modifico correctamente'
+export const LISTAR_HORARIO = "/dashboard/listar-horario"
+export const LISTAR_CLIENTE= "/dashboard/listar-cliente"
+export const LISTAR_HISTORIA_CLINICA= "/dashboard/listar-historia-clinica"
+export const LISTAR_EMPLEADO = "/dashboard/listar-empleado"
+export const LISTAR_PROGRAMACION = "/dashboard/listar-programacion"
+export const LISTAR_PROGRAMACION_DETALLE = "/dashboard/listar-programacion-detalle"
+export const LISTAR_CITA = "/dashboard/listar-cita"
+export const LISTAR_CONSULTA = "/dashboard/listar-consulta"
+export const SWEET_GUARDO = "guardo"
+export const SWEET_MODIFICO = "modifico"
+export const SWEET_ELIMINO = "elimino"
+export const SWEET_SUCESS = "success"
+export const ITEMS_POR_PAGINA = 5
+// export const ITEMS_POR_PAGINA = 20

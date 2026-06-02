@@ -1,0 +1,2212 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Historias de Usuario - Sistema de Consultorio Dental</title>
+    <style>
+        body {
+            font-family: 'Calibri', sans-serif;
+            font-size: 11pt;
+            line-height: 1.5;
+            margin: 2cm;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            font-size: 24pt;
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #34495e;
+            font-size: 18pt;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            page-break-before: always;
+            border-left: 5px solid #3498db;
+            padding-left: 15px;
+        }
+        h3 {
+            color: #2980b9;
+            font-size: 14pt;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #bdc3c7;
+            padding-bottom: 5px;
+        }
+        .hu-container {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ecf0f1;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+            page-break-inside: avoid;
+        }
+        .hu-title {
+            font-weight: bold;
+            color: #2c3e50;
+            font-size: 12pt;
+            margin-bottom: 10px;
+        }
+        .hu-description {
+            font-style: italic;
+            color: #7f8c8d;
+            margin-bottom: 15px;
+        }
+        .criteria-section {
+            margin-top: 15px;
+        }
+        .criteria-title {
+            font-weight: bold;
+            color: #27ae60;
+            margin-bottom: 8px;
+        }
+        .criteria-list {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        .criteria-list li {
+            margin-bottom: 5px;
+        }
+        .priority-info {
+            background-color: #e8f4fd;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 15px;
+            border-left: 4px solid #3498db;
+        }
+        .priority-info span {
+            font-weight: bold;
+        }
+        .index {
+            background-color: #f1f2f6;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        .index h3 {
+            color: #2c3e50;
+            margin-top: 0;
+        }
+        .index ul {
+            columns: 2;
+            column-gap: 40px;
+        }
+        .index li {
+            margin-bottom: 8px;
+        }
+        .summary {
+            background-color: #e8f5e8;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+            border-left: 4px solid #27ae60;
+        }
+        .summary h3 {
+            color: #27ae60;
+            margin-top: 0;
+        }
+        .priority-section {
+            margin-top: 20px;
+        }
+        .priority-section h4 {
+            color: #e74c3c;
+            margin-bottom: 10px;
+        }
+        .priority-section ul {
+            margin-left: 20px;
+        }
+        .priority-section li {
+            margin-bottom: 5px;
+        }
+        @media print {
+            body { margin: 1cm; }
+            h2 { page-break-before: always; }
+            .hu-container { page-break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+    <h1>HISTORIAS DE USUARIO</h1>
+    <h1>SISTEMA DE CONSULTORIO DENTAL</h1>
+# HISTORIAS DE USUARIO - SISTEMA DE CONSULTORIO DENTAL
+
+<h2>ÍNDICE</h2>
+
+1. [Gestión de Autenticación](#gestión-de-autenticación)
+2. [Gestión de Usuarios](#gestión-de-usuarios)
+3. [Gestión de Empleados](#gestión-de-empleados)
+4. [Gestión de Programación](#gestión-de-programación)
+5. [Gestión de Citas](#gestión-de-citas)
+6. [Gestión de Consultas](#gestión-de-consultas)
+7. [Odontograma](#odontograma)
+8. [Gestión de Historia Clínica](#gestión-de-historia-clínica)
+9. [Gestión de Empresas](#gestión-de-empresas)
+10. [Gestión de Roles y Permisos](#gestión-de-roles-y-permisos)
+11. [Dashboard y Reportes](#dashboard-y-reportes)
+12. [Gestión de Horarios](#gestión-de-horarios)
+
+---
+
+<h2>GESTIÓN DE AUTENTICACIÓN</h2>
+
+<h3>HU001: Inicio de Sesión</h3><div style="margin:20px 0;page-break-inside:avoid;"><h4 style="color:#0ea5e9;margin:15px 0;font-size:14pt;">📱 Visualización de la Pantalla:</h4>
+<div style="background:#f8f9fa;padding:20px;border:2px solid #e5e7eb;border-radius:8px;max-width:400px;margin:20px auto;">
+  <h3 style="color:#0ea5e9;text-align:center;font-weight:bold;font-size:18px;margin-bottom:20px;">Inicia Sesión</h3>
+  <table style="width:100%;border-collapse:collapse;">
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;width:30%;"><strong>Email:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="text" style="width:100%;padding:8px;border:1px solid #ccc;" placeholder="ejemplo@email.com" /></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Password:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="password" style="width:100%;padding:8px;border:1px solid #ccc;" placeholder="••••••••" /></td></tr>
+    <tr><td colspan="2" style="padding:15px;border:1px solid #ddd;text-align:center;"><button style="background:#0ea5e9;color:white;padding:10px 20px;border:none;border-radius:4px;font-weight:bold;">Iniciar Sesión</button></td></tr>
+    <tr><td colspan="2" style="padding:10px;border:1px solid #ddd;text-align:center;"><a href="#" style="color:#0ea5e9;">Olvidé mi password</a></td></tr>
+  </table>
+</div>
+</div>
+<strong>Como</strong> usuario del sistema  
+<strong>Quiero</strong> iniciar sesión con mi email y contraseña  
+<strong>Para</strong> acceder a las funcionalidades del consultorio dental
+
+<strong>Criterios de Aceptación:</strong>
+<ul><li>El sistema debe validar que el email y contraseña sean correctos</li>
+<li>Debe mostrar mensajes de error claros si las credenciales son incorrectas</li>
+<li>Debe redirigir al dashboard principal después del login exitoso</li>
+<li>Debe mantener la sesión activa durante la navegación</li>
+
+<strong>Criterios de Negocio:</strong>
+<li>Solo usuarios activos pueden acceder al sistema</li>
+<li>Las contraseñas deben estar encriptadas</li>
+<li>Se debe registrar el intento de acceso (éxito/fallo)</li>
+
+<strong>Prioridad:</strong> Crítica  
+<strong>Estimación:</strong> 8 horas  
+<strong>Sprint:</strong> 1
+
+---
+
+<h3>HU002: Recuperación de Contraseña</h3><div style="margin:20px 0;page-break-inside:avoid;"><h4 style="color:#0ea5e9;margin:15px 0;font-size:14pt;">📱 Visualización de la Pantalla:</h4>
+<div style="background:#f8f9fa;padding:20px;border:2px solid #e5e7eb;border-radius:8px;max-width:400px;margin:20px auto;">
+  <h3 style="color:#0ea5e9;text-align:center;font-weight:bold;font-size:18px;margin-bottom:20px;">Recuperar Contraseña</h3>
+  <table style="width:100%;border-collapse:collapse;">
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;width:30%;"><strong>Email:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="email" style="width:100%;padding:8px;border:1px solid #ccc;" placeholder="tu@email.com" /></td></tr>
+    <tr><td colspan="2" style="padding:15px;border:1px solid #ddd;text-align:center;"><button style="background:#0ea5e9;color:white;padding:10px 20px;border:none;border-radius:4px;font-weight:bold;">Enviar Enlace</button></td></tr>
+  </table>
+  <p style="text-align:center;color:#6b7280;font-size:14px;margin-top:15px;">Se enviará un enlace de recuperación a tu email</p>
+</div>
+</div>
+<strong>Como</strong> usuario del sistema  
+<strong>Quiero</strong> recuperar mi contraseña olvidada  
+<strong>Para</strong> poder acceder nuevamente al sistema
+
+<strong>Criterios de Aceptación:</strong>
+<li>Debe permitir ingresar el email registrado</li>
+<li>Debe enviar un enlace de recuperación por email</li>
+<li>El enlace debe tener un tiempo de expiración</li>
+<li>Debe permitir establecer una nueva contraseña</li>
+
+<strong>Criterios de Negocio:</strong>
+<li>El enlace debe expirar en 24 horas</li>
+<li>Se debe validar que el email existe en el sistema</li>
+<li>Se debe registrar el intento de recuperación</li>
+
+<strong>Prioridad:</strong> Alta  
+<strong>Estimación:</strong> 12 horas  
+<strong>Sprint:</strong> 2
+
+---
+
+<h3>HU003: Cambio de Contraseña</h3><div style="margin:20px 0;page-break-inside:avoid;"><h4 style="color:#0ea5e9;margin:15px 0;font-size:14pt;">📱 Visualización de la Pantalla:</h4>
+<div style="background:#f8f9fa;padding:20px;border:2px solid #e5e7eb;border-radius:8px;max-width:400px;margin:20px auto;">
+  <h3 style="color:#0ea5e9;text-align:center;font-weight:bold;font-size:18px;margin-bottom:20px;">Cambiar Contraseña</h3>
+  <table style="width:100%;border-collapse:collapse;">
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;width:40%;"><strong>Contraseña Actual:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="password" style="width:100%;padding:8px;border:1px solid #ccc;" placeholder="••••••••" /></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Nueva Contraseña:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="password" style="width:100%;padding:8px;border:1px solid #ccc;" placeholder="••••••••" /></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Confirmar:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="password" style="width:100%;padding:8px;border:1px solid #ccc;" placeholder="••••••••" /></td></tr>
+    <tr><td colspan="2" style="padding:15px;border:1px solid #ddd;text-align:center;"><button style="background:#0ea5e9;color:white;padding:10px 20px;border:none;border-radius:4px;font-weight:bold;">Cambiar Contraseña</button></td></tr>
+  </table>
+</div>
+</div>
+<strong>Como</strong> usuario autenticado  
+<strong>Quiero</strong> cambiar mi contraseña actual  
+<strong>Para</strong> mantener la seguridad de mi cuenta
+
+<strong>Criterios de Aceptación:</strong>
+<li>Debe solicitar la contraseña actual</li>
+<li>Debe solicitar la nueva contraseña dos veces</li>
+<li>Debe validar que la nueva contraseña sea diferente a la actual</li>
+<li>Debe mostrar confirmación del cambio exitoso</li>
+
+<strong>Criterios de Negocio:</strong>
+<li>La nueva contraseña debe cumplir con políticas de seguridad</li>
+<li>Se debe registrar el cambio de contraseña</li>
+<li>Se debe invalidar sesiones activas en otros dispositivos</li>
+
+<strong>Prioridad:</strong> Media  
+<strong>Estimación:</strong> 6 horas  
+<strong>Sprint:</strong> 3
+
+---
+
+<h3>HU004: Persistencia de Sesión</h3><div style="margin:20px 0;page-break-inside:avoid;"><h4 style="color:#0ea5e9;margin:15px 0;font-size:14pt;">📱 Visualización de la Pantalla:</h4>
+<div style="background:#f8f9fa;padding:20px;border:2px solid #e5e7eb;border-radius:8px;max-width:500px;margin:20px auto;">
+  <h3 style="color:#0ea5e9;text-align:center;font-weight:bold;font-size:18px;margin-bottom:20px;">Persistencia de Sesión</h3>
+  <div style="background:#f0f9ff;padding:15px;border:1px solid #0ea5e9;border-radius:4px;margin:20px 0;">
+    <p style="text-align:center;color:#0ea5e9;font-weight:bold;">Sesión activa detectada</p>
+    <p style="text-align:center;color:#64748b;font-size:14px;">Usuario: juan.perez@consultorio.com</p>
+    <p style="text-align:center;color:#64748b;font-size:14px;">Último acceso: 15/01/2024 08:30 AM</p>
+  </div>
+  <table style="width:100%;border-collapse:collapse;">
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;width:35%;"><strong>Mantener sesión:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="checkbox" checked /> Recordar mis credenciales</td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Tiempo de sesión:</strong></td><td style="padding:10px;border:1px solid #ddd;"><select style="width:100%;padding:8px;border:1px solid #ccc;"><option>8 horas</option><option>24 horas</option><option>7 días</option></select></td></tr>
+    <tr><td colspan="2" style="padding:15px;border:1px solid #ddd;text-align:center;">
+      <button style="background:#0ea5e9;color:white;padding:10px 20px;border:none;border-radius:4px;font-weight:bold;margin-right:10px;">Continuar Sesión</button>
+      <button style="background:#ef4444;color:white;padding:10px 20px;border:none;border-radius:4px;font-weight:bold;">Cerrar Sesión</button>
+    </td></tr>
+  </table>
+</div>
+</div>
+<strong>Como</strong> usuario autenticado  
+<strong>Quiero</strong> que mi sesión se mantenga activa al refrescar la página  
+<strong>Para</strong> no tener que volver a iniciar sesión constantemente
+
+<strong>Criterios de Aceptación:</strong>
+<li>La sesión debe mantenerse activa durante la navegación</li>
+<li>Debe validar el token de autenticación en cada petición</li>
+<li>Debe redirigir al login si el token expira</li>
+<li>Debe mostrar indicador de sesión activa</li>
+
+<strong>Criterios de Negocio:</strong>
+<li>El token debe tener un tiempo de expiración configurable</li>
+<li>Se debe registrar la actividad del usuario</li>
+<li>Se debe permitir cerrar sesión manualmente</li></ul>
+
+<strong>Prioridad:</strong> Alta  
+<strong>Estimación:</strong> 10 horas  
+<strong>Sprint:</strong> 1
+
+---
+
+<h2>GESTIÓN DE USUARIOS</h2>
+
+<h3>HU005: Crear Usuario</h3><div style="margin:20px 0;page-break-inside:avoid;"><h4 style="color:#0ea5e9;margin:15px 0;font-size:14pt;">📱 Visualización de la Pantalla:</h4>
+<div style="background:#f8f9fa;padding:20px;border:2px solid #e5e7eb;border-radius:8px;max-width:500px;margin:20px auto;">
+  <h3 style="color:#0ea5e9;text-align:center;font-weight:bold;font-size:18px;margin-bottom:20px;">Crear Usuario</h3>
+  <table style="width:100%;border-collapse:collapse;">
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;width:35%;"><strong>Empleado:</strong></td><td style="padding:10px;border:1px solid #ddd;"><select style="width:100%;padding:8px;border:1px solid #ccc;"><option>Seleccionar empleado</option><option>Juan Pérez - Médico</option><option>María López - Recepcionista</option></select></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Email:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="email" style="width:100%;padding:8px;border:1px solid #ccc;" placeholder="email@consultorio.com" /></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Rol:</strong></td><td style="padding:10px;border:1px solid #ddd;"><select style="width:100%;padding:8px;border:1px solid #ccc;"><option>Seleccionar rol</option><option>Administrador</option><option>Médico</option><option>Recepcionista</option></select></td></tr>
+    <tr><td colspan="2" style="padding:15px;border:1px solid #ddd;text-align:center;"><button style="background:#0ea5e9;color:white;padding:10px 20px;border:none;border-radius:4px;font-weight:bold;">Crear Usuario</button></td></tr>
+  </table>
+</div>
+</div>
+<strong>Como</strong> administrador del sistema  
+<strong>Quiero</strong> crear nuevos usuarios asociándolos a empleados existentes  
+<strong>Para</strong> permitir el acceso al sistema a nuevos miembros del equipo
+
+<strong>Criterios de Aceptación:</strong>
+<ul><li>Debe mostrar lista de empleados disponibles</li>
+<li>Debe permitir asociar un empleado a un usuario</li>
+<li>Debe generar credenciales temporales</li>
+<li>Debe enviar email con credenciales al empleado</li>
+
+<strong>Criterios de Negocio:</strong>
+<li>Solo empleados activos pueden ser asociados</li>
+<li>El email debe ser único en el sistema</li>
+<li>Se debe asignar un rol por defecto</li>
+<li>Se debe registrar la creación del usuario</li>
+
+<strong>Prioridad:</strong> Alta  
+<strong>Estimación:</strong> 16 horas  
+<strong>Sprint:</strong> 2
+
+---
+
+<h3>HU006: Editar Usuario</h3><div style="margin:20px 0;page-break-inside:avoid;"><h4 style="color:#0ea5e9;margin:15px 0;font-size:14pt;">📱 Visualización de la Pantalla:</h4>
+<div style="background:#f8f9fa;padding:20px;border:2px solid #e5e7eb;border-radius:8px;max-width:500px;margin:20px auto;">
+  <h3 style="color:#0ea5e9;text-align:center;font-weight:bold;font-size:18px;margin-bottom:20px;">Editar Usuario</h3>
+  <table style="width:100%;border-collapse:collapse;">
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;width:35%;"><strong>Usuario:</strong></td><td style="padding:10px;border:1px solid #ddd;"><select style="width:100%;padding:8px;border:1px solid #ccc;"><option>Seleccionar usuario</option><option>juan.perez@consultorio.com</option><option>maria.lopez@consultorio.com</option></select></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Email:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="email" style="width:100%;padding:8px;border:1px solid #ccc;" value="juan.perez@consultorio.com" /></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Rol:</strong></td><td style="padding:10px;border:1px solid #ddd;"><select style="width:100%;padding:8px;border:1px solid #ccc;"><option>Médico</option><option>Administrador</option><option>Recepcionista</option></select></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Estado:</strong></td><td style="padding:10px;border:1px solid #ddd;"><select style="width:100%;padding:8px;border:1px solid #ccc;"><option>Activo</option><option>Inactivo</option></select></td></tr>
+    <tr><td colspan="2" style="padding:15px;border:1px solid #ddd;text-align:center;"><button style="background:#0ea5e9;color:white;padding:10px 20px;border:none;border-radius:4px;font-weight:bold;">Actualizar Usuario</button></td></tr>
+  </table>
+</div>
+</div>
+<strong>Como</strong> administrador del sistema  
+<strong>Quiero</strong> editar información de usuarios existentes  
+<strong>Para</strong> mantener actualizada la información del sistema
+
+<strong>Criterios de Aceptación:</strong>
+<li>Debe mostrar formulario con datos actuales</li>
+<li>Debe permitir cambiar email y rol</li>
+<li>Debe validar que el email sea único</li>
+<li>Debe mostrar confirmación de cambios</li>
+
+<strong>Criterios de Negocio:</strong>
+<li>No se puede cambiar el empleado asociado</li>
+<li>Se debe registrar la modificación</li>
+<li>Se debe notificar al usuario si cambia su email</li>
+
+<strong>Prioridad:</strong> Media  
+<strong>Estimación:</strong> 12 horas  
+<strong>Sprint:</strong> 3
+
+---
+
+<h3>HU007: Listar Usuarios</h3><div style="margin:20px 0;page-break-inside:avoid;"><h4 style="color:#0ea5e9;margin:15px 0;font-size:14pt;">📱 Visualización de la Pantalla:</h4>
+<div style="background:#f8f9fa;padding:20px;border:2px solid #e5e7eb;border-radius:8px;max-width:800px;margin:20px auto;">
+  <h3 style="color:#0ea5e9;text-align:center;font-weight:bold;font-size:18px;margin-bottom:20px;">Lista de Usuarios</h3>
+  <div style="margin-bottom:15px;display:flex;gap:10px;justify-content:center;">
+    <select style="padding:8px;border:1px solid #ccc;border-radius:4px;"><option>Todos los roles</option><option>Médico</option><option>Recepcionista</option><option>Administrador</option></select>
+    <select style="padding:8px;border:1px solid #ccc;border-radius:4px;"><option>Todos los estados</option><option>Activo</option><option>Inactivo</option></select>
+    <input type="text" placeholder="Buscar..." style="padding:8px;border:1px solid #ccc;border-radius:4px;width:200px;" />
+  </div>
+  <table style="width:100%;border-collapse:collapse;border:1px solid #ddd;">
+    <thead>
+      <tr style="background:#f3f4f6;">
+        <th style="padding:12px;border:1px solid #ddd;text-align:left;"><strong>ID</strong></th>
+        <th style="padding:12px;border:1px solid #ddd;text-align:left;"><strong>Nombre</strong></th>
+        <th style="padding:12px;border:1px solid #ddd;text-align:left;"><strong>Email</strong></th>
+        <th style="padding:12px;border:1px solid #ddd;text-align:left;"><strong>Rol</strong></th>
+        <th style="padding:12px;border:1px solid #ddd;text-align:left;"><strong>Estado</strong></th>
+        <th style="padding:12px;border:1px solid #ddd;text-align:left;"><strong>Último Acceso</strong></th>
+        <th style="padding:12px;border:1px solid #ddd;text-align:center;"><strong>Acciones</strong></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="padding:10px;border:1px solid #ddd;">1</td>
+        <td style="padding:10px;border:1px solid #ddd;">Dr. Juan Pérez</td>
+        <td style="padding:10px;border:1px solid #ddd;">juan@clinic.com</td>
+        <td style="padding:10px;border:1px solid #ddd;">Médico</td>
+        <td style="padding:10px;border:1px solid #ddd;"><span style="color:#059669;font-weight:bold;">Activo</span></td>
+        <td style="padding:10px;border:1px solid #ddd;">15/01/2025 09:30</td>
+        <td style="padding:10px;border:1px solid #ddd;text-align:center;">
+          <button style="background:#0ea5e9;color:white;padding:5px 10px;border:none;border-radius:3px;margin:2px;">Editar</button>
+          <button style="background:#dc2626;color:white;padding:5px 10px;border:none;border-radius:3px;margin:2px;">Eliminar</button>
+        </td>
+      </tr>
+      <tr>
+        <td style="padding:10px;border:1px solid #ddd;">2</td>
+        <td style="padding:10px;border:1px solid #ddd;">María García</td>
+        <td style="padding:10px;border:1px solid #ddd;">maria@clinic.com</td>
+        <td style="padding:10px;border:1px solid #ddd;">Recepcionista</td>
+        <td style="padding:10px;border:1px solid #ddd;"><span style="color:#059669;font-weight:bold;">Activo</span></td>
+        <td style="padding:10px;border:1px solid #ddd;">15/01/2025 08:15</td>
+        <td style="padding:10px;border:1px solid #ddd;text-align:center;">
+          <button style="background:#0ea5e9;color:white;padding:5px 10px;border:none;border-radius:3px;margin:2px;">Editar</button>
+          <button style="background:#dc2626;color:white;padding:5px 10px;border:none;border-radius:3px;margin:2px;">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div style="margin-top:15px;text-align:center;">
+    <button style="background:#059669;color:white;padding:10px 20px;border:none;border-radius:4px;font-weight:bold;margin:5px;">+ Nuevo Usuario</button>
+    <button style="background:#f59e0b;color:white;padding:10px 20px;border:none;border-radius:4px;font-weight:bold;margin:5px;">Exportar</button>
+  </div>
+</div></div>
+<strong>Como</strong> administrador del sistema  
+<strong>Quiero</strong> listar todos los usuarios con paginación y filtros  
+<strong>Para</strong> gestionar eficientemente las cuentas del sistema
+
+<strong>Criterios de Aceptación:</strong>
+<li>Debe mostrar lista paginada de usuarios</li>
+<li>Debe permitir filtrar por rol y estado</li>
+<li>Debe mostrar información básica de cada usuario</li>
+<li>Debe permitir acciones rápidas (editar, eliminar)</li>
+
+<strong>Criterios de Negocio:</strong>
+<li>Solo usuarios con permisos de administrador pueden ver la lista</li>
+<li>Se debe mostrar el empleado asociado</li>
+<li>Se debe mostrar el último acceso</li>
+<li>Se debe permitir exportar la lista</li>
+
+<strong>Prioridad:</strong> Media  
+<strong>Estimación:</strong> 14 horas  
+<strong>Sprint:</strong> 2
+
+---
+
+<h3>HU008: Eliminar Usuario</h3><div style="margin:20px 0;page-break-inside:avoid;"><h4 style="color:#0ea5e9;margin:15px 0;font-size:14pt;">📱 Visualización de la Pantalla:</h4>
+<div style="background:#f8f9fa;padding:20px;border:2px solid #e5e7eb;border-radius:8px;max-width:500px;margin:20px auto;">
+  <h3 style="color:#ef4444;text-align:center;font-weight:bold;font-size:18px;margin-bottom:20px;">Eliminar Usuario</h3>
+  <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:4px;padding:15px;margin-bottom:20px;">
+    <p style="color:#dc2626;text-align:center;font-weight:bold;">¿Está seguro que desea eliminar este usuario?</p>
+  </div>
+  <table style="width:100%;border-collapse:collapse;">
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;width:35%;"><strong>Usuario:</strong></td><td style="padding:10px;border:1px solid #ddd;">juan.perez@consultorio.com</td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Empleado:</strong></td><td style="padding:10px;border:1px solid #ddd;">Juan Pérez</td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Rol:</strong></td><td style="padding:10px;border:1px solid #ddd;">Médico</td></tr>
+    <tr><td colspan="2" style="padding:15px;border:1px solid #ddd;text-align:center;">
+      <button style="background:#ef4444;color:white;padding:10px 20px;border:none;border-radius:4px;font-weight:bold;margin-right:10px;">Confirmar Eliminación</button>
+      <button style="background:#6b7280;color:white;padding:10px 20px;border:none;border-radius:4px;font-weight:bold;">Cancelar</button>
+    </td></tr>
+  </table>
+</div>
+</div>
+<strong>Como</strong> administrador del sistema  
+<strong>Quiero</strong> eliminar usuarios del sistema  
+<strong>Para</strong> mantener la seguridad y limpieza de datos
+
+<strong>Criterios de Aceptación:</strong>
+<li>Debe solicitar confirmación antes de eliminar</li>
+<li>Debe mostrar advertencia si el usuario tiene actividad reciente</li>
+<li>Debe permitir desactivar en lugar de eliminar</li>
+<li>Debe mostrar confirmación de eliminación</li>
+
+<strong>Criterios de Negocio:</strong>
+<li>No se puede eliminar el último administrador</li>
+<li>Se debe mantener historial de actividad</li>
+<li>Se debe notificar al empleado asociado</li>
+<li>Se debe liberar el email para uso futuro</li></ul>
+
+<strong>Prioridad:</strong> Baja  
+<strong>Estimación:</strong> 8 horas  
+<strong>Sprint:</strong> 4
+
+---
+
+<h2>GESTIÓN DE EMPLEADOS</h2>
+
+<h3>HU009: Registrar Empleado</h3><div style="margin:20px 0;page-break-inside:avoid;"><h4 style="color:#0ea5e9;margin:15px 0;font-size:14pt;">📱 Visualización de la Pantalla:</h4>
+<div style="background:#f8f9fa;padding:20px;border:2px solid #e5e7eb;border-radius:8px;max-width:600px;margin:20px auto;">
+  <h3 style="color:#0ea5e9;text-align:center;font-weight:bold;font-size:18px;margin-bottom:20px;">Registrar Empleado</h3>
+  <table style="width:100%;border-collapse:collapse;">
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;width:35%;"><strong>Nombres:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="text" style="width:100%;padding:8px;border:1px solid #ccc;" placeholder="Nombres completos" /></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Apellidos:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="text" style="width:100%;padding:8px;border:1px solid #ccc;" placeholder="Apellidos completos" /></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Documento:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="text" style="width:100%;padding:8px;border:1px solid #ccc;" placeholder="DNI o documento" /></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Teléfono:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="tel" style="width:100%;padding:8px;border:1px solid #ccc;" placeholder="+51 999 999 999" /></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Email:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="email" style="width:100%;padding:8px;border:1px solid #ccc;" placeholder="email@ejemplo.com" /></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Tipo:</strong></td><td style="padding:10px;border:1px solid #ddd;"><select style="width:100%;padding:8px;border:1px solid #ccc;"><option>Seleccionar tipo</option><option>Médico</option><option>Recepcionista</option><option>Administrador</option></select></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Empresa:</strong></td><td style="padding:10px;border:1px solid #ddd;"><select style="width:100%;padding:8px;border:1px solid #ccc;"><option>Seleccionar empresa</option><option>Consultorio Dental ABC</option></select></td></tr>
+    <tr><td colspan="2" style="padding:15px;border:1px solid #ddd;text-align:center;"><button style="background:#0ea5e9;color:white;padding:10px 20px;border:none;border-radius:4px;font-weight:bold;">Registrar Empleado</button></td></tr>
+  </table>
+</div>
+</div>
+<strong>Como</strong> administrador del sistema  
+<strong>Quiero</strong> registrar nuevos empleados con información completa  
+<strong>Para</strong> mantener un registro actualizado del personal
+
+<strong>Criterios de Aceptación:</strong>
+<ul><li>Debe capturar información personal (nombres, apellidos, documento)</li>
+<li>Debe capturar información de contacto (teléfono, email)</li>
+<li>Debe permitir asignar tipo de empleado y empresa</li>
+<li>Debe validar que el documento sea único</li>
+
+<strong>Criterios de Negocio:</strong>
+<li>El documento de identidad debe ser único por empresa</li>
+<li>Se debe validar formato de email y teléfono</li>
+<li>Se debe generar un código de empleado automático</li>
+<li>Se debe registrar la fecha de contratación</li>
+
+<strong>Prioridad:</strong> Alta  
+<strong>Estimación:</strong> 20 horas  
+<strong>Sprint:</strong> 1
+
+---
+
+<h3>HU010: Editar Empleado</h3><div style="margin:20px 0;page-break-inside:avoid;"><h4 style="color:#0ea5e9;margin:15px 0;font-size:14pt;">📱 Visualización de la Pantalla:</h4>
+<div style="background:#f8f9fa;padding:20px;border:2px solid #e5e7eb;border-radius:8px;max-width:600px;margin:20px auto;">
+  <h3 style="color:#0ea5e9;text-align:center;font-weight:bold;font-size:18px;margin-bottom:20px;">Editar Empleado</h3>
+  <table style="width:100%;border-collapse:collapse;">
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;width:35%;"><strong>Empleado:</strong></td><td style="padding:10px;border:1px solid #ddd;"><select style="width:100%;padding:8px;border:1px solid #ccc;"><option>Seleccionar empleado</option><option>Juan Pérez - Médico</option><option>María López - Recepcionista</option></select></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Nombres:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="text" style="width:100%;padding:8px;border:1px solid #ccc;" value="Juan Carlos" /></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Apellidos:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="text" style="width:100%;padding:8px;border:1px solid #ccc;" value="Pérez García" /></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Documento:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="text" style="width:100%;padding:8px;border:1px solid #ccc;" value="12345678" /></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Teléfono:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="tel" style="width:100%;padding:8px;border:1px solid #ccc;" value="+51 999 123 456" /></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Email:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="email" style="width:100%;padding:8px;border:1px solid #ccc;" value="juan.perez@consultorio.com" /></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Tipo:</strong></td><td style="padding:10px;border:1px solid #ddd;"><select style="width:100%;padding:8px;border:1px solid #ccc;"><option>Médico</option><option>Recepcionista</option><option>Administrador</option></select></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Estado:</strong></td><td style="padding:10px;border:1px solid #ddd;"><select style="width:100%;padding:8px;border:1px solid #ccc;"><option>Activo</option><option>Inactivo</option></select></td></tr>
+    <tr><td colspan="2" style="padding:15px;border:1px solid #ddd;text-align:center;"><button style="background:#0ea5e9;color:white;padding:10px 20px;border:none;border-radius:4px;font-weight:bold;">Actualizar Empleado</button></td></tr>
+  </table>
+</div>
+</div>
+<strong>Como</strong> administrador del sistema  
+<strong>Quiero</strong> editar información de empleados existentes  
+<strong>Para</strong> mantener datos actualizados
+
+<strong>Criterios de Aceptación:</strong>
+<li>Debe mostrar formulario con datos actuales</li>
+<li>Debe permitir modificar información personal y de contacto</li>
+<li>Debe permitir cambiar tipo de empleado</li>
+<li>Debe validar cambios antes de guardar</li>
+
+<strong>Criterios de Negocio:</strong>
+<li>No se puede cambiar el documento de identidad</li>
+<li>Se debe registrar la fecha de modificación</li>
+<li>Se debe notificar cambios importantes al empleado</li>
+<li>Se debe mantener historial de cambios</li>
+
+<strong>Prioridad:</strong> Media  
+<strong>Estimación:</strong> 16 horas  
+<strong>Sprint:</strong> 2
+
+---
+
+<h3>HU011: Listar Empleados</h3><div style="margin:20px 0;page-break-inside:avoid;"><h4 style="color:#0ea5e9;margin:15px 0;font-size:14pt;">📱 Visualización de la Pantalla:</h4>
+<div style="background:#f8f9fa;padding:20px;border:2px solid #e5e7eb;border-radius:8px;max-width:800px;margin:20px auto;">
+  <h3 style="color:#0ea5e9;text-align:center;font-weight:bold;font-size:18px;margin-bottom:20px;">Lista de Empleados</h3>
+  <div style="margin-bottom:15px;display:flex;gap:10px;justify-content:center;">
+    <select style="padding:8px;border:1px solid #ccc;border-radius:4px;"><option>Todos los tipos</option><option>Médico</option><option>Recepcionista</option><option>Administrador</option></select>
+    <select style="padding:8px;border:1px solid #ccc;border-radius:4px;"><option>Todos los estados</option><option>Activo</option><option>Inactivo</option></select>
+    <input type="text" placeholder="Buscar por nombre..." style="padding:8px;border:1px solid #ccc;border-radius:4px;width:200px;" />
+  </div>
+  <table style="width:100%;border-collapse:collapse;border:1px solid #ddd;">
+    <thead>
+      <tr style="background:#f3f4f6;">
+        <th style="padding:12px;border:1px solid #ddd;text-align:left;"><strong>ID</strong></th>
+        <th style="padding:12px;border:1px solid #ddd;text-align:left;"><strong>Nombre</strong></th>
+        <th style="padding:12px;border:1px solid #ddd;text-align:left;"><strong>Documento</strong></th>
+        <th style="padding:12px;border:1px solid #ddd;text-align:left;"><strong>Tipo</strong></th>
+        <th style="padding:12px;border:1px solid #ddd;text-align:left;"><strong>Teléfono</strong></th>
+        <th style="padding:12px;border:1px solid #ddd;text-align:left;"><strong>Estado</strong></th>
+        <th style="padding:12px;border:1px solid #ddd;text-align:center;"><strong>Acciones</strong></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="padding:10px;border:1px solid #ddd;">1</td>
+        <td style="padding:10px;border:1px solid #ddd;">Dr. Juan Pérez</td>
+        <td style="padding:10px;border:1px solid #ddd;">12345678</td>
+        <td style="padding:10px;border:1px solid #ddd;">Médico</td>
+        <td style="padding:10px;border:1px solid #ddd;">+57 300 123 4567</td>
+        <td style="padding:10px;border:1px solid #ddd;"><span style="color:#059669;font-weight:bold;">Activo</span></td>
+        <td style="padding:10px;border:1px solid #ddd;text-align:center;">
+          <button style="background:#0ea5e9;color:white;padding:5px 10px;border:none;border-radius:3px;margin:2px;">Editar</button>
+          <button style="background:#dc2626;color:white;padding:5px 10px;border:none;border-radius:3px;margin:2px;">Eliminar</button>
+        </td>
+      </tr>
+      <tr>
+        <td style="padding:10px;border:1px solid #ddd;">2</td>
+        <td style="padding:10px;border:1px solid #ddd;">María García</td>
+        <td style="padding:10px;border:1px solid #ddd;">87654321</td>
+        <td style="padding:10px;border:1px solid #ddd;">Recepcionista</td>
+        <td style="padding:10px;border:1px solid #ddd;">+57 300 987 6543</td>
+        <td style="padding:10px;border:1px solid #ddd;"><span style="color:#059669;font-weight:bold;">Activo</span></td>
+        <td style="padding:10px;border:1px solid #ddd;text-align:center;">
+          <button style="background:#0ea5e9;color:white;padding:5px 10px;border:none;border-radius:3px;margin:2px;">Editar</button>
+          <button style="background:#dc2626;color:white;padding:5px 10px;border:none;border-radius:3px;margin:2px;">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div style="margin-top:15px;text-align:center;">
+    <button style="background:#059669;color:white;padding:10px 20px;border:none;border-radius:4px;font-weight:bold;margin:5px;">+ Nuevo Empleado</button>
+    <button style="background:#f59e0b;color:white;padding:10px 20px;border:none;border-radius:4px;font-weight:bold;margin:5px;">Exportar</button>
+  </div>
+</div></div>
+<strong>Como</strong> administrador del sistema  
+<strong>Quiero</strong> listar empleados con filtros por empresa y otros criterios  
+<strong>Para</strong> gestionar eficientemente el personal
+
+<strong>Criterios de Aceptación:</strong>
+<li>Debe mostrar lista paginada de empleados</li>
+<li>Debe permitir filtrar por empresa, tipo de empleado y estado</li>
+<li>Debe permitir búsqueda por nombre o documento</li>
+<li>Debe mostrar información relevante de cada empleado</li>
+
+<strong>Criterios de Negocio:</strong>
+<li>Solo se muestran empleados de la empresa del usuario</li>
+<li>Se debe mostrar estado activo/inactivo</li>
+<li>Se debe mostrar fecha de contratación</li>
+<li>Se debe permitir exportar la lista</li>
+
+<strong>Prioridad:</strong> Media  
+<strong>Estimación:</strong> 18 horas  
+<strong>Sprint:</strong> 2
+
+---
+
+<h3>HU012: Eliminar Empleado</h3><div style="margin:20px 0;page-break-inside:avoid;"><h4 style="color:#0ea5e9;margin:15px 0;font-size:14pt;">📱 Visualización de la Pantalla:</h4>
+<div style="background:#f8f9fa;padding:20px;border:2px solid #e5e7eb;border-radius:8px;max-width:500px;margin:20px auto;">
+  <h3 style="color:#ef4444;text-align:center;font-weight:bold;font-size:18px;margin-bottom:20px;">Eliminar Empleado</h3>
+  <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:4px;padding:15px;margin-bottom:20px;">
+    <p style="color:#dc2626;text-align:center;font-weight:bold;">¿Está seguro que desea eliminar este empleado?</p>
+  </div>
+  <table style="width:100%;border-collapse:collapse;">
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;width:35%;"><strong>Empleado:</strong></td><td style="padding:10px;border:1px solid #ddd;">Juan Carlos Pérez García</td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Documento:</strong></td><td style="padding:10px;border:1px solid #ddd;">12345678</td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Tipo:</strong></td><td style="padding:10px;border:1px solid #ddd;">Médico</td></tr>
+    <tr><td colspan="2" style="padding:15px;border:1px solid #ddd;text-align:center;">
+      <button style="background:#ef4444;color:white;padding:10px 20px;border:none;border-radius:4px;font-weight:bold;margin-right:10px;">Confirmar Eliminación</button>
+      <button style="background:#6b7280;color:white;padding:10px 20px;border:none;border-radius:4px;font-weight:bold;">Cancelar</button>
+    </td></tr>
+  </table>
+</div>
+</div>
+<strong>Como</strong> administrador del sistema  
+<strong>Quiero</strong> eliminar empleados del sistema  
+<strong>Para</strong> mantener el registro actualizado
+
+<strong>Criterios de Aceptación:</strong>
+<li>Debe solicitar confirmación antes de eliminar</li>
+<li>Debe verificar que no tenga citas o consultas pendientes</li>
+<li>Debe permitir desactivar en lugar de eliminar</li>
+<li>Debe mostrar advertencias sobre dependencias</li>
+
+<strong>Criterios de Negocio:</strong>
+<li>No se puede eliminar empleados con actividad reciente</li>
+<li>Se debe mantener historial de empleo</li>
+<li>Se debe notificar al empleado</li>
+<li>Se debe liberar recursos asociados</li></ul>
+
+<strong>Prioridad:</strong> Baja  
+<strong>Estimación:</strong> 10 horas  
+<strong>Sprint:</strong> 4
+
+---
+
+<h2>GESTIÓN DE PROGRAMACIÓN</h2>
+
+<h3>HU013: Crear Programación</h3><div style="margin:20px 0;page-break-inside:avoid;"><h4 style="color:#0ea5e9;margin:15px 0;font-size:14pt;">📱 Visualización de la Pantalla:</h4>
+<div style="background:#f8f9fa;padding:20px;border:2px solid #e5e7eb;border-radius:8px;max-width:600px;margin:20px auto;">
+  <h3 style="color:#0ea5e9;text-align:center;font-weight:bold;font-size:18px;margin-bottom:20px;">Crear Programación</h3>
+  <table style="width:100%;border-collapse:collapse;">
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;width:35%;"><strong>Médico:</strong></td><td style="padding:10px;border:1px solid #ddd;"><select style="width:100%;padding:8px;border:1px solid #ccc;"><option>Seleccionar médico</option><option>Dr. García</option><option>Dr. Rodríguez</option></select></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Fecha Inicio:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="date" style="width:100%;padding:8px;border:1px solid #ccc;" /></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Fecha Fin:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="date" style="width:100%;padding:8px;border:1px solid #ccc;" /></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Horario:</strong></td><td style="padding:10px;border:1px solid #ddd;"><select style="width:100%;padding:8px;border:1px solid #ccc;"><option>Seleccionar horario</option><option>Mañana (8:00-12:00)</option><option>Tarde (14:00-18:00)</option></select></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Estado:</strong></td><td style="padding:10px;border:1px solid #ddd;"><select style="width:100%;padding:8px;border:1px solid #ccc;"><option>Activo</option><option>Inactivo</option></select></td></tr>
+    <tr><td colspan="2" style="padding:15px;border:1px solid #ddd;text-align:center;"><button style="background:#0ea5e9;color:white;padding:10px 20px;border:none;border-radius:4px;font-weight:bold;">Crear Programación</button></td></tr>
+  </table>
+</div>
+</div>
+<strong>Como</strong> administrador del sistema  
+<strong>Quiero</strong> crear programaciones semanales con fechas de inicio y fin  
+<strong>Para</strong> organizar la disponibilidad de médicos
+
+<strong>Criterios de Aceptación:</strong>
+<ul><li>Debe permitir seleccionar fecha de inicio y fin</li>
+<li>Debe validar que las fechas sean coherentes</li>
+<li>Debe generar automáticamente los días de la semana</li>
+<li>Debe mostrar confirmación de creación</li>
+
+<strong>Criterios de Negocio:</strong>
+<li>Solo se puede crear una programación activa por empresa</li>
+<li>Las fechas deben ser futuras</li>
+<li>Se debe registrar quién creó la programación</li>
+<li>Se debe notificar a los médicos sobre la nueva programación</li>
+
+<strong>Prioridad:</strong> Alta  
+<strong>Estimación:</strong> 16 horas  
+<strong>Sprint:</strong> 3
+
+---
+
+<h3>HU014: Asignar Horarios a Médicos</h3><div style="margin:20px 0;page-break-inside:avoid;"><h4 style="color:#0ea5e9;margin:15px 0;font-size:14pt;">📱 Visualización de la Pantalla:</h4>
+<div style="background:#f8f9fa;padding:20px;border:2px solid #e5e7eb;border-radius:8px;max-width:700px;margin:20px auto;">
+  <h3 style="color:#0ea5e9;text-align:center;font-weight:bold;font-size:18px;margin-bottom:20px;">Asignar Horarios a Médicos</h3>
+  <table style="width:100%;border-collapse:collapse;">
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;width:35%;"><strong>Médico:</strong></td><td style="padding:10px;border:1px solid #ddd;"><select style="width:100%;padding:8px;border:1px solid #ccc;"><option>Seleccionar médico</option><option>Dr. Juan Pérez</option><option>Dr. Carlos Rodríguez</option></select></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Horario:</strong></td><td style="padding:10px;border:1px solid #ddd;"><select style="width:100%;padding:8px;border:1px solid #ccc;"><option>Seleccionar horario</option><option>Mañana (8:00-12:00)</option><option>Tarde (14:00-18:00)</option><option>Noche (18:00-22:00)</option></select></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Días:</strong></td><td style="padding:10px;border:1px solid #ddd;">
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <label style="display:flex;align-items:center;gap:5px;"><input type="checkbox" checked /> Lunes</label>
+        <label style="display:flex;align-items:center;gap:5px;"><input type="checkbox" checked /> Martes</label>
+        <label style="display:flex;align-items:center;gap:5px;"><input type="checkbox" checked /> Miércoles</label>
+        <label style="display:flex;align-items:center;gap:5px;"><input type="checkbox" checked /> Jueves</label>
+        <label style="display:flex;align-items:center;gap:5px;"><input type="checkbox" checked /> Viernes</label>
+        <label style="display:flex;align-items:center;gap:5px;"><input type="checkbox" /> Sábado</label>
+        <label style="display:flex;align-items:center;gap:5px;"><input type="checkbox" /> Domingo</label>
+      </div>
+    </td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Estado:</strong></td><td style="padding:10px;border:1px solid #ddd;"><select style="width:100%;padding:8px;border:1px solid #ccc;"><option>Activo</option><option>Inactivo</option></select></td></tr>
+    <tr><td colspan="2" style="padding:15px;border:1px solid #ddd;text-align:center;"><button style="background:#0ea5e9;color:white;padding:10px 20px;border:none;border-radius:4px;font-weight:bold;">Asignar Horario</button></td></tr>
+  </table>
+</div>
+</div>
+<strong>Como</strong> administrador del sistema  
+<strong>Quiero</strong> asignar horarios específicos a médicos en la programación  
+<strong>Para</strong> definir la disponibilidad de cada profesional
+
+<strong>Criterios de Aceptación:</strong>
+<li>Debe mostrar lista de médicos disponibles</li>
+<li>Debe permitir seleccionar días de la semana</li>
+<li>Debe permitir definir horarios específicos</li>
+<li>Debe validar que no haya conflictos de horarios</li>
+
+<strong>Criterios de Negocio:</strong>
+<li>Solo médicos activos pueden ser asignados</li>
+<li>Se debe respetar la capacidad máxima de citas por día</li>
+<li>Se debe notificar al médico sobre su asignación</li>
+<li>Se debe registrar la asignación</li>
+
+<strong>Prioridad:</strong> Alta  
+<strong>Estimación:</strong> 24 horas  
+<strong>Sprint:</strong> 3
+
+---
+
+<h3>HU015: Visualizar Programaciones</h3><div style="margin:20px 0;page-break-inside:avoid;"><h4 style="color:#0ea5e9;margin:15px 0;font-size:14pt;">📱 Visualización de la Pantalla:</h4>
+<div style="background:#f8f9fa;padding:20px;border:2px solid #e5e7eb;border-radius:8px;max-width:900px;margin:20px auto;">
+  <h3 style="color:#0ea5e9;text-align:center;font-weight:bold;font-size:18px;margin-bottom:20px;">Visualizar Programaciones</h3>
+  <table style="width:100%;border-collapse:collapse;">
+    <tr style="background:#0ea5e9;color:white;">
+      <th style="padding:12px;border:1px solid #ddd;text-align:left;">ID</th>
+      <th style="padding:12px;border:1px solid #ddd;text-align:left;">Médico</th>
+      <th style="padding:12px;border:1px solid #ddd;text-align:left;">Horario</th>
+      <th style="padding:12px;border:1px solid #ddd;text-align:left;">Días</th>
+      <th style="padding:12px;border:1px solid #ddd;text-align:left;">Fecha Inicio</th>
+      <th style="padding:12px;border:1px solid #ddd;text-align:left;">Fecha Fin</th>
+      <th style="padding:12px;border:1px solid #ddd;text-align:left;">Estado</th>
+      <th style="padding:12px;border:1px solid #ddd;text-align:center;">Acciones</th>
+    </tr>
+    <tr>
+      <td style="padding:10px;border:1px solid #ddd;">1</td>
+      <td style="padding:10px;border:1px solid #ddd;">Dr. Juan Pérez</td>
+      <td style="padding:10px;border:1px solid #ddd;">Mañana (8:00-12:00)</td>
+      <td style="padding:10px;border:1px solid #ddd;">Lun-Vie</td>
+      <td style="padding:10px;border:1px solid #ddd;">01/01/2024</td>
+      <td style="padding:10px;border:1px solid #ddd;">31/12/2024</td>
+      <td style="padding:10px;border:1px solid #ddd;"><span style="background:#10b981;color:white;padding:4px 8px;border-radius:4px;font-size:12px;">Activo</span></td>
+      <td style="padding:10px;border:1px solid #ddd;text-align:center;">
+        <button style="background:#f59e0b;color:white;padding:4px 8px;border:none;border-radius:4px;margin:2px;">Editar</button>
+        <button style="background:#ef4444;color:white;padding:4px 8px;border:none;border-radius:4px;margin:2px;">Eliminar</button>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding:10px;border:1px solid #ddd;">2</td>
+      <td style="padding:10px;border:1px solid #ddd;">Dr. Carlos Rodríguez</td>
+      <td style="padding:10px;border:1px solid #ddd;">Tarde (14:00-18:00)</td>
+      <td style="padding:10px;border:1px solid #ddd;">Lun-Vie</td>
+      <td style="padding:10px;border:1px solid #ddd;">01/01/2024</td>
+      <td style="padding:10px;border:1px solid #ddd;">31/12/2024</td>
+      <td style="padding:10px;border:1px solid #ddd;"><span style="background:#10b981;color:white;padding:4px 8px;border-radius:4px;font-size:12px;">Activo</span></td>
+      <td style="padding:10px;border:1px solid #ddd;text-align:center;">
+        <button style="background:#f59e0b;color:white;padding:4px 8px;border:none;border-radius:4px;margin:2px;">Editar</button>
+        <button style="background:#ef4444;color:white;padding:4px 8px;border:none;border-radius:4px;margin:2px;">Eliminar</button>
+      </td>
+    </tr>
+  </table>
+</div>
+</div>
+<strong>Como</strong> administrador del sistema  
+<strong>Quiero</strong> visualizar todas las programaciones existentes  
+<strong>Para</strong> gestionar y revisar la organización del tiempo
+
+<strong>Criterios de Aceptación:</strong>
+<li>Debe mostrar lista de programaciones con fechas</li>
+<li>Debe mostrar estado activo/inactivo</li>
+<li>Debe permitir ver detalles de cada programación</li>
+<li>Debe permitir filtrar por estado y fechas</li>
+
+<strong>Criterios de Negocio:</strong>
+<li>Solo se muestran programaciones de la empresa</li>
+<li>Se debe mostrar número de médicos asignados</li>
+<li>Se debe mostrar número de citas programadas</li>
+<li>Se debe permitir exportar la información</li>
+
+<strong>Prioridad:</strong> Media  
+<strong>Estimación:</strong> 20 horas  
+<strong>Sprint:</strong> 4
+
+---
+
+<h3>HU016: Eliminar Programación</h3><div style="margin:20px 0;page-break-inside:avoid;"><h4 style="color:#0ea5e9;margin:15px 0;font-size:14pt;">📱 Visualización de la Pantalla:</h4>
+<div style="background:#f8f9fa;padding:20px;border:2px solid #e5e7eb;border-radius:8px;max-width:500px;margin:20px auto;">
+  <h3 style="color:#ef4444;text-align:center;font-weight:bold;font-size:18px;margin-bottom:20px;">Eliminar Programación</h3>
+  <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:4px;padding:15px;margin-bottom:20px;">
+    <p style="color:#dc2626;text-align:center;font-weight:bold;">¿Está seguro que desea eliminar esta programación?</p>
+  </div>
+  <table style="width:100%;border-collapse:collapse;">
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;width:35%;"><strong>Médico:</strong></td><td style="padding:10px;border:1px solid #ddd;">Dr. Juan Pérez</td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Horario:</strong></td><td style="padding:10px;border:1px solid #ddd;">Mañana (8:00-12:00)</td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Días:</strong></td><td style="padding:10px;border:1px solid #ddd;">Lunes a Viernes</td></tr>
+    <tr><td colspan="2" style="padding:15px;border:1px solid #ddd;text-align:center;">
+      <button style="background:#ef4444;color:white;padding:10px 20px;border:none;border-radius:4px;font-weight:bold;margin-right:10px;">Confirmar Eliminación</button>
+      <button style="background:#6b7280;color:white;padding:10px 20px;border:none;border-radius:4px;font-weight:bold;">Cancelar</button>
+    </td></tr>
+  </table>
+</div>
+</div>
+<strong>Como</strong> administrador del sistema  
+<strong>Quiero</strong> eliminar programaciones que ya no sean necesarias  
+<strong>Para</strong> mantener el sistema organizado
+
+<strong>Criterios de Aceptación:</strong>
+<li>Debe solicitar confirmación antes de eliminar</li>
+<li>Debe verificar que no tenga citas programadas</li>
+<li>Debe mostrar advertencias sobre dependencias</li>
+<li>Debe permitir desactivar en lugar de eliminar</li>
+
+<strong>Criterios de Negocio:</strong>
+<li>No se puede eliminar programaciones activas con citas</li>
+<li>Se debe notificar a médicos y pacientes afectados</li>
+<li>Se debe mantener historial de programaciones</li>
+<li>Se debe liberar horarios asociados</li></ul>
+
+<strong>Prioridad:</strong> Baja  
+<strong>Estimación:</strong> 12 horas  
+<strong>Sprint:</strong> 5
+
+---
+
+<h2>GESTIÓN DE CITAS</h2>
+
+<h3>HU017: Crear Cita</h3><div style="margin:20px 0;page-break-inside:avoid;"><h4 style="color:#0ea5e9;margin:15px 0;font-size:14pt;">📱 Visualización de la Pantalla:</h4>
+<div style="background:#f8f9fa;padding:20px;border:2px solid #e5e7eb;border-radius:8px;max-width:500px;margin:20px auto;">
+  <h3 style="color:#0ea5e9;text-align:center;font-weight:bold;font-size:18px;margin-bottom:20px;">Crear Nueva Cita</h3>
+  <table style="width:100%;border-collapse:collapse;">
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;width:30%;"><strong>Paciente:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="text" style="width:100%;padding:8px;border:1px solid #ccc;" placeholder="Nombre del paciente" /></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Médico:</strong></td><td style="padding:10px;border:1px solid #ddd;"><select style="width:100%;padding:8px;border:1px solid #ccc;"><option>Seleccionar médico</option><option>Dr. García</option><option>Dr. Rodríguez</option></select></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Fecha:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="date" style="width:100%;padding:8px;border:1px solid #ccc;" /></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Hora:</strong></td><td style="padding:10px;border:1px solid #ddd;"><select style="width:100%;padding:8px;border:1px solid #ccc;"><option>Seleccionar hora</option><option>09:00 AM</option><option>10:00 AM</option><option>11:00 AM</option></select></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Tipo de Cita:</strong></td><td style="padding:10px;border:1px solid #ddd;"><select style="width:100%;padding:8px;border:1px solid #ccc;"><option>Seleccionar tipo</option><option>Consulta</option><option>Limpieza</option><option>Extracción</option><option>Ortodoncia</option></select></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Observaciones:</strong></td><td style="padding:10px;border:1px solid #ddd;"><textarea style="width:100%;padding:8px;border:1px solid #ccc;height:60px;" placeholder="Observaciones adicionales..."></textarea></td></tr>
+    <tr><td colspan="2" style="padding:15px;border:1px solid #ddd;text-align:center;"><button style="background:#0ea5e9;color:white;padding:12px 30px;border:none;border-radius:4px;font-weight:bold;font-size:16px;">Crear Cita</button></td></tr>
+  </table>
+</div>
+</div>
+<strong>Como</strong> recepcionista del consultorio  
+<strong>Quiero</strong> crear citas para pacientes con médicos específicos  
+<strong>Para</strong> organizar la atención de pacientes
+
+<strong>Criterios de Aceptación:</strong>
+<ul><li>Debe permitir seleccionar médico disponible</li>
+<li>Debe permitir seleccionar fecha y hora disponible</li>
+<li>Debe capturar información del paciente</li>
+<li>Debe validar disponibilidad del horario</li>
+
+<strong>Criterios de Negocio:</strong>
+<li>Solo se pueden crear citas en horarios disponibles</li>
+<li>Se debe verificar que el médico esté asignado ese día</li>
+<li>Se debe generar número de cita único</li>
+<li>Se debe enviar confirmación al paciente</li>
+
+<strong>Prioridad:</strong> Crítica  
+<strong>Estimación:</strong> 28 horas  
+<strong>Sprint:</strong> 1
+
+---
+
+<h3>HU018: Editar Cita</h3><div style="margin:20px 0;page-break-inside:avoid;"><h4 style="color:#0ea5e9;margin:15px 0;font-size:14pt;">📱 Visualización de la Pantalla:</h4>
+<div style="background:#f8f9fa;padding:20px;border:2px solid #e5e7eb;border-radius:8px;max-width:500px;margin:20px auto;">
+  <h3 style="color:#0ea5e9;text-align:center;font-weight:bold;font-size:18px;margin-bottom:20px;">Editar Cita</h3>
+  <table style="width:100%;border-collapse:collapse;">
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;width:35%;"><strong>Cita:</strong></td><td style="padding:10px;border:1px solid #ddd;"><select style="width:100%;padding:8px;border:1px solid #ccc;"><option>Seleccionar cita</option><option>Cita #001 - Juan Pérez</option><option>Cita #002 - María López</option></select></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Paciente:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="text" style="width:100%;padding:8px;border:1px solid #ccc;" value="Juan Pérez" /></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Médico:</strong></td><td style="padding:10px;border:1px solid #ddd;"><select style="width:100%;padding:8px;border:1px solid #ccc;"><option>Dr. García</option><option>Dr. Rodríguez</option></select></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Fecha:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="date" style="width:100%;padding:8px;border:1px solid #ccc;" value="2024-01-15" /></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Hora:</strong></td><td style="padding:10px;border:1px solid #ddd;"><select style="width:100%;padding:8px;border:1px solid #ccc;"><option>09:00 AM</option><option>10:00 AM</option><option>11:00 AM</option></select></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Tipo de Cita:</strong></td><td style="padding:10px;border:1px solid #ddd;"><select style="width:100%;padding:8px;border:1px solid #ccc;"><option>Consulta</option><option>Limpieza</option><option>Extracción</option><option>Ortodoncia</option></select></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Estado:</strong></td><td style="padding:10px;border:1px solid #ddd;"><select style="width:100%;padding:8px;border:1px solid #ccc;"><option>Programada</option><option>Confirmada</option><option>Cancelada</option><option>Completada</option></select></td></tr>
+    <tr><td colspan="2" style="padding:15px;border:1px solid #ddd;text-align:center;"><button style="background:#0ea5e9;color:white;padding:10px 20px;border:none;border-radius:4px;font-weight:bold;">Actualizar Cita</button></td></tr>
+  </table>
+</div>
+</div>
+<strong>Como</strong> recepcionista del consultorio  
+<strong>Quiero</strong> editar información de citas existentes  
+<strong>Para</strong> actualizar detalles cuando sea necesario
+
+<strong>Criterios de Aceptación:</strong>
+<li>Debe mostrar formulario con datos actuales</li>
+<li>Debe permitir cambiar médico, fecha y hora</li>
+<li>Debe validar nueva disponibilidad</li>
+<li>Debe mostrar confirmación de cambios</li>
+
+<strong>Criterios de Negocio:</strong>
+<li>Se debe notificar al paciente sobre cambios</li>
+<li>Se debe registrar la modificación</li>
+<li>Se debe liberar el horario anterior</li>
+<li>Se debe verificar nueva disponibilidad</li>
+
+<strong>Prioridad:</strong> Alta  
+<strong>Estimación:</strong> 20 horas  
+<strong>Sprint:</strong> 2
+
+---
+
+<h3>HU019: Listar Citas</h3><div style="margin:20px 0;page-break-inside:avoid;"><h4 style="color:#0ea5e9;margin:15px 0;font-size:14pt;">📱 Visualización de la Pantalla:</h4>
+<div style="background:#f8f9fa;padding:20px;border:2px solid #e5e7eb;border-radius:8px;max-width:800px;margin:20px auto;">
+  <h3 style="color:#0ea5e9;text-align:center;font-weight:bold;font-size:18px;margin-bottom:20px;">Lista de Citas</h3>
+  <div style="margin-bottom:15px;display:flex;gap:10px;justify-content:center;">
+    <select style="padding:8px;border:1px solid #ccc;border-radius:4px;"><option>Todos los estados</option><option>Confirmada</option><option>Pendiente</option><option>Cancelada</option></select>
+    <input type="date" style="padding:8px;border:1px solid #ccc;border-radius:4px;" />
+    <input type="text" placeholder="Buscar paciente..." style="padding:8px;border:1px solid #ccc;border-radius:4px;width:200px;" />
+  </div>
+  <table style="width:100%;border-collapse:collapse;border:1px solid #ddd;">
+    <thead>
+      <tr style="background:#f3f4f6;">
+        <th style="padding:12px;border:1px solid #ddd;text-align:left;"><strong>ID</strong></th>
+        <th style="padding:12px;border:1px solid #ddd;text-align:left;"><strong>Paciente</strong></th>
+        <th style="padding:12px;border:1px solid #ddd;text-align:left;"><strong>Médico</strong></th>
+        <th style="padding:12px;border:1px solid #ddd;text-align:left;"><strong>Fecha</strong></th>
+        <th style="padding:12px;border:1px solid #ddd;text-align:left;"><strong>Hora</strong></th>
+        <th style="padding:12px;border:1px solid #ddd;text-align:left;"><strong>Estado</strong></th>
+        <th style="padding:12px;border:1px solid #ddd;text-align:center;"><strong>Acciones</strong></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="padding:10px;border:1px solid #ddd;">1</td>
+        <td style="padding:10px;border:1px solid #ddd;">Carlos López</td>
+        <td style="padding:10px;border:1px solid #ddd;">Dr. Juan Pérez</td>
+        <td style="padding:10px;border:1px solid #ddd;">15/01/2025</td>
+        <td style="padding:10px;border:1px solid #ddd;">09:00 AM</td>
+        <td style="padding:10px;border:1px solid #ddd;"><span style="color:#059669;font-weight:bold;">Confirmada</span></td>
+        <td style="padding:10px;border:1px solid #ddd;text-align:center;">
+          <button style="background:#0ea5e9;color:white;padding:5px 10px;border:none;border-radius:3px;margin:2px;">Editar</button>
+          <button style="background:#dc2626;color:white;padding:5px 10px;border:none;border-radius:3px;margin:2px;">Cancelar</button>
+        </td>
+      </tr>
+      <tr>
+        <td style="padding:10px;border:1px solid #ddd;">2</td>
+        <td style="padding:10px;border:1px solid #ddd;">Ana Rodríguez</td>
+        <td style="padding:10px;border:1px solid #ddd;">Dra. María García</td>
+        <td style="padding:10px;border:1px solid #ddd;">15/01/2025</td>
+        <td style="padding:10px;border:1px solid #ddd;">10:30 AM</td>
+        <td style="padding:10px;border:1px solid #ddd;"><span style="color:#f59e0b;font-weight:bold;">Pendiente</span></td>
+        <td style="padding:10px;border:1px solid #ddd;text-align:center;">
+          <button style="background:#0ea5e9;color:white;padding:5px 10px;border:none;border-radius:3px;margin:2px;">Editar</button>
+          <button style="background:#dc2626;color:white;padding:5px 10px;border:none;border-radius:3px;margin:2px;">Cancelar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div style="margin-top:15px;text-align:center;">
+    <button style="background:#059669;color:white;padding:10px 20px;border:none;border-radius:4px;font-weight:bold;margin:5px;">+ Nueva Cita</button>
+    <button style="background:#f59e0b;color:white;padding:10px 20px;border:none;border-radius:4px;font-weight:bold;margin:5px;">Exportar</button>
+  </div>
+</div></div>
+<strong>Como</strong> recepcionista del consultorio  
+<strong>Quiero</strong> listar todas las citas con filtros y paginación  
+<strong>Para</strong> gestionar eficientemente la agenda
+
+<strong>Criterios de Aceptación:</strong>
+<li>Debe mostrar lista paginada de citas</li>
+<li>Debe permitir filtrar por médico, fecha y estado</li>
+<li>Debe permitir búsqueda por paciente</li>
+<li>Debe mostrar información relevante de cada cita</li>
+
+<strong>Criterios de Negocio:</strong>
+<li>Solo se muestran citas de la empresa</li>
+<li>Se debe mostrar estado (confirmada, cancelada, completada)</li>
+<li>Se debe permitir acciones rápidas</li>
+<li>Se debe permitir exportar la agenda</li>
+
+<strong>Prioridad:</strong> Alta  
+<strong>Estimación:</strong> 24 horas  
+<strong>Sprint:</strong> 2
+
+---
+
+<h3>HU020: Cancelar Cita</h3><div style="margin:20px 0;page-break-inside:avoid;"><h4 style="color:#0ea5e9;margin:15px 0;font-size:14pt;">📱 Visualización de la Pantalla:</h4>
+<div style="background:#f8f9fa;padding:20px;border:2px solid #e5e7eb;border-radius:8px;max-width:500px;margin:20px auto;">
+  <h3 style="color:#ef4444;text-align:center;font-weight:bold;font-size:18px;margin-bottom:20px;">Cancelar Cita</h3>
+  <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:4px;padding:15px;margin-bottom:20px;">
+    <p style="color:#dc2626;text-align:center;font-weight:bold;">¿Está seguro que desea cancelar esta cita?</p>
+  </div>
+  <table style="width:100%;border-collapse:collapse;">
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;width:35%;"><strong>Cita:</strong></td><td style="padding:10px;border:1px solid #ddd;">#001</td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Paciente:</strong></td><td style="padding:10px;border:1px solid #ddd;">Juan Pérez</td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Médico:</strong></td><td style="padding:10px;border:1px solid #ddd;">Dr. García</td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Fecha:</strong></td><td style="padding:10px;border:1px solid #ddd;">15/01/2024 - 09:00 AM</td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Motivo:</strong></td><td style="padding:10px;border:1px solid #ddd;"><textarea style="width:100%;padding:8px;border:1px solid #ccc;height:60px;" placeholder="Motivo de la cancelación..."></textarea></td></tr>
+    <tr><td colspan="2" style="padding:15px;border:1px solid #ddd;text-align:center;">
+      <button style="background:#ef4444;color:white;padding:10px 20px;border:none;border-radius:4px;font-weight:bold;margin-right:10px;">Confirmar Cancelación</button>
+      <button style="background:#6b7280;color:white;padding:10px 20px;border:none;border-radius:4px;font-weight:bold;">Cancelar</button>
+    </td></tr>
+  </table>
+</div>
+</div>
+<strong>Como</strong> recepcionista del consultorio  
+<strong>Quiero</strong> cancelar citas cuando sea necesario  
+<strong>Para</strong> liberar horarios y notificar a pacientes
+
+<strong>Criterios de Aceptación:</strong>
+<li>Debe solicitar confirmación antes de cancelar</li>
+<li>Debe permitir especificar motivo de cancelación</li>
+<li>Debe liberar el horario automáticamente</li>
+<li>Debe notificar al paciente sobre la cancelación</li>
+
+<strong>Criterios de Negocio:</strong>
+<li>Se debe registrar la cancelación</li>
+<li>Se debe liberar el horario para nuevas citas</li>
+<li>Se debe notificar al médico</li>
+<li>Se debe mantener historial de cancelaciones</li></ul>
+
+<strong>Prioridad:</strong> Alta  
+<strong>Estimación:</strong> 16 horas  
+<strong>Sprint:</strong> 3
+
+---
+
+<h2>GESTIÓN DE CONSULTAS</h2>
+
+<h3>HU021: Registrar Consulta</h3><div style="margin:20px 0;page-break-inside:avoid;"><h4 style="color:#0ea5e9;margin:15px 0;font-size:14pt;">📱 Visualización de la Pantalla:</h4>
+<div style="background:#f8f9fa;padding:20px;border:2px solid #e5e7eb;border-radius:8px;max-width:600px;margin:20px auto;">
+  <h3 style="color:#0ea5e9;text-align:center;font-weight:bold;font-size:18px;margin-bottom:20px;">Registrar Consulta</h3>
+  <table style="width:100%;border-collapse:collapse;">
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;width:30%;"><strong>Paciente:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="text" style="width:100%;padding:8px;border:1px solid #ccc;" placeholder="Nombre del paciente" /></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Médico:</strong></td><td style="padding:10px;border:1px solid #ddd;"><select style="width:100%;padding:8px;border:1px solid #ccc;"><option>Seleccionar médico</option><option>Dr. García</option><option>Dr. Rodríguez</option></select></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Fecha:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="date" style="width:100%;padding:8px;border:1px solid #ccc;" /></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Motivo:</strong></td><td style="padding:10px;border:1px solid #ddd;"><textarea style="width:100%;padding:8px;border:1px solid #ccc;height:60px;" placeholder="Motivo de la consulta..."></textarea></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Diagnóstico:</strong></td><td style="padding:10px;border:1px solid #ddd;"><textarea style="width:100%;padding:8px;border:1px solid #ccc;height:60px;" placeholder="Diagnóstico..."></textarea></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Tratamiento:</strong></td><td style="padding:10px;border:1px solid #ddd;"><textarea style="width:100%;padding:8px;border:1px solid #ccc;height:60px;" placeholder="Tratamiento recomendado..."></textarea></td></tr>
+    <tr><td colspan="2" style="padding:15px;border:1px solid #ddd;text-align:center;"><button style="background:#0ea5e9;color:white;padding:12px 30px;border:none;border-radius:4px;font-weight:bold;font-size:16px;">Registrar Consulta</button></td></tr>
+  </table>
+</div>
+</div>
+<strong>Como</strong> médico del consultorio  
+<strong>Quiero</strong> registrar consultas médicas para pacientes  
+<strong>Para</strong> mantener un historial completo de atención
+
+<strong>Criterios de Aceptación:</strong>
+<ul><li>Debe permitir seleccionar paciente desde citas del día</li>
+<li>Debe capturar información clínica completa</li>
+<li>Debe permitir adjuntar odontograma</li>
+<li>Debe permitir definir plan de tratamiento</li>
+
+<strong>Criterios de Negocio:</strong>
+<li>Solo se pueden registrar consultas para citas confirmadas</li>
+<li>Se debe generar número de consulta único</li>
+<li>Se debe registrar fecha y hora de atención</li>
+<li>Se debe notificar al paciente sobre la consulta</li>
+
+<strong>Prioridad:</strong> Crítica  
+<strong>Estimación:</strong> 32 horas  
+<strong>Sprint:</strong> 1
+
+---
+
+<h3>HU022: Acceder Historial de Consultas</h3><div style="margin:20px 0;page-break-inside:avoid;"><h4 style="color:#0ea5e9;margin:15px 0;font-size:14pt;">📱 Visualización de la Pantalla:</h4>
+<div style="background:#f8f9fa;padding:20px;border:2px solid #e5e7eb;border-radius:8px;max-width:900px;margin:20px auto;">
+  <h3 style="color:#0ea5e9;text-align:center;font-weight:bold;font-size:18px;margin-bottom:20px;">Historial de Consultas</h3>
+  <table style="width:100%;border-collapse:collapse;">
+    <tr style="background:#0ea5e9;color:white;">
+      <th style="padding:12px;border:1px solid #ddd;text-align:left;">ID</th>
+      <th style="padding:12px;border:1px solid #ddd;text-align:left;">Paciente</th>
+      <th style="padding:12px;border:1px solid #ddd;text-align:left;">Médico</th>
+      <th style="padding:12px;border:1px solid #ddd;text-align:left;">Fecha</th>
+      <th style="padding:12px;border:1px solid #ddd;text-align:left;">Motivo</th>
+      <th style="padding:12px;border:1px solid #ddd;text-align:center;">Acciones</th>
+    </tr>
+    <tr>
+      <td style="padding:10px;border:1px solid #ddd;">001</td>
+      <td style="padding:10px;border:1px solid #ddd;">Juan Pérez</td>
+      <td style="padding:10px;border:1px solid #ddd;">Dr. García</td>
+      <td style="padding:10px;border:1px solid #ddd;">15/01/2024</td>
+      <td style="padding:10px;border:1px solid #ddd;">Dolor de muelas</td>
+      <td style="padding:10px;border:1px solid #ddd;text-align:center;">
+        <button style="background:#f59e0b;color:white;padding:4px 8px;border:none;border-radius:4px;margin:2px;">Ver</button>
+        <button style="background:#0ea5e9;color:white;padding:4px 8px;border:none;border-radius:4px;margin:2px;">Editar</button>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding:10px;border:1px solid #ddd;">002</td>
+      <td style="padding:10px;border:1px solid #ddd;">María López</td>
+      <td style="padding:10px;border:1px solid #ddd;">Dr. Rodríguez</td>
+      <td style="padding:10px;border:1px solid #ddd;">14/01/2024</td>
+      <td style="padding:10px;border:1px solid #ddd;">Limpieza dental</td>
+      <td style="padding:10px;border:1px solid #ddd;text-align:center;">
+        <button style="background:#f59e0b;color:white;padding:4px 8px;border:none;border-radius:4px;margin:2px;">Ver</button>
+        <button style="background:#0ea5e9;color:white;padding:4px 8px;border:none;border-radius:4px;margin:2px;">Editar</button>
+      </td>
+    </tr>
+  </table>
+</div>
+</div>
+<strong>Como</strong> médico del consultorio  
+<strong>Quiero</strong> acceder al historial de consultas de un paciente  
+<strong>Para</strong> tener contexto completo para la atención
+
+<strong>Criterios de Aceptación:</strong>
+<li>Debe mostrar lista cronológica de consultas</li>
+<li>Debe permitir ver detalles de cada consulta</li>
+<li>Debe mostrar odontogramas asociados</li>
+<li>Debe permitir filtrar por fechas</li>
+
+<strong>Criterios de Negocio:</strong>
+<li>Solo se muestran consultas del médico o de la empresa</li>
+<li>Se debe mostrar información resumida</li>
+<li>Se debe permitir exportar historial</li>
+<li>Se debe mantener confidencialidad</li>
+
+<strong>Prioridad:</strong> Alta  
+<strong>Estimación:</strong> 20 horas  
+<strong>Sprint:</strong> 2
+
+---
+
+<h3>HU023: Editar Consulta</h3><div style="margin:20px 0;page-break-inside:avoid;"><h4 style="color:#0ea5e9;margin:15px 0;font-size:14pt;">📱 Visualización de la Pantalla:</h4>
+<div style="background:#f8f9fa;padding:20px;border:2px solid #e5e7eb;border-radius:8px;max-width:600px;margin:20px auto;">
+  <h3 style="color:#0ea5e9;text-align:center;font-weight:bold;font-size:18px;margin-bottom:20px;">Editar Consulta</h3>
+  <table style="width:100%;border-collapse:collapse;">
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;width:35%;"><strong>Consulta:</strong></td><td style="padding:10px;border:1px solid #ddd;"><select style="width:100%;padding:8px;border:1px solid #ccc;"><option>Seleccionar consulta</option><option>Consulta #001 - Juan Pérez</option><option>Consulta #002 - María López</option></select></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Paciente:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="text" style="width:100%;padding:8px;border:1px solid #ccc;" value="Juan Pérez" /></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Médico:</strong></td><td style="padding:10px;border:1px solid #ddd;"><select style="width:100%;padding:8px;border:1px solid #ccc;"><option>Dr. García</option><option>Dr. Rodríguez</option></select></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Fecha:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="date" style="width:100%;padding:8px;border:1px solid #ccc;" value="2024-01-15" /></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Motivo:</strong></td><td style="padding:10px;border:1px solid #ddd;"><textarea style="width:100%;padding:8px;border:1px solid #ccc;height:60px;" placeholder="Motivo de la consulta...">Dolor de muelas</textarea></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Diagnóstico:</strong></td><td style="padding:10px;border:1px solid #ddd;"><textarea style="width:100%;padding:8px;border:1px solid #ccc;height:60px;" placeholder="Diagnóstico...">Caries dental</textarea></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Tratamiento:</strong></td><td style="padding:10px;border:1px solid #ddd;"><textarea style="width:100%;padding:8px;border:1px solid #ccc;height:60px;" placeholder="Tratamiento recomendado...">Restauración dental</textarea></td></tr>
+    <tr><td colspan="2" style="padding:15px;border:1px solid #ddd;text-align:center;"><button style="background:#0ea5e9;color:white;padding:10px 20px;border:none;border-radius:4px;font-weight:bold;">Actualizar Consulta</button></td></tr>
+  </table>
+</div>
+</div>
+<strong>Como</strong> médico del consultorio  
+<strong>Quiero</strong> editar información de consultas previas  
+<strong>Para</strong> corregir o completar información cuando sea necesario
+
+<strong>Criterios de Aceptación:</strong>
+<li>Debe mostrar formulario con datos actuales</li>
+<li>Debe permitir modificar información clínica</li>
+<li>Debe permitir actualizar odontograma</li>
+<li>Debe registrar la modificación</li>
+
+<strong>Criterios de Negocio:</strong>
+<li>Solo se pueden editar consultas propias</li>
+<li>Se debe mantener historial de cambios</li>
+<li>Se debe notificar sobre modificaciones importantes</li>
+<li>Se debe validar cambios antes de guardar</li></ul>
+
+<strong>Prioridad:</strong> Media  
+<strong>Estimación:</strong> 18 horas  
+<strong>Sprint:</strong> 3
+
+---
+
+<h2>ODONTOGRAMA</h2>
+
+<h3>HU024: Crear Odontograma</h3><div style="margin:20px 0;page-break-inside:avoid;"><h4 style="color:#0ea5e9;margin:15px 0;font-size:14pt;">📱 Visualización de la Pantalla:</h4>
+<div style="background:#f8f9fa;padding:20px;border:2px solid #e5e7eb;border-radius:8px;max-width:800px;margin:20px auto;">
+  <h3 style="color:#0ea5e9;text-align:center;font-weight:bold;font-size:18px;margin-bottom:20px;">Odontograma</h3>
+  <table style="width:100%;border-collapse:collapse;margin:20px 0;">
+    <tr><td colspan="16" style="background:#0ea5e9;color:white;text-align:center;padding:15px;font-weight:bold;font-size:16px;">Dientes Superiores Adultos</td></tr>
+    <tr>
+      <td style="border:2px solid #333;padding:8px;text-align:center;background:#fff;font-weight:bold;">18</td>
+      <td style="border:2px solid #333;padding:8px;text-align:center;background:#fff;font-weight:bold;">17</td>
+      <td style="border:2px solid #333;padding:8px;text-align:center;background:#fff;font-weight:bold;">16</td>
+      <td style="border:2px solid #333;padding:8px;text-align:center;background:#fff;font-weight:bold;">15</td>
+      <td style="border:2px solid #333;padding:8px;text-align:center;background:#fff;font-weight:bold;">14</td>
+      <td style="border:2px solid #333;padding:8px;text-align:center;background:#fff;font-weight:bold;">13</td>
+      <td style="border:2px solid #333;padding:8px;text-align:center;background:#fff;font-weight:bold;">12</td>
+      <td style="border:2px solid #333;padding:8px;text-align:center;background:#fff;font-weight:bold;">11</td>
+      <td style="border:2px solid #333;padding:8px;text-align:center;background:#fff;font-weight:bold;">21</td>
+      <td style="border:2px solid #333;padding:8px;text-align:center;background:#fff;font-weight:bold;">22</td>
+      <td style="border:2px solid #333;padding:8px;text-align:center;background:#fff;font-weight:bold;">23</td>
+      <td style="border:2px solid #333;padding:8px;text-align:center;background:#fff;font-weight:bold;">24</td>
+      <td style="border:2px solid #333;padding:8px;text-align:center;background:#fff;font-weight:bold;">25</td>
+      <td style="border:2px solid #333;padding:8px;text-align:center;background:#fff;font-weight:bold;">26</td>
+      <td style="border:2px solid #333;padding:8px;text-align:center;background:#fff;font-weight:bold;">27</td>
+      <td style="border:2px solid #333;padding:8px;text-align:center;background:#fff;font-weight:bold;">28</td>
+    </tr>
+  </table>
+  <div style="background:#f0f9ff;padding:15px;border:1px solid #0ea5e9;border-radius:4px;margin:20px 0;">
+    <strong>Procedimientos disponibles:</strong> Caries (●), Restauración (■), Extracción (✕), Corona (◎), Endodoncia (▲), Implante (⬡), Sellante (⬒), Fractura (↯)
+  </div>
+</div>
+</div>
+<strong>Como</strong> médico del consultorio  
+<strong>Quiero</strong> crear odontogramas para pacientes mostrando dientes de adulto y niño  
+<strong>Para</strong> registrar el estado dental completo
+
+<strong>Criterios de Aceptación:</strong>
+<ul><li>Debe mostrar representación visual de dientes adultos y temporales</li>
+<li>Debe permitir seleccionar dientes individuales</li>
+<li>Debe mostrar números de dientes claramente</li>
+<li>Debe permitir guardar el odontograma</li>
+
+<strong>Criterios de Negocio:</strong>
+<li>Debe mostrar disposición estándar (18-28, 55-25, 85-75, 48-38)</li>
+<li>Se debe asociar al paciente específico</li>
+<li>Se debe registrar fecha de creación</li>
+<li>Se debe mantener versiones del odontograma</li>
+
+<strong>Prioridad:</strong> Alta  
+<strong>Estimación:</strong> 40 horas  
+<strong>Sprint:</strong> 3
+
+---
+
+<h3>HU025: Aplicar Procedimientos Dentales</h3><div style="margin:20px 0;page-break-inside:avoid;"><h4 style="color:#0ea5e9;margin:15px 0;font-size:14pt;">📱 Visualización de la Pantalla:</h4>
+<div style="background:#f8f9fa;padding:20px;border:2px solid #e5e7eb;border-radius:8px;max-width:800px;margin:20px auto;">
+  <h3 style="color:#0ea5e9;text-align:center;font-weight:bold;font-size:18px;margin-bottom:20px;">Aplicar Procedimientos Dentales</h3>
+  <div style="background:#f0f9ff;padding:15px;border:1px solid #0ea5e9;border-radius:4px;margin:20px 0;">
+    <strong>Diente seleccionado:</strong> Diente #16 (Superior derecho)
+  </div>
+  <table style="width:100%;border-collapse:collapse;margin:20px 0;">
+    <tr style="background:#0ea5e9;color:white;">
+      <th style="padding:12px;border:1px solid #ddd;text-align:center;">Procedimiento</th>
+      <th style="padding:12px;border:1px solid #ddd;text-align:center;">Símbolo</th>
+      <th style="padding:12px;border:1px solid #ddd;text-align:center;">Color</th>
+      <th style="padding:12px;border:1px solid #ddd;text-align:center;">Acción</th>
+    </tr>
+    <tr>
+      <td style="padding:10px;border:1px solid #ddd;text-align:center;">Caries</td>
+      <td style="padding:10px;border:1px solid #ddd;text-align:center;font-size:20px;">●</td>
+      <td style="padding:10px;border:1px solid #ddd;text-align:center;"><div style="width:20px;height:20px;background:#FF4444;border-radius:50%;margin:0 auto;"></div></td>
+      <td style="padding:10px;border:1px solid #ddd;text-align:center;"><button style="background:#FF4444;color:white;padding:4px 8px;border:none;border-radius:4px;">Aplicar</button></td>
+    </tr>
+    <tr>
+      <td style="padding:10px;border:1px solid #ddd;text-align:center;">Restauración</td>
+      <td style="padding:10px;border:1px solid #ddd;text-align:center;font-size:20px;">■</td>
+      <td style="padding:10px;border:1px solid #ddd;text-align:center;"><div style="width:20px;height:20px;background:#4444FF;border-radius:2px;margin:0 auto;"></div></td>
+      <td style="padding:10px;border:1px solid #ddd;text-align:center;"><button style="background:#4444FF;color:white;padding:4px 8px;border:none;border-radius:4px;">Aplicar</button></td>
+    </tr>
+    <tr>
+      <td style="padding:10px;border:1px solid #ddd;text-align:center;">Corona</td>
+      <td style="padding:10px;border:1px solid #ddd;text-align:center;font-size:20px;">◎</td>
+      <td style="padding:10px;border:1px solid #ddd;text-align:center;"><div style="width:20px;height:20px;background:#FFD700;border-radius:50%;margin:0 auto;"></div></td>
+      <td style="padding:10px;border:1px solid #ddd;text-align:center;"><button style="background:#FFD700;color:white;padding:4px 8px;border:none;border-radius:4px;">Aplicar</button></td>
+    </tr>
+  </table>
+</div>
+</div>
+<strong>Como</strong> médico del consultorio  
+<strong>Quiero</strong> aplicar procedimientos dentales específicos a dientes individuales  
+<strong>Para</strong> registrar tratamientos realizados
+
+<strong>Criterios de Aceptación:</strong>
+<li>Debe mostrar lista de procedimientos disponibles</li>
+<li>Debe permitir seleccionar diente específico</li>
+<li>Debe aplicar color o símbolo al diente</li>
+<li>Debe registrar el procedimiento aplicado</li>
+
+<strong>Criterios de Negocio:</strong>
+<li>Se debe mostrar procedimientos básicos y avanzados</li>
+<li>Se debe registrar fecha de aplicación</li>
+<li>Se debe mantener historial de procedimientos</li>
+<li>Se debe permitir deshacer procedimientos</li>
+
+<strong>Prioridad:</strong> Alta  
+<strong>Estimación:</strong> 36 horas  
+<strong>Sprint:</strong> 3
+
+---
+
+<h3>HU026: Seleccionar Superficies Dentales</h3><div style="margin:20px 0;page-break-inside:avoid;"><h4 style="color:#0ea5e9;margin:15px 0;font-size:14pt;">📱 Visualización de la Pantalla:</h4>
+<div style="background:#f8f9fa;padding:20px;border:2px solid #e5e7eb;border-radius:8px;max-width:600px;margin:20px auto;">
+  <h3 style="color:#0ea5e9;text-align:center;font-weight:bold;font-size:18px;margin-bottom:20px;">Seleccionar Superficies Dentales</h3>
+  <div style="background:#f0f9ff;padding:15px;border:1px solid #0ea5e9;border-radius:4px;margin:20px 0;">
+    <strong>Diente seleccionado:</strong> Diente #16 (Superior derecho)
+  </div>
+  <table style="width:100%;border-collapse:collapse;">
+    <tr style="background:#0ea5e9;color:white;">
+      <th style="padding:12px;border:1px solid #ddd;text-align:center;">Superficie</th>
+      <th style="padding:12px;border:1px solid #ddd;text-align:center;">Descripción</th>
+      <th style="padding:12px;border:1px solid #ddd;text-align:center;">Acción</th>
+    </tr>
+    <tr>
+      <td style="padding:10px;border:1px solid #ddd;text-align:center;"><strong>Vestibular</strong></td>
+      <td style="padding:10px;border:1px solid #ddd;">Cara externa del diente</td>
+      <td style="padding:10px;border:1px solid #ddd;text-align:center;"><button style="background:#0ea5e9;color:white;padding:4px 8px;border:none;border-radius:4px;">Seleccionar</button></td>
+    </tr>
+    <tr>
+      <td style="padding:10px;border:1px solid #ddd;text-align:center;"><strong>Mesial</strong></td>
+      <td style="padding:10px;border:1px solid #ddd;">Cara hacia el centro</td>
+      <td style="padding:10px;border:1px solid #ddd;text-align:center;"><button style="background:#0ea5e9;color:white;padding:4px 8px;border:none;border-radius:4px;">Seleccionar</button></td>
+    </tr>
+    <tr>
+      <td style="padding:10px;border:1px solid #ddd;text-align:center;"><strong>Oclusal</strong></td>
+      <td style="padding:10px;border:1px solid #ddd;">Cara de masticación</td>
+      <td style="padding:10px;border:1px solid #ddd;text-align:center;"><button style="background:#0ea5e9;color:white;padding:4px 8px;border:none;border-radius:4px;">Seleccionar</button></td>
+    </tr>
+    <tr>
+      <td style="padding:10px;border:1px solid #ddd;text-align:center;"><strong>Distal</strong></td>
+      <td style="padding:10px;border:1px solid #ddd;">Cara hacia atrás</td>
+      <td style="padding:10px;border:1px solid #ddd;text-align:center;"><button style="background:#0ea5e9;color:white;padding:4px 8px;border:none;border-radius:4px;">Seleccionar</button></td>
+    </tr>
+    <tr>
+      <td style="padding:10px;border:1px solid #ddd;text-align:center;"><strong>Lingual</strong></td>
+      <td style="padding:10px;border:1px solid #ddd;">Cara interna del diente</td>
+      <td style="padding:10px;border:1px solid #ddd;text-align:center;"><button style="background:#0ea5e9;color:white;padding:4px 8px;border:none;border-radius:4px;">Seleccionar</button></td>
+    </tr>
+  </table>
+</div>
+</div>
+<strong>Como</strong> médico del consultorio  
+<strong>Quiero</strong> seleccionar superficies específicas de los dientes para tratamientos  
+<strong>Para</strong> registrar tratamientos precisos
+
+<strong>Criterios de Aceptación:</strong>
+<li>Debe mostrar superficies disponibles (vestibular, mesial, oclusal, distal, lingual)</li>
+<li>Debe permitir seleccionar múltiples superficies</li>
+<li>Debe aplicar procedimientos a superficies específicas</li>
+<li>Debe mostrar visualmente las superficies seleccionadas</li>
+
+<strong>Criterios de Negocio:</strong>
+<li>Solo ciertos procedimientos requieren selección de superficie</li>
+<li>Se debe registrar superficie específica tratada</li>
+<li>Se debe mantener historial por superficie</li>
+<li>Se debe permitir editar superficies tratadas</li>
+
+<strong>Prioridad:</strong> Media  
+<strong>Estimación:</strong> 28 horas  
+<strong>Sprint:</strong> 4
+
+---
+
+<h3>HU027: Visualizar Historial de Procedimientos</h3><div style="margin:20px 0;page-break-inside:avoid;"><h4 style="color:#0ea5e9;margin:15px 0;font-size:14pt;">📱 Visualización de la Pantalla:</h4>
+<div style="background:#f8f9fa;padding:20px;border:2px solid #e5e7eb;border-radius:8px;max-width:600px;margin:20px auto;">
+  <h3 style="color:#0ea5e9;text-align:center;font-weight:bold;font-size:18px;margin-bottom:20px;">Registrar Historia Clínica</h3>
+  <table style="width:100%;border-collapse:collapse;">
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;width:35%;"><strong>Paciente:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="text" style="width:100%;padding:8px;border:1px solid #ccc;" placeholder="Nombre del paciente" /></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Fecha:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="date" style="width:100%;padding:8px;border:1px solid #ccc;" /></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Antecedentes:</strong></td><td style="padding:10px;border:1px solid #ddd;"><textarea style="width:100%;padding:8px;border:1px solid #ccc;height:60px;" placeholder="Antecedentes médicos..."></textarea></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Alergias:</strong></td><td style="padding:10px;border:1px solid #ddd;"><textarea style="width:100%;padding:8px;border:1px solid #ccc;height:60px;" placeholder="Alergias conocidas..."></textarea></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Medicamentos:</strong></td><td style="padding:10px;border:1px solid #ddd;"><textarea style="width:100%;padding:8px;border:1px solid #ccc;height:60px;" placeholder="Medicamentos actuales..."></textarea></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Observaciones:</strong></td><td style="padding:10px;border:1px solid #ddd;"><textarea style="width:100%;padding:8px;border:1px solid #ccc;height:60px;" placeholder="Observaciones adicionales..."></textarea></td></tr>
+    <tr><td colspan="2" style="padding:15px;border:1px solid #ddd;text-align:center;"><button style="background:#0ea5e9;color:white;padding:12px 30px;border:none;border-radius:4px;font-weight:bold;font-size:16px;">Registrar Historia</button></td></tr>
+  </table>
+</div>
+</div>
+<strong>Como</strong> médico del consultorio  
+<strong>Quiero</strong> visualizar el historial de procedimientos aplicados a cada diente  
+<strong>Para</strong> tener contexto completo del tratamiento
+
+<strong>Criterios de Aceptación:</strong>
+<li>Debe mostrar lista de procedimientos por diente</li>
+<li>Debe mostrar fechas de aplicación</li>
+<li>Debe mostrar superficies tratadas</li>
+<li>Debe permitir filtrar por tipo de procedimiento</li>
+
+<strong>Criterios de Negocio:</strong>
+<li>Se debe mostrar procedimientos en orden cronológico</li>
+<li>Se debe permitir ver detalles de cada procedimiento</li>
+<li>Se debe permitir exportar historial</li>
+<li>Se debe mantener confidencialidad</li></ul>
+
+<strong>Prioridad:</strong> Media  
+<strong>Estimación:</strong> 24 horas  
+<strong>Sprint:</strong> 4
+
+---
+
+<h2>GESTIÓN DE HISTORIA CLÍNICA</h2>
+
+<h3>HU028: Crear Historia Clínica</h3><div style="margin:20px 0;page-break-inside:avoid;"><h4 style="color:#0ea5e9;margin:15px 0;font-size:14pt;">📱 Visualización de la Pantalla:</h4>
+<div style="background:#f8f9fa;padding:20px;border:2px solid #e5e7eb;border-radius:8px;max-width:600px;margin:20px auto;">
+  <h3 style="color:#0ea5e9;text-align:center;font-weight:bold;font-size:18px;margin-bottom:20px;">Crear Historia Clínica</h3>
+  <table style="width:100%;border-collapse:collapse;">
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;width:35%;"><strong>Paciente:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="text" style="width:100%;padding:8px;border:1px solid #ccc;" placeholder="Nombre del paciente" /></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Fecha:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="date" style="width:100%;padding:8px;border:1px solid #ccc;" /></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Antecedentes:</strong></td><td style="padding:10px;border:1px solid #ddd;"><textarea style="width:100%;padding:8px;border:1px solid #ccc;height:60px;" placeholder="Antecedentes médicos..."></textarea></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Alergias:</strong></td><td style="padding:10px;border:1px solid #ddd;"><textarea style="width:100%;padding:8px;border:1px solid #ccc;height:60px;" placeholder="Alergias conocidas..."></textarea></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Medicamentos:</strong></td><td style="padding:10px;border:1px solid #ddd;"><textarea style="width:100%;padding:8px;border:1px solid #ccc;height:60px;" placeholder="Medicamentos actuales..."></textarea></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Observaciones:</strong></td><td style="padding:10px;border:1px solid #ddd;"><textarea style="width:100%;padding:8px;border:1px solid #ccc;height:60px;" placeholder="Observaciones adicionales..."></textarea></td></tr>
+    <tr><td colspan="2" style="padding:15px;border:1px solid #ddd;text-align:center;"><button style="background:#0ea5e9;color:white;padding:12px 30px;border:none;border-radius:4px;font-weight:bold;font-size:16px;">Crear Historia</button></td></tr>
+  </table>
+</div>
+</div>
+<strong>Como</strong> médico del consultorio  
+<strong>Quiero</strong> crear historias clínicas completas para pacientes  
+<strong>Para</strong> mantener registro médico integral
+
+<strong>Criterios de Aceptación:</strong>
+<ul><li>Debe capturar información personal del paciente</li>
+<li>Debe capturar antecedentes médicos</li>
+<li>Debe permitir adjuntar documentos</li>
+<li>Debe permitir registrar alergias y medicamentos</li>
+
+<strong>Criterios de Negocio:</strong>
+<li>Se debe generar número de historia clínica único</li>
+<li>Se debe registrar fecha de creación</li>
+<li>Se debe mantener confidencialidad</li>
+<li>Se debe permitir actualizaciones</li>
+
+<strong>Prioridad:</strong> Alta  
+<strong>Estimación:</strong> 32 horas  
+<strong>Sprint:</strong> 2
+
+---
+
+<h3>HU029: Editar Historia Clínica</h3><div style="margin:20px 0;page-break-inside:avoid;"><h4 style="color:#0ea5e9;margin:15px 0;font-size:14pt;">📱 Visualización de la Pantalla:</h4>
+<div style="background:#f8f9fa;padding:20px;border:2px solid #e5e7eb;border-radius:8px;max-width:600px;margin:20px auto;">
+  <h3 style="color:#0ea5e9;text-align:center;font-weight:bold;font-size:18px;margin-bottom:20px;">Editar Historia Clínica</h3>
+  <table style="width:100%;border-collapse:collapse;">
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;width:35%;"><strong>Historia:</strong></td><td style="padding:10px;border:1px solid #ddd;"><select style="width:100%;padding:8px;border:1px solid #ccc;"><option>Seleccionar historia</option><option>Historia #001 - Juan Pérez</option><option>Historia #002 - María López</option></select></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Paciente:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="text" style="width:100%;padding:8px;border:1px solid #ccc;" value="Juan Pérez" /></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Fecha:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="date" style="width:100%;padding:8px;border:1px solid #ccc;" value="2024-01-15" /></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Antecedentes:</strong></td><td style="padding:10px;border:1px solid #ddd;"><textarea style="width:100%;padding:8px;border:1px solid #ccc;height:60px;" placeholder="Antecedentes médicos...">Diabetes tipo 2</textarea></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Alergias:</strong></td><td style="padding:10px;border:1px solid #ddd;"><textarea style="width:100%;padding:8px;border:1px solid #ccc;height:60px;" placeholder="Alergias conocidas...">Penicilina</textarea></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Medicamentos:</strong></td><td style="padding:10px;border:1px solid #ddd;"><textarea style="width:100%;padding:8px;border:1px solid #ccc;height:60px;" placeholder="Medicamentos actuales...">Metformina</textarea></td></tr>
+    <tr><td colspan="2" style="padding:15px;border:1px solid #ddd;text-align:center;"><button style="background:#0ea5e9;color:white;padding:10px 20px;border:none;border-radius:4px;font-weight:bold;">Actualizar Historia</button></td></tr>
+  </table>
+</div>
+</div>
+<strong>Como</strong> médico del consultorio  
+<strong>Quiero</strong> editar historias clínicas existentes  
+<strong>Para</strong> mantener información actualizada
+
+<strong>Criterios de Aceptación:</strong>
+<li>Debe mostrar formulario con datos actuales</li>
+<li>Debe permitir modificar información médica</li>
+<li>Debe permitir agregar nuevos antecedentes</li>
+<li>Debe registrar modificaciones</li>
+
+<strong>Criterios de Negocio:</strong>
+<li>Solo se pueden editar historias propias o de la empresa</li>
+<li>Se debe mantener historial de cambios</li>
+<li>Se debe notificar sobre modificaciones importantes</li>
+<li>Se debe validar cambios antes de guardar</li>
+
+<strong>Prioridad:</strong> Media  
+<strong>Estimación:</strong> 24 horas  
+<strong>Sprint:</strong> 3
+
+---
+
+<h3>HU030: Acceder Historial Médico</h3><div style="margin:20px 0;page-break-inside:avoid;"><h4 style="color:#0ea5e9;margin:15px 0;font-size:14pt;">📱 Visualización de la Pantalla:</h4>
+<div style="background:#f8f9fa;padding:20px;border:2px solid #e5e7eb;border-radius:8px;max-width:500px;margin:20px auto;">
+  <h3 style="color:#0ea5e9;text-align:center;font-weight:bold;font-size:18px;margin-bottom:20px;">Registrar Empresa</h3>
+  <table style="width:100%;border-collapse:collapse;">
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;width:35%;"><strong>Nombre:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="text" style="width:100%;padding:8px;border:1px solid #ccc;" placeholder="Nombre de la empresa" /></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>RUC:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="text" style="width:100%;padding:8px;border:1px solid #ccc;" placeholder="12345678901" /></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Dirección:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="text" style="width:100%;padding:8px;border:1px solid #ccc;" placeholder="Dirección completa" /></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Teléfono:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="tel" style="width:100%;padding:8px;border:1px solid #ccc;" placeholder="+51 1 234 5678" /></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Email:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="email" style="width:100%;padding:8px;border:1px solid #ccc;" placeholder="contacto@empresa.com" /></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Estado:</strong></td><td style="padding:10px;border:1px solid #ddd;"><select style="width:100%;padding:8px;border:1px solid #ccc;"><option>Activo</option><option>Inactivo</option></select></td></tr>
+    <tr><td colspan="2" style="padding:15px;border:1px solid #ddd;text-align:center;"><button style="background:#0ea5e9;color:white;padding:10px 20px;border:none;border-radius:4px;font-weight:bold;">Registrar Empresa</button></td></tr>
+  </table>
+</div>
+</div>
+<strong>Como</strong> médico del consultorio  
+<strong>Quiero</strong> acceder al historial médico completo de un paciente  
+<strong>Para</strong> tener contexto completo para la atención
+
+<strong>Criterios de Aceptación:</strong>
+<li>Debe mostrar información personal del paciente</li>
+<li>Debe mostrar antecedentes médicos</li>
+<li>Debe mostrar consultas previas</li>
+<li>Debe mostrar odontogramas asociados</li>
+
+<strong>Criterios de Negocio:</strong>
+<li>Solo se muestra información del paciente específico</li>
+<li>Se debe mantener confidencialidad</li>
+<li>Se debe permitir exportar historial</li>
+<li>Se debe mostrar información en orden cronológico</li></ul>
+
+<strong>Prioridad:</strong> Alta  
+<strong>Estimación:</strong> 28 horas  
+<strong>Sprint:</strong> 2
+
+---
+
+<h2>GESTIÓN DE EMPRESAS</h2>
+
+<h3>HU031: Registrar Empresa</h3><div style="margin:20px 0;page-break-inside:avoid;"><h4 style="color:#0ea5e9;margin:15px 0;font-size:14pt;">📱 Visualización de la Pantalla:</h4>
+<div style="background:#f8f9fa;padding:20px;border:2px solid #e5e7eb;border-radius:8px;max-width:500px;margin:20px auto;">
+  <h3 style="color:#0ea5e9;text-align:center;font-weight:bold;font-size:18px;margin-bottom:20px;">Registrar Empresa</h3>
+  <table style="width:100%;border-collapse:collapse;">
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;width:35%;"><strong>Nombre:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="text" style="width:100%;padding:8px;border:1px solid #ccc;" placeholder="Nombre de la empresa" /></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>RUC:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="text" style="width:100%;padding:8px;border:1px solid #ccc;" placeholder="12345678901" /></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Dirección:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="text" style="width:100%;padding:8px;border:1px solid #ccc;" placeholder="Dirección completa" /></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Teléfono:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="tel" style="width:100%;padding:8px;border:1px solid #ccc;" placeholder="+51 1 234 5678" /></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Email:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="email" style="width:100%;padding:8px;border:1px solid #ccc;" placeholder="contacto@empresa.com" /></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Estado:</strong></td><td style="padding:10px;border:1px solid #ddd;"><select style="width:100%;padding:8px;border:1px solid #ccc;"><option>Activo</option><option>Inactivo</option></select></td></tr>
+    <tr><td colspan="2" style="padding:15px;border:1px solid #ddd;text-align:center;"><button style="background:#0ea5e9;color:white;padding:10px 20px;border:none;border-radius:4px;font-weight:bold;">Registrar Empresa</button></td></tr>
+  </table>
+</div>
+</div>
+<strong>Como</strong> administrador del sistema  
+<strong>Quiero</strong> registrar nuevas empresas en el sistema  
+<strong>Para</strong> permitir la gestión multi-empresa
+
+<strong>Criterios de Aceptación:</strong>
+<ul><li>Debe capturar información básica de la empresa</li>
+<li>Debe permitir configurar parámetros específicos</li>
+<li>Debe generar código único de empresa</li>
+<li>Debe permitir asignar administrador</li>
+
+<strong>Criterios de Negocio:</strong>
+<li>El nombre de empresa debe ser único</li>
+<li>Se debe registrar fecha de creación</li>
+<li>Se debe configurar parámetros por defecto</li>
+<li>Se debe notificar al administrador asignado</li>
+
+<strong>Prioridad:</strong> Alta  
+<strong>Estimación:</strong> 20 horas  
+<strong>Sprint:</strong> 1
+
+---
+
+<h3>HU032: Editar Empresa</h3><div style="margin:20px 0;page-break-inside:avoid;"><h4 style="color:#0ea5e9;margin:15px 0;font-size:14pt;">📱 Visualización de la Pantalla:</h4>
+<div style="background:#f8f9fa;padding:20px;border:2px solid #e5e7eb;border-radius:8px;max-width:500px;margin:20px auto;">
+  <h3 style="color:#0ea5e9;text-align:center;font-weight:bold;font-size:18px;margin-bottom:20px;">Editar Empresa</h3>
+  <table style="width:100%;border-collapse:collapse;">
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;width:35%;"><strong>Empresa:</strong></td><td style="padding:10px;border:1px solid #ddd;"><select style="width:100%;padding:8px;border:1px solid #ccc;"><option>Seleccionar empresa</option><option>Consultorio Dental ABC</option><option>Clínica Dental XYZ</option></select></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Nombre:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="text" style="width:100%;padding:8px;border:1px solid #ccc;" value="Consultorio Dental ABC" /></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>RUC:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="text" style="width:100%;padding:8px;border:1px solid #ccc;" value="12345678901" /></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Dirección:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="text" style="width:100%;padding:8px;border:1px solid #ccc;" value="Av. Principal 123, Lima" /></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Teléfono:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="tel" style="width:100%;padding:8px;border:1px solid #ccc;" value="+51 1 234 5678" /></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Email:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="email" style="width:100%;padding:8px;border:1px solid #ccc;" value="contacto@consultorioabc.com" /></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Estado:</strong></td><td style="padding:10px;border:1px solid #ddd;"><select style="width:100%;padding:8px;border:1px solid #ccc;"><option>Activo</option><option>Inactivo</option></select></td></tr>
+    <tr><td colspan="2" style="padding:15px;border:1px solid #ddd;text-align:center;"><button style="background:#0ea5e9;color:white;padding:10px 20px;border:none;border-radius:4px;font-weight:bold;">Actualizar Empresa</button></td></tr>
+  </table>
+</div>
+</div>
+<strong>Como</strong> administrador del sistema  
+<strong>Quiero</strong> editar información de empresas existentes  
+<strong>Para</strong> mantener datos actualizados
+
+<strong>Criterios de Aceptación:</strong>
+<li>Debe mostrar formulario con datos actuales</li>
+<li>Debe permitir modificar información básica</li>
+<li>Debe permitir cambiar configuración</li>
+<li>Debe validar cambios antes de guardar</li>
+
+<strong>Criterios de Negocio:</strong>
+<li>No se puede cambiar el código de empresa</li>
+<li>Se debe registrar la modificación</li>
+<li>Se debe notificar cambios importantes</li>
+<li>Se debe mantener historial de cambios</li>
+
+<strong>Prioridad:</strong> Media  
+<strong>Estimación:</strong> 16 horas  
+<strong>Sprint:</strong> 2
+
+---
+
+<h3>HU033: Listar Empresas</h3><div style="margin:20px 0;page-break-inside:avoid;"><h4 style="color:#0ea5e9;margin:15px 0;font-size:14pt;">📱 Visualización de la Pantalla:</h4>
+<div style="background:#f8f9fa;padding:20px;border:2px solid #e5e7eb;border-radius:8px;max-width:800px;margin:20px auto;">
+  <h3 style="color:#0ea5e9;text-align:center;font-weight:bold;font-size:18px;margin-bottom:20px;">Lista de Empresas</h3>
+  <div style="margin-bottom:15px;display:flex;gap:10px;justify-content:center;">
+    <select style="padding:8px;border:1px solid #ccc;border-radius:4px;"><option>Todos los estados</option><option>Activo</option><option>Inactivo</option></select>
+    <input type="text" placeholder="Buscar empresa..." style="padding:8px;border:1px solid #ccc;border-radius:4px;width:200px;" />
+  </div>
+  <table style="width:100%;border-collapse:collapse;border:1px solid #ddd;">
+    <thead>
+      <tr style="background:#f3f4f6;">
+        <th style="padding:12px;border:1px solid #ddd;text-align:left;"><strong>ID</strong></th>
+        <th style="padding:12px;border:1px solid #ddd;text-align:left;"><strong>Nombre</strong></th>
+        <th style="padding:12px;border:1px solid #ddd;text-align:left;"><strong>NIT</strong></th>
+        <th style="padding:12px;border:1px solid #ddd;text-align:left;"><strong>Teléfono</strong></th>
+        <th style="padding:12px;border:1px solid #ddd;text-align:left;"><strong>Email</strong></th>
+        <th style="padding:12px;border:1px solid #ddd;text-align:center;"><strong>Acciones</strong></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="padding:10px;border:1px solid #ddd;">1</td>
+        <td style="padding:10px;border:1px solid #ddd;">Empresa ABC S.A.</td>
+        <td style="padding:10px;border:1px solid #ddd;">900.123.456-7</td>
+        <td style="padding:10px;border:1px solid #ddd;">+57 1 234 5678</td>
+        <td style="padding:10px;border:1px solid #ddd;">contacto@abc.com</td>
+        <td style="padding:10px;border:1px solid #ddd;text-align:center;">
+          <button style="background:#0ea5e9;color:white;padding:5px 10px;border:none;border-radius:3px;margin:2px;">Editar</button>
+          <button style="background:#dc2626;color:white;padding:5px 10px;border:none;border-radius:3px;margin:2px;">Eliminar</button>
+        </td>
+      </tr>
+      <tr>
+        <td style="padding:10px;border:1px solid #ddd;">2</td>
+        <td style="padding:10px;border:1px solid #ddd;">Corporación XYZ Ltda.</td>
+        <td style="padding:10px;border:1px solid #ddd;">800.987.654-3</td>
+        <td style="padding:10px;border:1px solid #ddd;">+57 1 876 5432</td>
+        <td style="padding:10px;border:1px solid #ddd;">info@xyz.com</td>
+        <td style="padding:10px;border:1px solid #ddd;text-align:center;">
+          <button style="background:#0ea5e9;color:white;padding:5px 10px;border:none;border-radius:3px;margin:2px;">Editar</button>
+          <button style="background:#dc2626;color:white;padding:5px 10px;border:none;border-radius:3px;margin:2px;">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div style="margin-top:15px;text-align:center;">
+    <button style="background:#059669;color:white;padding:10px 20px;border:none;border-radius:4px;font-weight:bold;margin:5px;">+ Nueva Empresa</button>
+    <button style="background:#f59e0b;color:white;padding:10px 20px;border:none;border-radius:4px;font-weight:bold;margin:5px;">Exportar</button>
+  </div>
+</div></div>
+<strong>Como</strong> administrador del sistema  
+<strong>Quiero</strong> listar todas las empresas registradas  
+<strong>Para</strong> gestionar la configuración multi-empresa
+
+<strong>Criterios de Aceptación:</strong>
+<li>Debe mostrar lista de empresas con información básica</li>
+<li>Debe permitir filtrar por estado</li>
+<li>Debe mostrar número de empleados por empresa</li>
+<li>Debe permitir acciones rápidas</li>
+
+<strong>Criterios de Negocio:</strong>
+<li>Solo administradores globales pueden ver todas las empresas</li>
+<li>Se debe mostrar estado activo/inactivo</li>
+<li>Se debe mostrar fecha de creación</li>
+<li>Se debe permitir exportar la lista</li></ul>
+
+<strong>Prioridad:</strong> Baja  
+<strong>Estimación:</strong> 12 horas  
+<strong>Sprint:</strong> 4
+
+---
+
+<h2>GESTIÓN DE ROLES Y PERMISOS</h2>
+
+<h3>HU034: Crear Rol</h3><div style="margin:20px 0;page-break-inside:avoid;"><h4 style="color:#0ea5e9;margin:15px 0;font-size:14pt;">📱 Visualización de la Pantalla:</h4>
+<div style="background:#f8f9fa;padding:20px;border:2px solid #e5e7eb;border-radius:8px;max-width:500px;margin:20px auto;">
+  <h3 style="color:#0ea5e9;text-align:center;font-weight:bold;font-size:18px;margin-bottom:20px;">Crear Rol</h3>
+  <table style="width:100%;border-collapse:collapse;">
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;width:35%;"><strong>Nombre:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="text" style="width:100%;padding:8px;border:1px solid #ccc;" placeholder="Nombre del rol" /></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Descripción:</strong></td><td style="padding:10px;border:1px solid #ddd;"><textarea style="width:100%;padding:8px;border:1px solid #ccc;height:60px;" placeholder="Descripción del rol..."></textarea></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Estado:</strong></td><td style="padding:10px;border:1px solid #ddd;"><select style="width:100%;padding:8px;border:1px solid #ccc;"><option>Activo</option><option>Inactivo</option></select></td></tr>
+    <tr><td colspan="2" style="padding:15px;border:1px solid #ddd;text-align:center;"><button style="background:#0ea5e9;color:white;padding:10px 20px;border:none;border-radius:4px;font-weight:bold;">Crear Rol</button></td></tr>
+  </table>
+</div>
+</div>
+<strong>Como</strong> administrador del sistema  
+<strong>Quiero</strong> crear roles con permisos específicos  
+<strong>Para</strong> controlar el acceso a funcionalidades
+
+<strong>Criterios de Aceptación:</strong>
+<ul><li>Debe permitir definir nombre y descripción del rol</li>
+<li>Debe permitir asignar permisos específicos</li>
+<li>Debe validar que el nombre sea único</li>
+<li>Debe mostrar confirmación de creación</li>
+
+<strong>Criterios de Negocio:</strong>
+<li>Se debe registrar quién creó el rol</li>
+<li>Se debe permitir duplicar roles existentes</li>
+<li>Se debe validar permisos antes de guardar</li>
+<li>Se debe notificar sobre nuevos roles</li>
+
+<strong>Prioridad:</strong> Alta  
+<strong>Estimación:</strong> 24 horas  
+<strong>Sprint:</strong> 2
+
+---
+
+<h3>HU035: Asignar Menús a Roles</h3><div style="margin:20px 0;page-break-inside:avoid;"><h4 style="color:#0ea5e9;margin:15px 0;font-size:14pt;">📱 Visualización de la Pantalla:</h4>
+<div style="background:#f8f9fa;padding:20px;border:2px solid #e5e7eb;border-radius:8px;max-width:700px;margin:20px auto;">
+  <h3 style="color:#0ea5e9;text-align:center;font-weight:bold;font-size:18px;margin-bottom:20px;">Asignar Menús a Roles</h3>
+  <table style="width:100%;border-collapse:collapse;">
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;width:35%;"><strong>Rol:</strong></td><td style="padding:10px;border:1px solid #ddd;"><select style="width:100%;padding:8px;border:1px solid #ccc;"><option>Seleccionar rol</option><option>Administrador</option><option>Médico</option><option>Recepcionista</option></select></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Menús:</strong></td><td style="padding:10px;border:1px solid #ddd;">
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <label style="display:flex;align-items:center;gap:5px;"><input type="checkbox" checked /> Dashboard</label>
+        <label style="display:flex;align-items:center;gap:5px;"><input type="checkbox" checked /> Gestión de Usuarios</label>
+        <label style="display:flex;align-items:center;gap:5px;"><input type="checkbox" checked /> Gestión de Empleados</label>
+        <label style="display:flex;align-items:center;gap:5px;"><input type="checkbox" checked /> Gestión de Citas</label>
+        <label style="display:flex;align-items:center;gap:5px;"><input type="checkbox" checked /> Gestión de Consultas</label>
+        <label style="display:flex;align-items:center;gap:5px;"><input type="checkbox" checked /> Odontograma</label>
+        <label style="display:flex;align-items:center;gap:5px;"><input type="checkbox" checked /> Historia Clínica</label>
+        <label style="display:flex;align-items:center;gap:5px;"><input type="checkbox" /> Configuración</label>
+      </div>
+    </td></tr>
+    <tr><td colspan="2" style="padding:15px;border:1px solid #ddd;text-align:center;"><button style="background:#0ea5e9;color:white;padding:10px 20px;border:none;border-radius:4px;font-weight:bold;">Asignar Menús</button></td></tr>
+  </table>
+</div>
+</div>
+<strong>Como</strong> administrador del sistema  
+<strong>Quiero</strong> asignar menús específicos a cada rol  
+<strong>Para</strong> personalizar la interfaz según el usuario
+
+<strong>Criterios de Aceptación:</strong>
+<li>Debe mostrar lista de menús disponibles</li>
+<li>Debe permitir seleccionar múltiples menús</li>
+<li>Debe mostrar vista previa de la asignación</li>
+<li>Debe validar la asignación antes de guardar</li>
+
+<strong>Criterios de Negocio:</strong>
+<li>Se debe registrar la asignación</li>
+<li>Se debe notificar a usuarios del rol</li>
+<li>Se debe mantener historial de cambios</li>
+<li>Se debe validar dependencias entre menús</li>
+
+<strong>Prioridad:</strong> Alta  
+<strong>Estimación:</strong> 20 horas  
+<strong>Sprint:</strong> 2
+
+---
+
+<h3>HU036: Editar Permisos de Roles</h3><div style="margin:20px 0;page-break-inside:avoid;"><h4 style="color:#0ea5e9;margin:15px 0;font-size:14pt;">📱 Visualización de la Pantalla:</h4>
+<div style="background:#f8f9fa;padding:20px;border:2px solid #e5e7eb;border-radius:8px;max-width:700px;margin:20px auto;">
+  <h3 style="color:#0ea5e9;text-align:center;font-weight:bold;font-size:18px;margin-bottom:20px;">Editar Permisos de Roles</h3>
+  <table style="width:100%;border-collapse:collapse;">
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;width:35%;"><strong>Rol:</strong></td><td style="padding:10px;border:1px solid #ddd;"><select style="width:100%;padding:8px;border:1px solid #ccc;"><option>Seleccionar rol</option><option>Administrador</option><option>Médico</option><option>Recepcionista</option></select></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Permisos:</strong></td><td style="padding:10px;border:1px solid #ddd;">
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <label style="display:flex;align-items:center;gap:5px;"><input type="checkbox" checked /> Crear</label>
+        <label style="display:flex;align-items:center;gap:5px;"><input type="checkbox" checked /> Leer</label>
+        <label style="display:flex;align-items:center;gap:5px;"><input type="checkbox" checked /> Actualizar</label>
+        <label style="display:flex;align-items:center;gap:5px;"><input type="checkbox" checked /> Eliminar</label>
+        <label style="display:flex;align-items:center;gap:5px;"><input type="checkbox" /> Exportar</label>
+        <label style="display:flex;align-items:center;gap:5px;"><input type="checkbox" /> Imprimir</label>
+      </div>
+    </td></tr>
+    <tr><td colspan="2" style="padding:15px;border:1px solid #ddd;text-align:center;"><button style="background:#0ea5e9;color:white;padding:10px 20px;border:none;border-radius:4px;font-weight:bold;">Actualizar Permisos</button></td></tr>
+  </table>
+</div>
+</div>
+<strong>Como</strong> administrador del sistema  
+<strong>Quiero</strong> editar permisos de roles existentes  
+<strong>Para</strong> ajustar el acceso según necesidades
+
+<strong>Criterios de Aceptación:</strong>
+<li>Debe mostrar permisos actuales del rol</li>
+<li>Debe permitir agregar/quitar permisos</li>
+<li>Debe mostrar impacto de los cambios</li>
+<li>Debe validar cambios antes de guardar</li>
+
+<strong>Criterios de Negocio:</strong>
+<li>Se debe registrar la modificación</li>
+<li>Se debe notificar a usuarios afectados</li>
+<li>Se debe mantener historial de cambios</li>
+<li>Se debe validar que no se afecten funcionalidades críticas</li></ul>
+
+<strong>Prioridad:</strong> Media  
+<strong>Estimación:</strong> 18 horas  
+<strong>Sprint:</strong> 3
+
+---
+
+<h2>DASHBOARD Y REPORTES</h2>
+
+<h3>HU037: Dashboard Administrativo</h3><div style="margin:20px 0;page-break-inside:avoid;"><h4 style="color:#0ea5e9;margin:15px 0;font-size:14pt;">📱 Visualización de la Pantalla:</h4>
+<div style="background:#f8f9fa;padding:20px;border:2px solid #e5e7eb;border-radius:8px;max-width:800px;margin:20px auto;">
+  <h3 style="color:#0ea5e9;text-align:center;font-weight:bold;font-size:18px;margin-bottom:20px;">Dashboard - Estadísticas del Consultorio</h3>
+  <table style="width:100%;border-collapse:collapse;margin:20px 0;">
+    <tr><td colspan="4" style="background:#0ea5e9;color:white;text-align:center;padding:15px;font-weight:bold;font-size:16px;">Estadísticas Principales</td></tr>
+    <tr>
+      <td style="border:1px solid #ddd;padding:15px;text-align:center;background:#f0f9ff;">
+        <div style="font-size:24px;font-weight:bold;color:#0ea5e9;">12</div>
+        <div style="color:#64748b;font-weight:bold;">Citas Hoy</div>
+      </td>
+      <td style="border:1px solid #ddd;padding:15px;text-align:center;background:#fef3c7;">
+        <div style="font-size:24px;font-weight:bold;color:#f59e0b;">5</div>
+        <div style="color:#64748b;font-weight:bold;">Citas Pendientes</div>
+      </td>
+      <td style="border:1px solid #ddd;padding:15px;text-align:center;background:#ecfdf5;">
+        <div style="font-size:24px;font-weight:bold;color:#10b981;">30</div>
+        <div style="color:#64748b;font-weight:bold;">Pacientes Activos</div>
+      </td>
+      <td style="border:1px solid #ddd;padding:15px;text-align:center;background:#f3e8ff;">
+        <div style="font-size:24px;font-weight:bold;color:#8b5cf6;">S/ 2,500</div>
+        <div style="color:#64748b;font-weight:bold;">Ingresos del Mes</div>
+      </td>
+    </tr>
+  </table>
+  <table style="width:100%;border-collapse:collapse;margin:20px 0;">
+    <tr><td colspan="2" style="background:#0ea5e9;color:white;text-align:center;padding:12px;font-weight:bold;">Citas Recientes</td></tr>
+    <tr>
+      <td style="padding:10px;border:1px solid #ddd;">Juan Pérez - 09:00 AM</td>
+      <td style="padding:10px;border:1px solid #ddd;"><span style="background:#f59e0b;color:white;padding:4px 8px;border-radius:4px;font-size:12px;">Programada</span></td>
+    </tr>
+    <tr>
+      <td style="padding:10px;border:1px solid #ddd;">María López - 10:00 AM</td>
+      <td style="padding:10px;border:1px solid #ddd;"><span style="background:#10b981;color:white;padding:4px 8px;border-radius:4px;font-size:12px;">Confirmada</span></td>
+    </tr>
+  </table>
+</div>
+</div>
+<strong>Como</strong> administrador del sistema  
+<strong>Quiero</strong> visualizar estadísticas generales del consultorio  
+<strong>Para</strong> tomar decisiones informadas
+
+<strong>Criterios de Aceptación:</strong>
+<ul><li>Debe mostrar métricas clave (citas, consultas, ingresos)</li>
+<li>Debe mostrar gráficos de tendencias</li>
+<li>Debe permitir filtrar por períodos</li>
+<li>Debe mostrar alertas importantes</li>
+
+<strong>Criterios de Negocio:</strong>
+<li>Solo se muestran datos de la empresa</li>
+<li>Se debe actualizar en tiempo real</li>
+<li>Se debe permitir exportar reportes</li>
+<li>Se debe mantener confidencialidad</li>
+
+<strong>Prioridad:</strong> Alta  
+<strong>Estimación:</strong> 32 horas  
+<strong>Sprint:</strong> 3
+
+---
+
+<h3>HU038: Agenda Médica</h3><div style="margin:20px 0;page-break-inside:avoid;"><h4 style="color:#0ea5e9;margin:15px 0;font-size:14pt;">📱 Visualización de la Pantalla:</h4>
+<div style="background:#f8f9fa;padding:20px;border:2px solid #e5e7eb;border-radius:8px;max-width:800px;margin:20px auto;">
+  <h3 style="color:#0ea5e9;text-align:center;font-weight:bold;font-size:18px;margin-bottom:20px;">Agenda Médica</h3>
+  <table style="width:100%;border-collapse:collapse;">
+    <tr style="background:#0ea5e9;color:white;">
+      <th style="padding:12px;border:1px solid #ddd;text-align:left;">Hora</th>
+      <th style="padding:12px;border:1px solid #ddd;text-align:left;">Paciente</th>
+      <th style="padding:12px;border:1px solid #ddd;text-align:left;">Tipo de Cita</th>
+      <th style="padding:12px;border:1px solid #ddd;text-align:left;">Estado</th>
+      <th style="padding:12px;border:1px solid #ddd;text-align:center;">Acciones</th>
+    </tr>
+    <tr>
+      <td style="padding:10px;border:1px solid #ddd;">08:00 AM</td>
+      <td style="padding:10px;border:1px solid #ddd;">Juan Pérez</td>
+      <td style="padding:10px;border:1px solid #ddd;">Consulta General</td>
+      <td style="padding:10px;border:1px solid #ddd;"><span style="background:#f59e0b;color:white;padding:4px 8px;border-radius:4px;font-size:12px;">Programada</span></td>
+      <td style="padding:10px;border:1px solid #ddd;text-align:center;">
+        <button style="background:#10b981;color:white;padding:4px 8px;border:none;border-radius:4px;margin:2px;">Iniciar</button>
+        <button style="background:#f59e0b;color:white;padding:4px 8px;border:none;border-radius:4px;margin:2px;">Editar</button>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding:10px;border:1px solid #ddd;">09:00 AM</td>
+      <td style="padding:10px;border:1px solid #ddd;">María López</td>
+      <td style="padding:10px;border:1px solid #ddd;">Limpieza Dental</td>
+      <td style="padding:10px;border:1px solid #ddd;"><span style="background:#10b981;color:white;padding:4px 8px;border-radius:4px;font-size:12px;">Confirmada</span></td>
+      <td style="padding:10px;border:1px solid #ddd;text-align:center;">
+        <button style="background:#10b981;color:white;padding:4px 8px;border:none;border-radius:4px;margin:2px;">Iniciar</button>
+        <button style="background:#f59e0b;color:white;padding:4px 8px;border:none;border-radius:4px;margin:2px;">Editar</button>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding:10px;border:1px solid #ddd;">10:00 AM</td>
+      <td style="padding:10px;border:1px solid #ddd;">Carlos Ruiz</td>
+      <td style="padding:10px;border:1px solid #ddd;">Extracción</td>
+      <td style="padding:10px;border:1px solid #ddd;"><span style="background:#6b7280;color:white;padding:4px 8px;border-radius:4px;font-size:12px;">Pendiente</span></td>
+      <td style="padding:10px;border:1px solid #ddd;text-align:center;">
+        <button style="background:#10b981;color:white;padding:4px 8px;border:none;border-radius:4px;margin:2px;">Iniciar</button>
+        <button style="background:#f59e0b;color:white;padding:4px 8px;border:none;border-radius:4px;margin:2px;">Editar</button>
+      </td>
+    </tr>
+  </table>
+</div>
+</div>
+<strong>Como</strong> médico del consultorio  
+<strong>Quiero</strong> ver mi agenda de citas del día  
+<strong>Para</strong> organizar mi trabajo diario
+
+<strong>Criterios de Aceptación:</strong>
+<li>Debe mostrar citas del día ordenadas por hora</li>
+<li>Debe mostrar información del paciente</li>
+<li>Debe permitir ver detalles de cada cita</li>
+<li>Debe mostrar estado de cada cita</li>
+
+<strong>Criterios de Negocio:</strong>
+<li>Solo se muestran citas propias</li>
+<li>Se debe actualizar automáticamente</li>
+<li>Se debe permitir marcar citas como completadas</li>
+<li>Se debe notificar sobre citas próximas</li>
+
+<strong>Prioridad:</strong> Alta  
+<strong>Estimación:</strong> 24 horas  
+<strong>Sprint:</strong> 2
+
+---
+
+<h3>HU039: Gestión de Citas Recepción</h3><div style="margin:20px 0;page-break-inside:avoid;"><h4 style="color:#0ea5e9;margin:15px 0;font-size:14pt;">📱 Visualización de la Pantalla:</h4>
+<div style="background:#f8f9fa;padding:20px;border:2px solid #e5e7eb;border-radius:8px;max-width:800px;margin:20px auto;">
+  <h3 style="color:#0ea5e9;text-align:center;font-weight:bold;font-size:18px;margin-bottom:20px;">Gestión de Citas - Recepción</h3>
+  <div style="display:flex;gap:20px;margin-bottom:20px;">
+    <div style="flex:1;background:white;padding:15px;border-radius:8px;border:1px solid #ddd;">
+      <h4 style="color:#059669;margin-bottom:10px;">Citas de Hoy</h4>
+      <div style="background:#f0fdf4;padding:10px;border-radius:5px;margin-bottom:10px;">
+        <strong>09:00 AM</strong> - Carlos López (Dr. Pérez)
+      </div>
+      <div style="background:#f0fdf4;padding:10px;border-radius:5px;margin-bottom:10px;">
+        <strong>10:30 AM</strong> - Ana Rodríguez (Dra. García)
+      </div>
+      <div style="background:#f0fdf4;padding:10px;border-radius:5px;">
+        <strong>02:00 PM</strong> - Luis Martínez (Dr. Pérez)
+      </div>
+    </div>
+    <div style="flex:1;background:white;padding:15px;border-radius:8px;border:1px solid #ddd;">
+      <h4 style="color:#dc2626;margin-bottom:10px;">Pendientes</h4>
+      <div style="background:#fef2f2;padding:10px;border-radius:5px;margin-bottom:10px;">
+        <strong>11:00 AM</strong> - María Silva (Confirmar)
+      </div>
+      <div style="background:#fef2f2;padding:10px;border-radius:5px;">
+        <strong>03:30 PM</strong> - Pedro Gómez (Confirmar)
+      </div>
+    </div>
+  </div>
+  <div style="text-align:center;">
+    <button style="background:#059669;color:white;padding:10px 20px;border:none;border-radius:4px;font-weight:bold;margin:5px;">+ Nueva Cita</button>
+    <button style="background:#0ea5e9;color:white;padding:10px 20px;border:none;border-radius:4px;font-weight:bold;margin:5px;">Ver Calendario</button>
+    <button style="background:#f59e0b;color:white;padding:10px 20px;border:none;border-radius:4px;font-weight:bold;margin:5px;">Reportes</button>
+  </div>
+</div></div>
+<strong>Como</strong> recepcionista del consultorio  
+<strong>Quiero</strong> ver las citas pendientes y confirmadas  
+<strong>Para</strong> gestionar la agenda eficientemente
+
+<strong>Criterios de Aceptación:</strong>
+<li>Debe mostrar todas las citas del día</li>
+<li>Debe permitir filtrar por médico y estado</li>
+<li>Debe permitir confirmar/cancelar citas</li>
+<li>Debe mostrar información del paciente</li>
+
+<strong>Criterios de Negocio:</strong>
+<li>Solo se muestran citas de la empresa</li>
+<li>Se debe permitir contactar pacientes</li>
+<li>Se debe registrar acciones realizadas</li>
+<li>Se debe notificar cambios a médicos</li></ul>
+
+<strong>Prioridad:</strong> Alta  
+<strong>Estimación:</strong> 28 horas  
+<strong>Sprint:</strong> 2
+
+---
+
+<h2>GESTIÓN DE HORARIOS</h2>
+
+<h3>HU040: Configurar Horarios</h3><div style="margin:20px 0;page-break-inside:avoid;"><h4 style="color:#0ea5e9;margin:15px 0;font-size:14pt;">📱 Visualización de la Pantalla:</h4>
+<div style="background:#f8f9fa;padding:20px;border:2px solid #e5e7eb;border-radius:8px;max-width:600px;margin:20px auto;">
+  <h3 style="color:#0ea5e9;text-align:center;font-weight:bold;font-size:18px;margin-bottom:20px;">Configurar Horarios</h3>
+  <table style="width:100%;border-collapse:collapse;">
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;width:35%;"><strong>Nombre:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="text" style="width:100%;padding:8px;border:1px solid #ccc;" placeholder="Mañana" /></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Hora Inicio:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="time" style="width:100%;padding:8px;border:1px solid #ccc;" value="08:00" /></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Hora Fin:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="time" style="width:100%;padding:8px;border:1px solid #ccc;" value="12:00" /></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Duración Cita:</strong></td><td style="padding:10px;border:1px solid #ddd;"><select style="width:100%;padding:8px;border:1px solid #ccc;"><option>30 minutos</option><option>45 minutos</option><option>60 minutos</option></select></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Estado:</strong></td><td style="padding:10px;border:1px solid #ddd;"><select style="width:100%;padding:8px;border:1px solid #ccc;"><option>Activo</option><option>Inactivo</option></select></td></tr>
+    <tr><td colspan="2" style="padding:15px;border:1px solid #ddd;text-align:center;"><button style="background:#0ea5e9;color:white;padding:10px 20px;border:none;border-radius:4px;font-weight:bold;">Crear Horario</button></td></tr>
+  </table>
+</div>
+</div>
+<strong>Como</strong> administrador del sistema  
+<strong>Quiero</strong> configurar horarios de trabajo para empleados  
+<strong>Para</strong> definir disponibilidad del personal
+
+<strong>Criterios de Aceptación:</strong>
+<ul><li>Debe permitir definir días de trabajo</li>
+<li>Debe permitir definir horarios de entrada y salida</li>
+<li>Debe permitir configurar descansos</li>
+<li>Debe validar que no haya conflictos</li>
+
+<strong>Criterios de Negocio:</strong>
+<li>Se debe respetar leyes laborales</li>
+<li>Se debe registrar quién configuró el horario</li>
+<li>Se debe notificar al empleado</li>
+<li>Se debe mantener historial de cambios</li>
+
+<strong>Prioridad:</strong> Media  
+<strong>Estimación:</strong> 24 horas  
+<strong>Sprint:</strong> 3
+
+---
+
+<h3>HU041: Editar Horarios</h3><div style="margin:20px 0;page-break-inside:avoid;"><h4 style="color:#0ea5e9;margin:15px 0;font-size:14pt;">📱 Visualización de la Pantalla:</h4>
+<div style="background:#f8f9fa;padding:20px;border:2px solid #e5e7eb;border-radius:8px;max-width:600px;margin:20px auto;">
+  <h3 style="color:#0ea5e9;text-align:center;font-weight:bold;font-size:18px;margin-bottom:20px;">Editar Horarios</h3>
+  <table style="width:100%;border-collapse:collapse;">
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;width:35%;"><strong>Horario:</strong></td><td style="padding:10px;border:1px solid #ddd;"><select style="width:100%;padding:8px;border:1px solid #ccc;"><option>Seleccionar horario</option><option>Mañana (8:00-12:00)</option><option>Tarde (14:00-18:00)</option></select></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Nombre:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="text" style="width:100%;padding:8px;border:1px solid #ccc;" value="Mañana" /></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Hora Inicio:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="time" style="width:100%;padding:8px;border:1px solid #ccc;" value="08:00" /></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Hora Fin:</strong></td><td style="padding:10px;border:1px solid #ddd;"><input type="time" style="width:100%;padding:8px;border:1px solid #ccc;" value="12:00" /></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Duración Cita:</strong></td><td style="padding:10px;border:1px solid #ddd;"><select style="width:100%;padding:8px;border:1px solid #ccc;"><option>30 minutos</option><option>45 minutos</option><option>60 minutos</option></select></td></tr>
+    <tr><td style="padding:10px;border:1px solid #ddd;background:#f9fafb;"><strong>Estado:</strong></td><td style="padding:10px;border:1px solid #ddd;"><select style="width:100%;padding:8px;border:1px solid #ccc;"><option>Activo</option><option>Inactivo</option></select></td></tr>
+    <tr><td colspan="2" style="padding:15px;border:1px solid #ddd;text-align:center;"><button style="background:#0ea5e9;color:white;padding:10px 20px;border:none;border-radius:4px;font-weight:bold;">Actualizar Horario</button></td></tr>
+  </table>
+</div>
+</div>
+<strong>Como</strong> administrador del sistema  
+<strong>Quiero</strong> editar horarios existentes  
+<strong>Para</strong> ajustar disponibilidad según necesidades
+
+<strong>Criterios de Aceptación:</strong>
+<li>Debe mostrar horario actual</li>
+<li>Debe permitir modificar días y horarios</li>
+<li>Debe validar cambios antes de guardar</li>
+<li>Debe mostrar impacto en programación</li>
+
+<strong>Criterios de Negocio:</strong>
+<li>Se debe verificar que no afecte citas existentes</li>
+<li>Se debe notificar al empleado</li>
+<li>Se debe registrar la modificación</li>
+<li>Se debe mantener historial de cambios</li>
+
+<strong>Prioridad:</strong> Media  
+<strong>Estimación:</strong> 20 horas  
+<strong>Sprint:</strong> 3
+
+---
+
+<h3>HU042: Listar Horarios</h3><div style="margin:20px 0;page-break-inside:avoid;"><h4 style="color:#0ea5e9;margin:15px 0;font-size:14pt;">📱 Visualización de la Pantalla:</h4>
+<div style="background:#f8f9fa;padding:20px;border:2px solid #e5e7eb;border-radius:8px;max-width:800px;margin:20px auto;">
+  <h3 style="color:#0ea5e9;text-align:center;font-weight:bold;font-size:18px;margin-bottom:20px;">Lista de Horarios</h3>
+  <div style="margin-bottom:15px;display:flex;gap:10px;justify-content:center;">
+    <select style="padding:8px;border:1px solid #ccc;border-radius:4px;"><option>Todos los médicos</option><option>Dr. Juan Pérez</option><option>Dra. María García</option></select>
+    <select style="padding:8px;border:1px solid #ccc;border-radius:4px;"><option>Todos los días</option><option>Lunes</option><option>Martes</option><option>Miércoles</option><option>Jueves</option><option>Viernes</option></select>
+    <select style="padding:8px;border:1px solid #ccc;border-radius:4px;"><option>Todos los estados</option><option>Activo</option><option>Inactivo</option></select>
+  </div>
+  <table style="width:100%;border-collapse:collapse;border:1px solid #ddd;">
+    <thead>
+      <tr style="background:#f3f4f6;">
+        <th style="padding:12px;border:1px solid #ddd;text-align:left;"><strong>ID</strong></th>
+        <th style="padding:12px;border:1px solid #ddd;text-align:left;"><strong>Médico</strong></th>
+        <th style="padding:12px;border:1px solid #ddd;text-align:left;"><strong>Día</strong></th>
+        <th style="padding:12px;border:1px solid #ddd;text-align:left;"><strong>Hora Inicio</strong></th>
+        <th style="padding:12px;border:1px solid #ddd;text-align:left;"><strong>Hora Fin</strong></th>
+        <th style="padding:12px;border:1px solid #ddd;text-align:left;"><strong>Estado</strong></th>
+        <th style="padding:12px;border:1px solid #ddd;text-align:center;"><strong>Acciones</strong></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="padding:10px;border:1px solid #ddd;">1</td>
+        <td style="padding:10px;border:1px solid #ddd;">Dr. Juan Pérez</td>
+        <td style="padding:10px;border:1px solid #ddd;">Lunes</td>
+        <td style="padding:10px;border:1px solid #ddd;">08:00 AM</td>
+        <td style="padding:10px;border:1px solid #ddd;">05:00 PM</td>
+        <td style="padding:10px;border:1px solid #ddd;"><span style="color:#059669;font-weight:bold;">Activo</span></td>
+        <td style="padding:10px;border:1px solid #ddd;text-align:center;">
+          <button style="background:#0ea5e9;color:white;padding:5px 10px;border:none;border-radius:3px;margin:2px;">Editar</button>
+          <button style="background:#dc2626;color:white;padding:5px 10px;border:none;border-radius:3px;margin:2px;">Eliminar</button>
+        </td>
+      </tr>
+      <tr>
+        <td style="padding:10px;border:1px solid #ddd;">2</td>
+        <td style="padding:10px;border:1px solid #ddd;">Dra. María García</td>
+        <td style="padding:10px;border:1px solid #ddd;">Martes</td>
+        <td style="padding:10px;border:1px solid #ddd;">09:00 AM</td>
+        <td style="padding:10px;border:1px solid #ddd;">06:00 PM</td>
+        <td style="padding:10px;border:1px solid #ddd;"><span style="color:#059669;font-weight:bold;">Activo</span></td>
+        <td style="padding:10px;border:1px solid #ddd;text-align:center;">
+          <button style="background:#0ea5e9;color:white;padding:5px 10px;border:none;border-radius:3px;margin:2px;">Editar</button>
+          <button style="background:#dc2626;color:white;padding:5px 10px;border:none;border-radius:3px;margin:2px;">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div style="margin-top:15px;text-align:center;">
+    <button style="background:#059669;color:white;padding:10px 20px;border:none;border-radius:4px;font-weight:bold;margin:5px;">+ Nuevo Horario</button>
+    <button style="background:#f59e0b;color:white;padding:10px 20px;border:none;border-radius:4px;font-weight:bold;margin:5px;">Exportar</button>
+  </div>
+</div></div>
+<strong>Como</strong> administrador del sistema  
+<strong>Quiero</strong> listar todos los horarios configurados  
+<strong>Para</strong> gestionar la disponibilidad del personal
+
+<strong>Criterios de Aceptación:</strong>
+<li>Debe mostrar lista de horarios por empleado</li>
+<li>Debe permitir filtrar por empleado y estado</li>
+<li>Debe mostrar información resumida</li>
+<li>Debe permitir acciones rápidas</li>
+
+<strong>Criterios de Negocio:</strong>
+<li>Solo se muestran horarios de la empresa</li>
+<li>Se debe mostrar estado activo/inactivo</li>
+<li>Se debe mostrar fecha de configuración</li>
+<li>Se debe permitir exportar la lista</li></ul>
+
+<strong>Prioridad:</strong> Baja  
+<strong>Estimación:</strong> 16 horas  
+<strong>Sprint:</strong> 4
+
+---
+
+<h2>RESUMEN DE PRIORIDADES</h2>
+
+<h3><strong>Prioridad Crítica (Sprint 1)</strong></h3>
+<ul><li>HU001: Inicio de Sesión</li>
+<li>HU017: Crear Cita</li>
+<li>HU021: Registrar Consulta</li>
+<li>HU031: Registrar Empresa</li>
+
+<h3><strong>Prioridad Alta (Sprint 2)</strong></h3>
+<li>HU002: Recuperación de Contraseña</li>
+<li>HU004: Persistencia de Sesión</li>
+<li>HU005: Crear Usuario</li>
+<li>HU009: Registrar Empleado</li>
+<li>HU013: Crear Programación</li>
+<li>HU014: Asignar Horarios a Médicos</li>
+<li>HU018: Editar Cita</li>
+<li>HU019: Listar Citas</li>
+<li>HU020: Cancelar Cita</li>
+<li>HU022: Acceder Historial de Consultas</li>
+<li>HU024: Crear Odontograma</li>
+<li>HU025: Aplicar Procedimientos Dentales</li>
+<li>HU028: Crear Historia Clínica</li>
+<li>HU030: Acceder Historial Médico</li>
+<li>HU034: Crear Rol</li>
+<li>HU035: Asignar Menús a Roles</li>
+<li>HU038: Agenda Médica</li>
+<li>HU039: Gestión de Citas Recepción</li>
+
+<h3><strong>Prioridad Media (Sprint 3)</strong></h3>
+<li>HU003: Cambio de Contraseña</li>
+<li>HU006: Editar Usuario</li>
+<li>HU007: Listar Usuarios</li>
+<li>HU010: Editar Empleado</li>
+<li>HU011: Listar Empleados</li>
+<li>HU015: Visualizar Programaciones</li>
+<li>HU023: Editar Consulta</li>
+<li>HU026: Seleccionar Superficies Dentales</li>
+<li>HU027: Visualizar Historial de Procedimientos</li>
+<li>HU029: Editar Historia Clínica</li>
+<li>HU032: Editar Empresa</li>
+<li>HU036: Editar Permisos de Roles</li>
+<li>HU037: Dashboard Administrativo</li>
+<li>HU040: Configurar Horarios</li>
+<li>HU041: Editar Horarios</li>
+
+<h3><strong>Prioridad Baja (Sprint 4-5)</strong></h3>
+<li>HU008: Eliminar Usuario</li>
+<li>HU012: Eliminar Empleado</li>
+<li>HU016: Eliminar Programación</li>
+<li>HU033: Listar Empresas</li>
+<li>HU042: Listar Horarios</li></ul>
+
+---
+
+<strong>Total de Historias de Usuario:</strong> 42  
+<strong>Tiempo Estimado Total:</strong> ~1,200 horas  
+<strong>Sprints Estimados:</strong> 5 sprints de 2 semanas cada uno 
+    <div class="summary">
+        <h3>RESUMEN DE PRIORIDADES</h3>
+        
+        <div class="priority-section">
+            <h4>Prioridad Crítica (Sprint 1)</h4>
+            <ul>
+                <li>HU001: Inicio de Sesión</li>
+                <li>HU017: Crear Cita</li>
+                <li>HU021: Registrar Consulta</li>
+                <li>HU031: Registrar Empresa</li>
+            </ul>
+        </div>
+        
+        <div class="priority-section">
+            <h4>Prioridad Alta (Sprint 2)</h4>
+            <ul>
+                <li>HU002: Recuperación de Contraseña</li>
+                <li>HU004: Persistencia de Sesión</li>
+                <li>HU005: Crear Usuario</li>
+                <li>HU009: Registrar Empleado</li>
+                <li>HU013: Crear Programación</li>
+                <li>HU014: Asignar Horarios a Médicos</li>
+                <li>HU018: Editar Cita</li>
+                <li>HU019: Listar Citas</li>
+                <li>HU020: Cancelar Cita</li>
+                <li>HU022: Acceder Historial de Consultas</li>
+                <li>HU024: Crear Odontograma</li>
+                <li>HU025: Aplicar Procedimientos Dentales</li>
+                <li>HU028: Crear Historia Clínica</li>
+                <li>HU030: Acceder Historial Médico</li>
+                <li>HU034: Crear Rol</li>
+                <li>HU035: Asignar Menús a Roles</li>
+                <li>HU038: Agenda Médica</li>
+                <li>HU039: Gestión de Citas Recepción</li>
+            </ul>
+        </div>
+        
+        <div class="priority-section">
+            <h4>Prioridad Media (Sprint 3)</h4>
+            <ul>
+                <li>HU003: Cambio de Contraseña</li>
+                <li>HU006: Editar Usuario</li>
+                <li>HU007: Listar Usuarios</li>
+                <li>HU010: Editar Empleado</li>
+                <li>HU011: Listar Empleados</li>
+                <li>HU015: Visualizar Programaciones</li>
+                <li>HU023: Editar Consulta</li>
+                <li>HU026: Seleccionar Superficies Dentales</li>
+                <li>HU027: Visualizar Historial de Procedimientos</li>
+                <li>HU029: Editar Historia Clínica</li>
+                <li>HU032: Editar Empresa</li>
+                <li>HU036: Editar Permisos de Roles</li>
+                <li>HU037: Dashboard Administrativo</li>
+                <li>HU040: Configurar Horarios</li>
+                <li>HU041: Editar Horarios</li>
+            </ul>
+        </div>
+        
+        <div class="priority-section">
+            <h4>Prioridad Baja (Sprint 4-5)</h4>
+            <ul>
+                <li>HU008: Eliminar Usuario</li>
+                <li>HU012: Eliminar Empleado</li>
+                <li>HU016: Eliminar Programación</li>
+                <li>HU033: Listar Empresas</li>
+                <li>HU042: Listar Horarios</li>
+            </ul>
+        </div>
+        
+        <div style="margin-top: 30px; padding: 15px; background-color: #fff; border-radius: 5px; border: 1px solid #ddd;">
+            <strong>Total de Historias de Usuario:</strong> 42<br>
+            <strong>Tiempo Estimado Total:</strong> ~1,200 horas<br>
+            <strong>Sprints Estimados:</strong> 5 sprints de 2 semanas cada uno
+        </div>
+    </div>
+</body>
+</html>

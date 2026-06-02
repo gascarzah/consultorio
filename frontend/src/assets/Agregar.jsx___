@@ -1,0 +1,137 @@
+import React from 'react';
+import { PageContainer } from '../../components/PageContainer';
+
+const AgregarCita = () => {
+  return (
+    <PageContainer 
+      title="Nueva Cita"
+      actionButton={
+        <button className="btn-secondary" onClick={() => window.history.back()}>
+          <svg className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          Volver
+        </button>
+      }
+    >
+      <div className="space-y-6">
+        {/* Filtros de búsqueda */}
+        <div className="filter-container">
+          <div className="form-row">
+            <div className="form-group">
+              <label className="form-label">Fecha</label>
+              <input type="date" className="form-input" />
+            </div>
+            <div className="form-group">
+              <label className="form-label">Médico</label>
+              <select className="form-input">
+                <option value="">Seleccione un médico</option>
+                <option value="1">Dr. Juan Pérez</option>
+                <option value="2">Dra. María García</option>
+              </select>
+            </div>
+            <div className="form-group">
+              <label className="form-label">Especialidad</label>
+              <select className="form-input">
+                <option value="">Seleccione una especialidad</option>
+                <option value="1">Medicina General</option>
+                <option value="2">Odontología</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        {/* Formulario principal */}
+        <div className="card">
+          <div className="card-header">
+            <h3 className="text-lg font-medium text-sky-900">Información de la Cita</h3>
+          </div>
+          <div className="card-body">
+            <form className="space-y-6">
+              {/* Datos del paciente */}
+              <div>
+                <h4 className="text-sm font-medium text-gray-900 mb-4">Datos del Paciente</h4>
+                <div className="form-row">
+                  <div className="form-group">
+                    <label className="form-label">DNI</label>
+                    <div className="relative">
+                      <input type="text" className="form-input" placeholder="Ingrese DNI" />
+                      <button type="button" className="absolute right-2 top-1/2 -translate-y-1/2">
+                        <svg className="h-5 w-5 text-gray-400 hover:text-sky-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                  <div className="form-group">
+                    <label className="form-label">Nombres</label>
+                    <input type="text" className="form-input" placeholder="Nombres completos" />
+                  </div>
+                  <div className="form-group">
+                    <label className="form-label">Apellidos</label>
+                    <input type="text" className="form-input" placeholder="Apellidos completos" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Datos de la cita */}
+              <div>
+                <h4 className="text-sm font-medium text-gray-900 mb-4">Datos de la Cita</h4>
+                <div className="form-row">
+                  <div className="form-group">
+                    <label className="form-label">Hora</label>
+                    <select className="form-input">
+                      <option value="">Seleccione una hora</option>
+                      <option value="09:00">09:00 AM</option>
+                      <option value="09:30">09:30 AM</option>
+                      <option value="10:00">10:00 AM</option>
+                    </select>
+                  </div>
+                  <div className="form-group">
+                    <label className="form-label">Tipo de Consulta</label>
+                    <select className="form-input">
+                      <option value="">Seleccione el tipo</option>
+                      <option value="1">Primera vez</option>
+                      <option value="2">Control</option>
+                      <option value="3">Emergencia</option>
+                    </select>
+                  </div>
+                  <div className="form-group">
+                    <label className="form-label">Modalidad</label>
+                    <select className="form-input">
+                      <option value="">Seleccione la modalidad</option>
+                      <option value="1">Presencial</option>
+                      <option value="2">Virtual</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              {/* Observaciones */}
+              <div className="form-group">
+                <label className="form-label">Observaciones</label>
+                <textarea 
+                  className="form-input" 
+                  rows="3"
+                  placeholder="Ingrese cualquier observación relevante"
+                ></textarea>
+              </div>
+
+              {/* Botones de acción */}
+              <div className="form-actions">
+                <button type="button" className="btn-secondary">
+                  Cancelar
+                </button>
+                <button type="submit" className="btn-primary">
+                  Guardar Cita
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </PageContainer>
+  );
+};
+
+export default AgregarCita;

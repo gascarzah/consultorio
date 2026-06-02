@@ -1,0 +1,11 @@
+.env
+.env.local
+.env.prod
+
+*.rar
+.run/
+
+deploy/certs/
+nul
+**/nul
+nul

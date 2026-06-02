@@ -1,0 +1,15 @@
+-- Soft delete: agregar bandera activo para baja logica
+ALTER TABLE empresa ADD COLUMN IF NOT EXISTS activo BOOLEAN;
+UPDATE empresa SET activo = TRUE WHERE activo IS NULL;
+ALTER TABLE empresa ALTER COLUMN activo SET DEFAULT TRUE;
+ALTER TABLE empresa ALTER COLUMN activo SET NOT NULL;
+
+ALTER TABLE rol ADD COLUMN IF NOT EXISTS activo BOOLEAN;
+UPDATE rol SET activo = TRUE WHERE activo IS NULL;
+ALTER TABLE rol ALTER COLUMN activo SET DEFAULT TRUE;
+ALTER TABLE rol ALTER COLUMN activo SET NOT NULL;
+
+ALTER TABLE historia_clinica ADD COLUMN IF NOT EXISTS activo BOOLEAN;
+UPDATE historia_clinica SET activo = TRUE WHERE activo IS NULL;
+ALTER TABLE historia_clinica ALTER COLUMN activo SET DEFAULT TRUE;
+ALTER TABLE historia_clinica ALTER COLUMN activo SET NOT NULL;

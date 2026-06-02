@@ -1,0 +1,1345 @@
+.odontograma {
+  display: grid;
+  grid-template-columns: 250px 1fr 250px;
+  gap: 2rem;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Procedimientos */
+.odontograma__procedures {
+  background: #f8fafc;
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.procedures__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.procedure-button {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.procedure-button:hover {
+  background: #f1f5f9;
+}
+
+.procedure-button.selected {
+  background: #e2e8f0;
+  border-color: #94a3b8;
+}
+
+.procedure-color {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+}
+
+/* Odontograma */
+.odontograma__chart {
+  padding: 2rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  min-height: 600px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.chart__container {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.chart__upper-section,
+.chart__lower-section {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.chart__divider {
+  height: 2px;
+  background: #e2e8f0;
+  margin: 1rem 0;
+}
+
+.chart__quadrant {
+  flex: 1;
+  max-width: 360px;
+  display: flex;
+  justify-content: center;
+}
+
+/* Fila de dientes */
+.teeth-row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Diente individual */
+.tooth {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tooth-crown {
+  width: 40px;
+  height: 40px;
+  border: 1px solid #1e293b;
+  background: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.tooth-inner {
+  width: 24px;
+  height: 24px;
+  border: 1px solid #1e293b;
+  background: white;
+  position: relative;
+}
+
+/* Líneas diagonales que conectan esquinas opuestas */
+.tooth-inner::before {
+  content: '';
+  position: absolute;
+  width: 11.3px;
+  height: 1px;
+  background-color: #1e293b;
+  left: -1px;
+  top: 0px;
+  transform: rotate(-135deg);
+  transform-origin: left top;
+}
+
+.tooth-inner::after {
+  content: '';
+  position: absolute;
+  width: 11.3px;
+  height: 1px;
+  background-color: #1e293b;
+  right: -1px;
+  top: 0px;
+  transform: rotate(135deg);
+  transform-origin: right top;
+}
+
+.tooth-crown::before {
+  content: '';
+  position: absolute;
+  width: 11.3px;
+  height: 1px;
+  background-color: #1e293b;
+  left: 7px;
+  bottom: 8px;
+  transform: rotate(135deg);
+  transform-origin: left bottom;
+}
+
+.tooth-crown::after {
+  content: '';
+  position: absolute;
+  width: 11.3px;
+  height: 1px;
+  background-color: #1e293b;
+  right: 7px;
+  bottom: 8px;
+  transform: rotate(-135deg);
+  transform-origin: right bottom;
+}
+
+.tooth-crown.selected {
+  border: 2px solid #2563eb;
+  background: rgba(37, 99, 235, 0.1);
+}
+
+.tooth-crown.selected .tooth-inner {
+  border-color: #2563eb;
+}
+
+.tooth-number {
+  font-size: 0.75rem;
+  color: #64748b;
+  font-weight: 500;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 0.25rem;
+}
+
+/* Ajustamos el contenedor del diente */
+.tooth-container {
+  position: relative;
+  padding: 0.5rem;
+}
+
+/* Ajustamos las filas de dientes */
+.upper-teeth,
+.lower-teeth {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 1rem 0;
+}
+
+.mouth-separator {
+  width: 100%;
+  height: 1px;
+  background: #e2e8f0;
+  margin: 1rem 0;
+}
+
+/* Ocultamos las superficies */
+.surface {
+  display: none;
+}
+
+/* Panel de información */
+.odontograma__info {
+  background: #f8fafc;
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.tooth-info {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: white;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+}
+
+.tooth-info h4 {
+  color: #1e293b;
+  margin-bottom: 0.5rem;
+}
+
+.no-selection {
+  color: #64748b;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .odontograma {
+    grid-template-columns: 200px 1fr 200px;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .chart__upper-section,
+  .chart__lower-section {
+    gap: 1rem;
+  }
+
+  .tooth__crown {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+@media (max-width: 900px) {
+  .odontograma {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .chart__upper-section,
+  .chart__lower-section {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .chart__quadrant {
+    max-width: 100%;
+  }
+}
+
+.chart__type-selector {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding: 0.5rem;
+  background: #f8fafc;
+  border-radius: 8px;
+}
+
+.type-button {
+  padding: 0.75rem 1.5rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  background: white;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.9rem;
+}
+
+.type-button:hover {
+  background: #f1f5f9;
+}
+
+.type-button.selected {
+  background: #3b82f6;
+  color: white;
+  border-color: #2563eb;
+}
+
+.odontograma-main {
+  padding: 1.5rem;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+/* Selector de dentición */
+.dentition-selector {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  padding: 0.5rem;
+  background: #f1f5f9;
+  border-radius: 4px;
+}
+
+.selector-btn {
+  padding: 0.75rem 1.5rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  background: white;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 500;
+  font-size: 0.9rem;
+  min-width: 120px;
+  text-align: center;
+}
+
+.selector-btn:hover {
+  background: #f8fafc;
+}
+
+.selector-btn.active {
+  background: #2563eb;
+  color: white;
+  border-color: #2563eb;
+}
+
+/* Contenido principal */
+.odontograma-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Carta dental */
+.dental-chart {
+  background: white;
+  padding: 1.5rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+}
+
+.upper-teeth,
+.lower-teeth {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.mouth-separator {
+  width: 100%;
+  height: 1px;
+  background: #e2e8f0;
+  margin: 0.5rem 0;
+}
+
+/* Diente individual */
+.tooth-container {
+  position: relative;
+  padding: 0.25rem;
+}
+
+.tooth {
+  cursor: pointer;
+  position: relative;
+  width: 40px;
+  height: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tooth.selected {
+  outline: 2px solid #2563eb;
+}
+
+.tooth-crown {
+  width: 40px;
+  height: 40px;
+  position: relative;
+  border: 1px solid #1e293b;
+  background: white;
+}
+
+.surface {
+  position: absolute;
+  border: 1px solid #1e293b;
+  background: white;
+}
+
+.vestibular {
+  top: 0;
+  left: 25%;
+  width: 50%;
+  height: 33.33%;
+}
+
+.mesial {
+  top: 33.33%;
+  right: 0;
+  width: 33.33%;
+  height: 33.33%;
+}
+
+.oclusal {
+  top: 33.33%;
+  left: 33.33%;
+  width: 33.33%;
+  height: 33.33%;
+}
+
+.distal {
+  top: 33.33%;
+  left: 0;
+  width: 33.33%;
+  height: 33.33%;
+}
+
+.lingual {
+  bottom: 0;
+  left: 25%;
+  width: 50%;
+  height: 33.33%;
+}
+
+/* Panel de procedimientos */
+.procedures-panel {
+  background: white;
+  padding: 1.5rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+}
+
+.procedures-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.procedure-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  background: white;
+  cursor: pointer;
+  transition: background 0.2s;
+  width: 100%;
+}
+
+.procedure-btn:not(.disabled):hover {
+  background: #f8fafc;
+}
+
+.procedure-btn.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.procedure-icon {
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+}
+
+.procedure-name {
+  font-size: 0.85rem;
+  color: #1e293b;
+  font-weight: 500;
+}
+
+/* Panel de información */
+.info-panel {
+  background: white;
+  padding: 1.5rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+}
+
+.panel-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #2563eb;
+}
+
+.tooth-info {
+  background: #f8fafc;
+  padding: 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+}
+
+.tooth-title {
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+
+.surfaces-selector {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e2e8f0;
+}
+
+.surface-title {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin-bottom: 0.75rem;
+  font-weight: 500;
+}
+
+.surface-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.surface-btn {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  background: white;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  color: #64748b;
+  min-width: 80px;
+  text-align: center;
+}
+
+.surface-btn:hover {
+  background: #f8fafc;
+}
+
+.surface-btn.active {
+  background: #2563eb;
+  color: white;
+  border-color: #2563eb;
+}
+
+.tooth-procedures {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e2e8f0;
+}
+
+.procedures-title {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin-bottom: 0.75rem;
+  font-weight: 500;
+}
+
+.procedure-item {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: #1e293b;
+  padding: 0.25rem 0;
+}
+
+.surface-name {
+  font-weight: 500;
+  color: #64748b;
+}
+
+.no-procedures {
+  color: #94a3b8;
+  font-style: italic;
+  text-align: center;
+  padding: 0.75rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+}
+
+.no-selection {
+  color: #94a3b8;
+  text-align: center;
+  font-style: italic;
+  padding: 1rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .odontograma-main {
+    padding: 1rem;
+  }
+
+  .procedures-list {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .odontograma-main {
+    padding: 0.75rem;
+  }
+
+  .dental-chart {
+    padding: 1rem;
+  }
+
+  .upper-teeth,
+  .lower-teeth {
+    gap: 0.75rem;
+  }
+
+  .procedures-list {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
+
+  .selector-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    min-width: 100px;
+  }
+}
+
+/* Estilo para la X de extracción */
+.tooth-extraction {
+  position: relative;
+}
+
+.tooth-extraction::before,
+.tooth-extraction::after {
+  content: '';
+  position: absolute;
+  width: 40px;
+  height: 4px;
+  background-color: red;
+  top: 50%;
+  left: 0;
+  transform-origin: center;
+  z-index: 10;
+}
+
+.tooth-extraction::before {
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.tooth-extraction::after {
+  transform: translateY(-50%) rotate(-45deg);
+}
+
+.tooth-extraction .tooth-inner {
+  opacity: 0.7;
+}
+
+/* Estilo para la corona */
+.tooth-crown.tooth-with-crown::before {
+  content: '';
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  border: 4px solid #FFD700;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+
+/* Aseguramos que el círculo de la corona no interfiera con la X de extracción */
+.tooth-extraction.tooth-with-crown::before {
+  border-color: red;
+}
+
+.tooth-crown.error {
+  border: 2px solid #ff4444;
+  animation: shake 0.5s;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+.surface-btn.error {
+  border-color: #ff4444;
+  color: #ff4444;
+}
+
+.procedure-btn.error {
+  border-color: #ff4444;
+  background-color: rgba(255, 68, 68, 0.1);
+}
+
+/* Asegurarse que las notificaciones estén por encima de otros elementos */
+.Toaster {
+  z-index: 9999;
+}
+
+/* Selector de vista */
+.view-selector {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  padding: 0.5rem;
+  background: #f1f5f9;
+  border-radius: 4px;
+}
+
+.view-btn {
+  padding: 0.75rem 1.5rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  background: white;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 500;
+  font-size: 0.9rem;
+  min-width: 120px;
+  text-align: center;
+}
+
+.view-btn:hover {
+  background: #f8fafc;
+}
+
+.view-btn.active {
+  background: #10b981;
+  color: white;
+  border-color: #059669;
+}
+
+/* Vista Frontal */
+.frontal-view {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+  padding: 1rem;
+}
+
+.frontal-upper,
+.frontal-lower {
+  display: flex;
+  gap: 3rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.frontal-upper-left,
+.frontal-upper-right,
+.frontal-lower-left,
+.frontal-lower-right {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.frontal-upper-left .tooth-container,
+.frontal-upper-right .tooth-container,
+.frontal-lower-left .tooth-container,
+.frontal-lower-right .tooth-container {
+  transform: rotate(90deg);
+}
+
+/* Vista Lateral */
+.lateral-view {
+  display: flex;
+  gap: 3rem;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 1rem;
+}
+
+.lateral-side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  min-width: 200px;
+}
+
+.lateral-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1e293b;
+  text-align: center;
+  margin: 0;
+  padding: 0.5rem;
+  background: #f8fafc;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.lateral-teeth {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+
+.lateral-upper,
+.lateral-lower {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.lateral-upper .tooth-container,
+.lateral-lower .tooth-container {
+  transform: rotate(45deg);
+}
+
+/* Responsive para las nuevas vistas */
+@media (max-width: 768px) {
+  .view-selector {
+    flex-wrap: wrap;
+    gap: 0.25rem;
+  }
+
+  .view-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    min-width: 100px;
+  }
+
+  .frontal-upper,
+  .frontal-lower {
+    gap: 1.5rem;
+  }
+
+  .lateral-view {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .lateral-side {
+    min-width: auto;
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .frontal-upper,
+  .frontal-lower {
+    gap: 1rem;
+  }
+
+  .lateral-view {
+    gap: 1.5rem;
+  }
+}
+
+/* Estilos para procedimientos avanzados */
+.advanced-procedures {
+  background: white;
+  padding: 1.5rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  margin-top: 1rem;
+}
+
+.procedure-categories {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.category-btn {
+  padding: 0.5rem 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  background: white;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.category-btn:hover {
+  background: #f8fafc;
+}
+
+.category-btn.active {
+  background: #2563eb;
+  color: white;
+  border-color: #2563eb;
+}
+
+.procedures-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.procedure-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  font-size: 0.85rem;
+}
+
+.procedure-btn:not(.disabled):hover {
+  background: #f8fafc;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.procedure-btn.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.procedure-icon {
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  font-weight: bold;
+}
+
+.procedure-name {
+  flex: 1;
+  font-size: 0.85rem;
+  color: #1e293b;
+  font-weight: 500;
+  text-align: left;
+}
+
+.surface-indicator {
+  background: #2563eb;
+  color: white;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: bold;
+}
+
+.procedure-legend {
+  border-top: 1px solid #e2e8f0;
+  padding-top: 1rem;
+  margin-top: 1rem;
+}
+
+.legend-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 0.75rem;
+}
+
+.legend-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  color: #64748b;
+}
+
+.legend-icon {
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 3px;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: bold;
+}
+
+.legend-text {
+  font-size: 0.8rem;
+  color: #64748b;
+}
+
+/* Responsive para procedimientos avanzados */
+@media (max-width: 768px) {
+  .procedure-categories {
+    justify-content: center;
+  }
+
+  .procedures-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 0.5rem;
+  }
+
+  .procedure-btn {
+    padding: 0.5rem;
+    font-size: 0.8rem;
+  }
+
+  .procedure-name {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .procedures-grid {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  }
+
+  .category-btn {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+  }
+}
+
+/* Nuevos estilos para el odontograma combinado */
+.combined-odontograma {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 1000px;
+}
+
+.teeth-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.teeth-row-upper-adult {
+  background: transparent;
+  border: none;
+}
+
+.teeth-row-upper-child {
+  background: transparent;
+  border: none;
+}
+
+.teeth-row-lower-child {
+  background: transparent;
+  border: none;
+}
+
+.teeth-row-lower-adult {
+  background: transparent;
+  border: none;
+}
+
+/* Diente individual */
+.tooth-container {
+  position: relative;
+  padding: 0.25rem;
+}
+
+.tooth {
+  cursor: pointer;
+  position: relative;
+  width: 40px;
+  height: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tooth-crown {
+  width: 40px;
+  height: 40px;
+  position: relative;
+  border: 1px solid #1e293b;
+  background: white;
+}
+
+.tooth-inner {
+  width: 24px;
+  height: 24px;
+  border: 1px solid #1e293b;
+  background: white;
+  position: relative;
+}
+
+/* Líneas diagonales que conectan esquinas opuestas */
+.tooth-inner::before {
+  content: '';
+  position: absolute;
+  width: 11.3px;
+  height: 1px;
+  background-color: #1e293b;
+  left: -1px;
+  top: 0px;
+  transform: rotate(-135deg);
+  transform-origin: left top;
+}
+
+.tooth-inner::after {
+  content: '';
+  position: absolute;
+  width: 11.3px;
+  height: 1px;
+  background-color: #1e293b;
+  right: -1px;
+  top: 0px;
+  transform: rotate(135deg);
+  transform-origin: right top;
+}
+
+.tooth-crown::before {
+  content: '';
+  position: absolute;
+  width: 11.3px;
+  height: 1px;
+  background-color: #1e293b;
+  left: 7px;
+  bottom: 8px;
+  transform: rotate(135deg);
+  transform-origin: left bottom;
+}
+
+.tooth-crown::after {
+  content: '';
+  position: absolute;
+  width: 11.3px;
+  height: 1px;
+  background-color: #1e293b;
+  right: 7px;
+  bottom: 8px;
+  transform: rotate(-135deg);
+  transform-origin: right bottom;
+}
+
+.tooth-crown.selected {
+  border: 2px solid #2563eb;
+  background: rgba(37, 99, 235, 0.1);
+}
+
+.tooth-crown.selected .tooth-inner {
+  border-color: #2563eb;
+}
+
+/* Números de los dientes */
+.tooth-number {
+  font-size: 0.75rem;
+  color: #64748b;
+  font-weight: 500;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 0.25rem;
+}
+
+.tooth-number-child {
+  color: #64748b;
+  font-weight: 500;
+}
+
+/* Para dientes inferiores, el número va abajo */
+.teeth-row-lower-child .tooth-number,
+.teeth-row-lower-adult .tooth-number {
+  margin-bottom: 0;
+  margin-top: 0.25rem;
+}
+
+/* Separador de boca */
+.mouth-separator {
+  width: 100%;
+  height: 1px;
+  background: #e2e8f0;
+  margin: 0.5rem 0;
+}
+
+/* Estilo para la X de extracción */
+.tooth-extraction {
+  position: relative;
+}
+
+.tooth-extraction::before,
+.tooth-extraction::after {
+  content: '';
+  position: absolute;
+  width: 40px;
+  height: 4px;
+  background-color: red;
+  top: 50%;
+  left: 0;
+  transform-origin: center;
+  z-index: 10;
+}
+
+.tooth-extraction::before {
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.tooth-extraction::after {
+  transform: translateY(-50%) rotate(-45deg);
+}
+
+.tooth-extraction .tooth-inner {
+  opacity: 0.7;
+}
+
+/* Estilo para la corona */
+.tooth-crown.tooth-with-crown::before {
+  content: '';
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  border: 4px solid #FFD700;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+
+/* Aseguramos que el círculo de la corona no interfiera con la X de extracción */
+.tooth-extraction.tooth-with-crown::before {
+  border-color: red;
+}
+
+/* Estilos para dientes de niño */
+.tooth-child .tooth-crown {
+  border-color: #1e293b;
+  border-width: 1px;
+}
+
+/* Responsive design para diferentes tamaños de pantalla */
+@media (max-width: 1200px) {
+  .combined-odontograma {
+    max-width: 1000px;
+    padding: 1.5rem;
+  }
+  
+  .tooth {
+    width: 45px;
+    height: 72px;
+  }
+  
+  .tooth-crown {
+    width: 45px;
+    height: 45px;
+  }
+  
+  .tooth-inner {
+    width: 27px;
+    height: 27px;
+  }
+}
+
+@media (max-width: 768px) {
+  .combined-odontograma {
+    max-width: 800px;
+    padding: 1rem;
+    gap: 1.5rem;
+  }
+  
+  .tooth {
+    width: 40px;
+    height: 64px;
+  }
+  
+  .tooth-crown {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .tooth-inner {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .tooth-number {
+    font-size: 0.7rem;
+  }
+} 
