@@ -3,7 +3,6 @@
 .env.prod
 
 *.rar
-.run/
 
 deploy/certs/
 nul
