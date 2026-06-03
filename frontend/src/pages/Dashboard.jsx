@@ -105,6 +105,7 @@ const Dashboard = () => {
   return (
     <PageContainer 
       title="Dashboard"
+      subtitle="Resumen del día y accesos rápidos."
       actionButton={
         <button
           type="button"
@@ -123,14 +124,14 @@ const Dashboard = () => {
     >
       <div className="space-y-6">
         {/* Estadísticas */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4">
           {stats.map((stat, index) => (
             <DashboardCard key={index} {...stat} />
           ))}
         </div>
 
         {/* Acceso Rápido */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
           <Link
             to="/dashboard/odontograma"
             className="card hover:shadow-lg transition-shadow duration-300 cursor-pointer"
@@ -184,7 +185,7 @@ const Dashboard = () => {
         </div>
 
         {/* Contenedor principal */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
           {/* Calendario */}
           <div className="lg:col-span-4">
             <div className="card">

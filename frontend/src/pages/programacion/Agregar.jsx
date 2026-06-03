@@ -1,10 +1,11 @@
-import { ProgramacionDetalleForm, ProgramacionForm } from "../../components";
+import { ProgramacionForm } from "../../components";
+import { FormPage } from "../../components/PageContainer";
 
 const AgregarProgramacion = () => {
   return (
-    <div className="flex justify-center items-center min-h-screen flex-col">
+    <FormPage title="Nueva programación" subtitle="Define el rango de fechas de atención." maxWidth="max-w-4xl">
       <ProgramacionForm />
-    </div>
+    </FormPage>
   );
 };
 

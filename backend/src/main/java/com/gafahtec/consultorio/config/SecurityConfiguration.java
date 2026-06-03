@@ -33,10 +33,12 @@ public class SecurityConfiguration {
   private final AuthenticationProvider authenticationProvider;
   private final LogoutHandler logoutHandler;
   private final Environment environment;
+  private final org.springframework.web.cors.CorsConfigurationSource corsConfigurationSource;
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http
+        .cors(cors -> cors.configurationSource(corsConfigurationSource))
         .csrf(csrf -> csrf.disable())
         .authorizeHttpRequests(auth -> {
           auth.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll();

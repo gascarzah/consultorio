@@ -1,12 +1,11 @@
-
-import {HistoriaClinicaForm} from  "../../components";
+import { HistoriaClinicaForm } from "../../components";
+import { FormPage } from "../../components/PageContainer";
 
 const AgregarHistoriaClinica = () => {
   return (
-    <div className="flex justify-center items-center flex-col">
-
+    <FormPage title="Nueva historia clínica" subtitle="Registro del paciente en la empresa." maxWidth="max-w-4xl">
       <HistoriaClinicaForm />
-    </div>
+    </FormPage>
   );
 };
 

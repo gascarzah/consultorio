@@ -1,10 +1,11 @@
 import RolForm from "../../components/form/RolForm";
+import { FormPage } from "../../components/PageContainer";
 
 const AgregarRol = () => {
   return (
-    <div className="flex justify-center items-center  flex-col ">
-     <RolForm />
-    </div>
+    <FormPage title="Nuevo rol" subtitle="Permisos de acceso al sistema.">
+      <RolForm />
+    </FormPage>
   );
 };
 

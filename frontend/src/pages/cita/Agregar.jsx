@@ -1,13 +1,11 @@
-import {CitaForm, MyCalendar} from  "../../components";
-// import MyCalendar from "../../components/MyCalendar";
+import { CitaForm } from "../../components";
+import { FormPage } from "../../components/PageContainer";
 
 const AgregarCita = () => {
   return (
-    <div className="flex justify-center items-center  flex-col ">
-
+    <FormPage title="Nueva cita" subtitle="Programa una cita con paciente y médico." maxWidth="max-w-4xl">
       <CitaForm />
-      {/* <MyCalendar/> */}
-    </div>
+    </FormPage>
   );
 };
 

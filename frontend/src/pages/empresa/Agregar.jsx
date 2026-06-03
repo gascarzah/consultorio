@@ -1,11 +1,11 @@
 import EmpresaForm from "../../components/form/EmpresaForm";
+import { FormPage } from "../../components/PageContainer";
 
 const AgregarEmpresa = () => {
   return (
-    <div className="flex justify-center items-center  flex-col">
-
+    <FormPage title="Nueva empresa" subtitle="Datos del consultorio o sede.">
       <EmpresaForm />
-    </div>
+    </FormPage>
   );
 };
 

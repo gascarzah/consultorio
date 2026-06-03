@@ -1,10 +1,11 @@
 import CategoriaMenuForm from "../../components/form/CategoriaMenuForm";
+import { FormPage } from "../../components/PageContainer";
 
 const AgregarCategoriaMenu = () => {
   return (
-    <div className="flex justify-center items-center min-h-screen flex-col">
+    <FormPage title="Nueva categoría de menú" subtitle="Agrupa ítems del menú lateral.">
       <CategoriaMenuForm />
-    </div>
+    </FormPage>
   );
 };
 

@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, isRejectedWithValue } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import clienteAxios from '../config/axios';
 import { registrarRolMenu } from './rolMenuSlice';
 import { setAuthFromTokens, setRol } from './authSlice';
@@ -13,6 +13,22 @@ const initialState = {
   logged: false,
   usuarios: [],
   passwordChanged: false,
+};
+
+const rejectApiError = (error, rejectWithValue) => {
+  const status = error.response?.status ?? 0;
+  const data = error.response?.data;
+  if (typeof data === 'object' && data !== null) {
+    return rejectWithValue({
+      status: data.status ?? status,
+      message: data.message ?? 'Error en la solicitud',
+    });
+  }
+  const message =
+    (typeof data === 'string' && data) ||
+    error.message ||
+    'No se pudo conectar con el servidor';
+  return rejectWithValue({ status, message });
 };
 
 export const registrarUsuario = createAsyncThunk(
@@ -46,12 +62,7 @@ export const registrarUsuario = createAsyncThunk(
 
       return data;
     } catch (error) {
-      if (error.response && error.response.data.message) {
-
-        return rejectWithValue(error.response.data.message)
-      } else {
-        return rejectWithValue(error.message)
-      }
+      return rejectApiError(error, rejectWithValue);
     }
   }
 )
@@ -63,7 +74,7 @@ export const getUsuario = createAsyncThunk(
       const { data } = await clienteAxios.get(`/usuarios/${encodeURIComponent(email)}`);
       return data
     } catch (error) {
-      return rejectWithValue(error.response.data)
+      return rejectApiError(error, rejectWithValue);
     }
   }
 )
@@ -74,7 +85,7 @@ export const getUsuarioPorId = createAsyncThunk(
       const { data } = await clienteAxios.get(`/usuarios/id/${id}`);
       return data
     } catch (error) {
-      return rejectWithValue(error.response.data)
+      return rejectApiError(error, rejectWithValue);
     }
   }
 )
@@ -96,8 +107,7 @@ export const getUsuariosPaginado = createAsyncThunk(
       const { data } = await clienteAxios.get(`/usuarios/pageable`, { params });
       return data
     } catch (error) {
-
-      return rejectWithValue(error.response.data)
+      return rejectApiError(error, rejectWithValue);
     }
   }
 )
@@ -111,7 +121,7 @@ export const modificarUsuario = createAsyncThunk(
       const { data } = await clienteAxios.put(`/usuarios`, values);
       return data
     } catch (error) {
-      return rejectWithValue(error.response.data)
+      return rejectApiError(error, rejectWithValue);
     }
   }
 )
@@ -168,8 +178,8 @@ const usuarioSlice = createSlice({
       })
       .addCase(registrarUsuario.rejected, (state, { payload }) => {
         state.loading = false
-        state.code = payload.status
-        state.message = payload.message
+        state.code = payload?.status ?? 0
+        state.message = payload?.message ?? 'No se pudo registrar el usuario'
       })
       .addCase(getUsuario.fulfilled, (state, { payload }) => {
         state.loading = false
@@ -188,8 +198,8 @@ const usuarioSlice = createSlice({
       })
       .addCase(getUsuario.rejected, (state, { payload }) => {
         state.loading = false
-        state.code = payload.status
-        state.message = payload.message
+        state.code = payload?.status ?? 0
+        state.message = payload?.message ?? 'No se pudo obtener el usuario'
       })
       .addCase(getUsuarioPorId.pending, (state) => {
         state.loading = true
@@ -202,8 +212,8 @@ const usuarioSlice = createSlice({
       })
       .addCase(getUsuarioPorId.rejected, (state, { payload }) => {
         state.loading = false
-        state.code = payload.status
-        state.message = payload.message
+        state.code = payload?.status ?? 0
+        state.message = payload?.message ?? 'No se pudo obtener el usuario'
       })
       .addCase(getUsuariosPaginado.pending, (state) => {
         state.loading = true;
@@ -221,8 +231,8 @@ const usuarioSlice = createSlice({
       })
       .addCase(getUsuariosPaginado.rejected, (state, { payload }) => {
         state.loading = false
-        state.code = payload.status
-        state.message = payload.message
+        state.code = payload?.status ?? 0
+        state.message = payload?.message ?? 'No se pudo listar usuarios'
         state.usuarios = []
         state.total = 0
       })
@@ -237,8 +247,8 @@ const usuarioSlice = createSlice({
       })
       .addCase(modificarUsuario.rejected, (state, { payload }) => {
         state.loading = false
-        state.code = payload.status
-        state.message = payload.message
+        state.code = payload?.status ?? 0
+        state.message = payload?.message ?? 'No se pudo modificar el usuario'
         state.usuarios = []
       })
       .addCase(eliminarUsuario.pending, (state) => {

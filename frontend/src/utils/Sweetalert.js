@@ -1,5 +1,5 @@
 import Swal from "sweetalert2";
-import { SWEET_ELIMINO, SWEET_SUCESS } from "./index";
+import { SWEET_ELIMINO, SWEET_SUCESS } from "./Constants";
 
 export const SweetCrud = (title, iconOrMessage, text) => {
     const validIcons = new Set(["success", "error", "warning", "info", "question"]);

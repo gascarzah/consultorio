@@ -57,7 +57,7 @@ Copiar **`backend/.env.example`** a `.env` en el servidor (o definir variables e
 | `FLYWAY_ENABLED` | `true` para aplicar migraciones al arranque |
 | `FLYWAY_VALIDATE_ON_MIGRATE` | `true` recomendado |
 | `FLYWAY_CLEAN_DISABLED` | En **producción** debe ser `true` (no permitir `clean`). Valores actuales del proyecto conviene revisarlos por entorno. |
-| `FLYWAY_CLEAN_ON_VALIDATION_ERROR` | En producción suele ser `false`; `clean` borra objetos de la base. |
+| *(eliminado)* `FLYWAY_CLEAN_ON_VALIDATION_ERROR` | Ya no existe en Flyway 11+ (Boot 3.5). Si falla la validación, corregir migraciones o usar `flyway repair` manualmente. |
 | `CRON_EXPRESSION` | Ajustar zona horaria y política del nuevo entorno |
 | `JWT_SECRET_KEY` | **Nuevo** valor fuerte y codificado en Base64 según lo que espere tu configuración de seguridad |
 | `JWT_EXPIRATION_MS` / `JWT_REFRESH_EXPIRATION_MS` | Política de sesión del ambiente |

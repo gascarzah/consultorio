@@ -38,75 +38,71 @@ const Login = () => {
   };
 
   return (
-    <>
-      <h1 className="text-sky-600 text-center font-black text-6xl ">
-        Inicia Sesión
-      </h1>
+    <div className="space-y-8">
+      <div className="text-center">
+        <h1 className="text-2xl font-semibold tracking-tight text-gray-900">
+          Iniciar sesión
+        </h1>
+        <p className="mt-2 text-sm text-gray-600">
+          Accede al panel del consultorio médico
+        </p>
+      </div>
 
       <Formik
         initialValues={{
           email: "",
           password: "",
         }}
-        onSubmit={(values, { resetForm }) => {
-          handleSubmit(values, resetForm);
+        onSubmit={(values) => {
+          handleSubmit(values);
         }}
         validationSchema={loginSchema}
       >
         {() => (
-            <Form className={"my-10 bg-white shadow rounded p-10"}>
-
-              <div className="my-5">
-                <label
-                  htmlFor="email"
-                  className="uppercase text-gray-600 block font-bold"
-                >
+          <Form className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm sm:p-8">
+            <div className="space-y-5">
+              <div>
+                <label htmlFor="email" className="form-label">
                   Email
                 </label>
                 <Field
                   id="email"
                   type="email"
-                  placeholder="Email"
-                  className="w-full mt-3 p-3 border rounded-xl bg-gray-50"
-                  name={"email"}
+                  placeholder="tu@correo.com"
+                  className="form-input mt-1 block w-full rounded-lg border-gray-300 px-3 py-2.5"
+                  name="email"
                 />
                 <ErrorMessage
                   name="email"
                   component="p"
-                  className="text-red-500 text-sm mt-1"
+                  className="error-message"
                 />
               </div>
-              <div className="my-5">
-                <label
-                  htmlFor="password"
-                  className="uppercase text-gray-600 block font-bold"
-                >
-                  Password
+              <div>
+                <label htmlFor="password" className="form-label">
+                  Contraseña
                 </label>
                 <Field
                   id="password"
                   type="password"
-                  placeholder="Password"
-                  className="w-full mt-3 p-3 border rounded-xl bg-gray-50"
-                  name={"password"}
+                  placeholder="••••••••"
+                  className="form-input mt-1 block w-full rounded-lg border-gray-300 px-3 py-2.5"
+                  name="password"
                 />
                 <ErrorMessage
                   name="password"
                   component="p"
-                  className="text-red-500 text-sm mt-1"
+                  className="error-message"
                 />
               </div>
-
-              <input
-                type="submit"
-                value="Iniciar Sesión"
-                className="bg-sky-700 mb-5 w-full rounded py-3 text-white font-bold
-                uppercase hover:cursor-pointer hover:bg-sky-800 transition-colors"
-              />
-            </Form>
+              <button type="submit" className="btn-primary w-full justify-center py-2.5">
+                Iniciar sesión
+              </button>
+            </div>
+          </Form>
         )}
       </Formik>
-    </>
+    </div>
   );
 };
 

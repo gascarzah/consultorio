@@ -6,7 +6,6 @@ spring:
       ddl-auto: validate
   flyway:
     clean-disabled: true
-    clean-on-validation-error: false
 
 springdoc:
   swagger-ui:

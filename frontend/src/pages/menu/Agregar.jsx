@@ -1,10 +1,11 @@
 import MenuForm from "../../components/form/MenuForm";
+import { FormPage } from "../../components/PageContainer";
 
 const AgregarMenu = () => {
   return (
-    <div className="flex justify-center items-center min-h-screen flex-col">
+    <FormPage title="Nuevo menú" subtitle="Ítem de navegación del panel.">
       <MenuForm />
-    </div>
+    </FormPage>
   );
 };
 

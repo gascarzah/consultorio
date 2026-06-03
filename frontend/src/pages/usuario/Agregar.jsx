@@ -1,10 +1,11 @@
+import { FormPage } from "../../components/PageContainer";
 import UsuarioForm from "../../components/form/UsuarioForm";
 
 const AgregarUsuario = () => {
   return (
-    <div className="flex justify-center items-center flex-col">
+    <FormPage title="Nuevo usuario" subtitle="Asigna empresa, rol y empleado vinculado.">
       <UsuarioForm />
-    </div>
+    </FormPage>
   );
 };
 

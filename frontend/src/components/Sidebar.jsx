@@ -88,63 +88,81 @@ export const Sidebar = ({ isOpen, onToggle }) => {
   }, {});
 
   return (
-    <aside className={`bg-white border-r border-gray-200 h-screen ${isOpen ? 'w-64' : 'w-20'} transition-all duration-300 ease-in-out fixed left-0 top-0 z-50`}>
-      <div className="p-4 flex justify-between items-center border-b border-gray-200">
-        <h2 className={`font-bold text-xl text-sky-800 ${!isOpen && 'hidden'}`}>Consultorio</h2>
-        <button 
+    <>
+      {isOpen && (
+        <button
           type="button"
+          className="fixed inset-0 top-14 z-30 bg-black/40 lg:hidden"
+          aria-label="Cerrar menú"
           onClick={onToggle}
-          className="p-2 rounded-lg hover:bg-gray-100 transition-colors text-gray-500"
-          aria-expanded={isOpen}
-          aria-label={isOpen ? "Contraer menú lateral" : "Expandir menú lateral"}
-        >
-          {isOpen ? (
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 19l-7-7m0 0l7-7m-7 7h18" />
-            </svg>
-          ) : (
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 5l7 7-7 7M5 5l7 7-7 7" />
-            </svg>
-          )}
-        </button>
-      </div>
+        />
+      )}
 
-      <nav className="mt-2 overflow-y-auto h-[calc(100vh-5rem)]">
-        {Object.entries(groupedMenus).map(([category, items]) => (
-          <div key={category} className="mb-4">
-            {isOpen && (
-              <h3 className="px-4 py-2 text-xs uppercase tracking-wider font-semibold text-gray-500">
-                {category}
-              </h3>
+      <aside
+        className={`fixed bottom-0 left-0 top-14 z-40 flex shrink-0 flex-col border-r border-gray-200 bg-gray-50 transition-all duration-300 ease-in-out ${
+          isOpen ? 'w-64 translate-x-0' : '-translate-x-full w-64 lg:translate-x-0 lg:w-20'
+        } lg:static lg:top-auto lg:z-auto lg:min-h-[calc(100dvh-3.5rem)]`}
+      >
+        <div className="flex items-center justify-between border-b border-gray-200 px-4 py-4">
+          <h2 className={`truncate font-semibold text-sky-800 ${!isOpen && 'lg:hidden'}`}>
+            Consultorio
+          </h2>
+          <button
+            type="button"
+            onClick={onToggle}
+            className="hidden rounded-md p-2 text-gray-500 hover:bg-white lg:inline-flex"
+            aria-expanded={isOpen}
+            aria-label={isOpen ? "Contraer menú lateral" : "Expandir menú lateral"}
+          >
+            {isOpen ? (
+              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 19l-7-7m0 0l7-7m-7 7h18" />
+              </svg>
+            ) : (
+              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+              </svg>
             )}
-            <div className="space-y-1 px-2">
-              {items.map((item) => {
-                const to = resolveMenuPath(item.menu.path);
+          </button>
+        </div>
 
-                return (
-                  <NavLink
-                    key={to}
-                    to={to}
-                    end={to === "/dashboard"}
-                    className={({ isActive }) =>
-                      `flex items-center px-3 py-2 text-sm rounded-md transition-colors duration-200 border-l-4 ${
-                        isActive
-                          ? "bg-sky-100 text-sky-800 font-semibold border-sky-600"
-                          : "text-gray-600 hover:bg-gray-50 hover:text-sky-600 border-transparent"
-                      } ${!isOpen ? "justify-center border-l-0" : ""}`
-                    }
-                  >
-                    <span className={`${!isOpen ? "text-center w-full" : ""}`}>
-                      {isOpen ? item.menu.nombre : item.menu.nombre.charAt(0)}
-                    </span>
-                  </NavLink>
-                );
-              })}
+        <nav className="flex-1 overflow-y-auto p-2">
+          {Object.entries(groupedMenus).map(([category, items]) => (
+            <div key={category} className="mb-5">
+              {isOpen && (
+                <p className="px-3 pb-1 pt-2 text-xs font-semibold uppercase tracking-wide text-gray-500">
+                  {category}
+                </p>
+              )}
+              <div className="flex flex-col gap-0.5">
+                {items.map((item) => {
+                  const to = resolveMenuPath(item.menu.path);
+
+                  return (
+                    <NavLink
+                      key={to}
+                      to={to}
+                      end={to === "/dashboard"}
+                      title={!isOpen ? item.menu.nombre : undefined}
+                      className={({ isActive }) =>
+                        `flex w-full items-center rounded-md px-3 py-2.5 text-sm font-medium transition-colors ${
+                          isActive
+                            ? "bg-white text-gray-900 shadow-sm ring-1 ring-gray-200"
+                            : "text-gray-700 hover:bg-white/80 hover:text-gray-900"
+                        } ${!isOpen ? "lg:justify-center lg:px-2" : "gap-2"}`
+                      }
+                    >
+                      <span className={`${!isOpen ? "lg:text-xs lg:font-bold" : "truncate"}`}>
+                        {isOpen ? item.menu.nombre : item.menu.nombre.charAt(0)}
+                      </span>
+                    </NavLink>
+                  );
+                })}
+              </div>
             </div>
-          </div>
-        ))}
-      </nav>
-    </aside>
+          ))}
+        </nav>
+      </aside>
+    </>
   );
 };

@@ -1,11 +1,11 @@
-import {EmpleadoForm} from "../../components";
+import { EmpleadoForm } from "../../components";
+import { FormPage } from "../../components/PageContainer";
 
 const AgregarEmpleado = () => {
   return (
-    <div className="flex justify-center items-center  flex-col">
-
+    <FormPage title="Nuevo empleado" subtitle="Registra datos personales y tipo de personal.">
       <EmpleadoForm />
-    </div>
+    </FormPage>
   );
 };
 

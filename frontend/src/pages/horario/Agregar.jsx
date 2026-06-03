@@ -1,11 +1,11 @@
-import {HorarioForm} from "../../components";
+import { HorarioForm } from "../../components";
+import { FormPage } from "../../components/PageContainer";
 
 const AgregarHorario = () => {
   return (
-    <div className="flex justify-center items-center  flex-col">
-
+    <FormPage title="Nuevo horario" subtitle="Bloques horarios por empresa.">
       <HorarioForm />
-    </div>
+    </FormPage>
   );
 };
 

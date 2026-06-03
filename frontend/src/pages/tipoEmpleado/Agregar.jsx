@@ -1,11 +1,11 @@
-
 import TipoEmpleadoForm from "../../components/form/TipoEmpleadoForm";
+import { FormPage } from "../../components/PageContainer";
 
 const AgregarTipoEmpleado = () => {
   return (
-    <div className="flex justify-center items-center  flex-col ">
+    <FormPage title="Nuevo tipo de empleado" subtitle="Define roles operativos del personal.">
       <TipoEmpleadoForm />
-    </div>
+    </FormPage>
   );
 };
 

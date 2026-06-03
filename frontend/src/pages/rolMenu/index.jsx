@@ -1,17 +1,45 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import { Formik, Field, Form, ErrorMessage } from "formik"; // Usamos Formik, Field, Form y ErrorMessage aquí
+import { Formik, Field, Form, ErrorMessage } from "formik";
 import { getRoles } from "../../slices/rolSlice";
-import { clearRolMenuEditorState, getMenusPorRol, getMenusPorRolTodo, registrarRolMenu } from "../../slices/rolMenuSlice";
+import {
+  clearRolMenuEditorState,
+  getMenusPorRol,
+  getMenusPorRolTodo,
+  registrarRolMenu,
+} from "../../slices/rolMenuSlice";
+import { FormPage } from "../../components/PageContainer";
 import { VALIDATION_MESSAGES } from "../../utils/ValidationMessages";
 import { SWEET_GUARDO, SWEET_SUCESS, SweetCrud } from "../../utils";
 
-// Esquema de validación con Yup
 const menuSchema = Yup.object().shape({
   idRol: Yup.string().required(VALIDATION_MESSAGES.REQUIRED.ROL),
 });
+
+const CATEGORY_ORDER = {
+  "Gestión Principal": 1,
+  "Gestión Médica": 2,
+  Administración: 3,
+  Configuración: 4,
+};
+
+function groupMenusByCategory(menus) {
+  const grouped = menus.reduce((acc, menu) => {
+    const category = menu.categoriaNombre || "Sin categoría";
+    if (!acc[category]) acc[category] = [];
+    acc[category].push(menu);
+    return acc;
+  }, {});
+
+  return Object.entries(grouped).sort(([a], [b]) => {
+    const orderA = CATEGORY_ORDER[a] ?? 99;
+    const orderB = CATEGORY_ORDER[b] ?? 99;
+    if (orderA !== orderB) return orderA - orderB;
+    return a.localeCompare(b, "es", { sensitivity: "base" });
+  });
+}
 
 const MantenimientoRolMenu = () => {
   const [selectedItems, setSelectedItems] = useState([]);
@@ -29,20 +57,28 @@ const MantenimientoRolMenu = () => {
     };
   }, [dispatch]);
 
-  // Efecto para actualizar los menús seleccionados cuando cambian los rolMenus
   useEffect(() => {
     if (rolMenus.length > 0) {
-      setSelectedItems(rolMenus.filter(menu => menu.activo).map(menu => menu.idMenu));
+      setSelectedItems(
+        rolMenus.filter((menu) => menu.activo).map((menu) => menu.idMenu)
+      );
       return;
     }
     setSelectedItems([]);
   }, [rolMenus]);
 
-  // Maneja la sumisión del formulario
+  const groupedMenus = useMemo(
+    () => groupMenusByCategory(rolMenus || []),
+    [rolMenus]
+  );
+
+  const allSelected =
+    rolMenus.length > 0 && selectedItems.length === rolMenus.length;
+
   const handleOnSubmit = (values) => {
     dispatch(registrarRolMenu({ ...values, idsMenu: selectedItems }))
       .unwrap()
-      .then((resultado) => {
+      .then(() => {
         if (rolLogueado?.idRol) {
           dispatch(getMenusPorRolTodo(rolLogueado.idRol));
         }
@@ -50,53 +86,60 @@ const MantenimientoRolMenu = () => {
         navigate("/dashboard");
       })
       .catch((error_) => {
-        SweetCrud('Error', error_?.message || 'No se pudo guardar');
+        SweetCrud("Error", error_?.message || "No se pudo guardar");
       });
   };
 
-  const checkboxHandler = (e) => {
-    const value = Number.parseInt(e.target.value, 10);
+  const toggleMenu = (idMenu) => {
     setSelectedItems((prev) =>
-      e.target.checked ? [...prev, value] : prev.filter((id) => id !== value)
+      prev.includes(idMenu)
+        ? prev.filter((id) => id !== idMenu)
+        : [...prev, idMenu]
     );
   };
 
   const checkAllHandler = () => {
-    setSelectedItems(selectedItems.length === rolMenus.length ? [] : rolMenus.map((menu) => menu.idMenu));
+    setSelectedItems(
+      allSelected ? [] : rolMenus.map((menu) => menu.idMenu)
+    );
   };
 
   const handleOnChange = (e, setFieldValue) => {
     const idRol = e.target.value;
     setFieldValue("idRol", idRol);
-    setSelectedItems([]); // Reinicia los seleccionados al cambiar de rol
-    dispatch(getMenusPorRol(idRol));
+    setSelectedItems([]);
+    if (idRol) {
+      dispatch(getMenusPorRol(idRol));
+    } else {
+      dispatch(clearRolMenuEditorState());
+    }
   };
 
   return (
-    <Formik
-      initialValues={{ idRol: "" }}
-      validationSchema={menuSchema}
-      onSubmit={handleOnSubmit}
+    <FormPage
+      title="Asignar menús por rol"
+      subtitle="Elige un rol y marca los módulos a los que tendrá acceso."
+      maxWidth="max-w-4xl"
     >
-      {({ setFieldValue }) => (
-        <Form className="my-10 bg-white shadow rounded flex-col w-full">
-          <h1 className="text-sky-500 font-black text-3xl capitalize text-center mb-8">
-            Asignar Menús por Rol
-          </h1>
-            <div className="my-5">
-              <label htmlFor="idRol" className="uppercase text-gray-600 block font-bold">
+      <Formik
+        initialValues={{ idRol: "" }}
+        validationSchema={menuSchema}
+        onSubmit={handleOnSubmit}
+      >
+        {({ setFieldValue, values }) => (
+          <Form className="space-y-8">
+            <div className="form-group max-w-md">
+              <label htmlFor="idRol" className="form-label">
                 Rol
               </label>
               <Field
                 as="select"
+                id="idRol"
                 name="idRol"
-                className="w-full mt-3 p-3 border rounded-xl bg-gray-50"
+                className="form-input mt-1 w-full rounded-lg border-gray-300 px-3 py-2.5"
                 onChange={(e) => handleOnChange(e, setFieldValue)}
               >
-                <option value="" label="Selecciona un rol">
-                  Select un Rol
-                </option>
-
+                <option value="">Selecciona un rol</option>
                 {roles?.map((role) => (
                   <option key={role.idRol} value={role.idRol}>
                     {role.nombre}
@@ -105,55 +148,114 @@ const MantenimientoRolMenu = () => {
               </Field>
               <ErrorMessage
                 name="idRol"
-                component="div"
-                className="text-red-500 text-sm mt-1"
+                component="p"
+                className="error-message"
               />
             </div>
 
-            <div className="my-5">
+            {values.idRol && (
+              <div className="space-y-5">
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                  <div>
+                    <h2 className="text-base font-semibold text-gray-900">
+                      Menús disponibles
+                    </h2>
+                    <p className="mt-1 text-sm text-gray-600">
+                      {selectedItems.length} de {rolMenus.length} seleccionados
+                    </p>
+                  </div>
+                  {rolMenus.length > 0 && (
+                    <button
+                      type="button"
+                      onClick={checkAllHandler}
+                      className="btn-secondary shrink-0"
+                    >
+                      {allSelected ? "Deseleccionar todos" : "Seleccionar todos"}
+                    </button>
+                  )}
+                </div>
+
+                {rolMenus.length > 0 ? (
+                  <div className="space-y-6">
+                    {groupedMenus.map(([category, items]) => (
+                      <section key={category} className="space-y-3">
+                        <h3 className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+                          {category}
+                        </h3>
+                        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                          {items.map((menu) => {
+                            const checked = selectedItems.includes(menu.idMenu);
+                            return (
+                              <label
+                                key={menu.idMenu}
+                                className={`flex cursor-pointer items-start gap-3 rounded-lg border p-4 transition-colors ${
+                                  checked
+                                    ? "border-sky-300 bg-sky-50 ring-1 ring-sky-200"
+                                    : "border-gray-200 bg-white hover:border-gray-300 hover:bg-gray-50"
+                                }`}
+                              >
+                                <input
+                                  type="checkbox"
+                                  value={menu.idMenu}
+                                  checked={checked}
+                                  onChange={() => toggleMenu(menu.idMenu)}
+                                  className="mt-0.5 h-4 w-4 rounded border-gray-300 text-sky-600 focus:ring-sky-500"
+                                />
+                                <span className="min-w-0 flex-1">
+                                  <span className="block text-sm font-medium text-gray-900">
+                                    {menu.nombre}
+                                  </span>
+                                  {menu.path && (
+                                    <span className="mt-0.5 block truncate text-xs text-gray-500">
+                                      {menu.path}
+                                    </span>
+                                  )}
+                                </span>
+                              </label>
+                            );
+                          })}
+                        </div>
+                      </section>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="rounded-lg border border-dashed border-gray-300 bg-gray-50 px-6 py-10 text-center">
+                    <p className="text-sm text-gray-600">
+                      No hay menús para este rol.
+                    </p>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {!values.idRol && (
+              <div className="rounded-lg border border-dashed border-gray-300 bg-gray-50 px-6 py-10 text-center">
+                <p className="text-sm text-gray-600">
+                  Selecciona un rol para ver y asignar menús.
+                </p>
+              </div>
+            )}
+
+            <div className="form-actions">
               <button
                 type="button"
-                onClick={checkAllHandler}
-                className="relative block rounded bg-sky-600 py-1.5 px-3 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-white"
+                className="btn-secondary"
+                onClick={() => navigate("/dashboard")}
               >
-                {rolMenus && rolMenus.length === selectedItems.length
-                  ? "DesSeleccionar Todos"
-                  : "Seleccionar Todos"}
+                Cancelar
+              </button>
+              <button
+                type="submit"
+                className="btn-primary"
+                disabled={!values.idRol || rolMenus.length === 0}
+              >
+                Guardar asignación
               </button>
             </div>
-
-            <div className="my-5">
-              <h3 className="text-lg font-bold">Seleccionar Menús</h3>
-              {rolMenus && rolMenus.length > 0 ? (
-                <div className="grid grid-cols-5 gap-4">
-                  {rolMenus.map((menu) => (
-                    <label key={menu.idMenu} className="flex items-center space-x-2">
-                      <input
-                        type="checkbox"
-                        value={menu.idMenu}
-                        checked={selectedItems.includes(menu.idMenu)}
-                        onChange={checkboxHandler}
-                        className="form-checkbox h-5 w-5 text-sky-600"
-                      />
-                      <span className="text-gray-700">{menu.nombre}</span>
-                    </label>
-                  ))}
-                </div>
-              ) : (
-                <p className="text-gray-600">No hay menús disponibles</p>
-              )}
-            </div>
-
-          <div className="">
-            <input
-              type="submit"
-              value="Registrar Menú"
-              className="bg-sky-500 hover:bg-sky-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 w-full uppercase"
-            />
-          </div>
-        </Form>
-      )}
-    </Formik>
+          </Form>
+        )}
+      </Formik>
+    </FormPage>
   );
 };
 
