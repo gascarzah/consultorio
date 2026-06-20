@@ -15,6 +15,7 @@ public class DatabaseConnectionLogger implements ApplicationListener<Application
     ConfigurableEnvironment env = event.getEnvironment();
     String url = env.getProperty("DB_URL", "(no definido)");
     String user = env.getProperty("DB_USERNAME", "(no definido)");
-    log.info("Conexión BD configurada: user={} url={}", user, url);
+    String schema = env.getProperty("DB_SCHEMA", "consultorio");
+    log.info("Conexión BD configurada: user={} schema={} url={}", user, schema, url);
   }
 }

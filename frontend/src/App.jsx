@@ -75,10 +75,17 @@ function NavigateFunctionComponent() {
 
 const allowPublicRegister = import.meta.env.VITE_ALLOW_PUBLIC_REGISTER !== "false";
 
+/** En producción: /consultorios (gafah.dev/consultorios). En dev: raíz. */
+const routerBasename =
+  import.meta.env.BASE_URL?.replace(/\/$/, "") || undefined;
+
 function App() {
   return (
     <Provider store={store}>
-      <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+      <BrowserRouter
+        basename={routerBasename}
+        future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
+      >
         <NavigateFunctionComponent />
         <ToastContainer
           position="top-right"

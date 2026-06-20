@@ -2,8 +2,9 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { visualizer } from 'rollup-plugin-visualizer'
 
-// Configuración optimizada para producción
+// Configuración optimizada para producción (subpath en gafah.dev/consultorios)
 export default defineConfig({
+  base: '/consultorios/',
   plugins: [
     react(),
     visualizer({

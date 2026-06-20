@@ -1,0 +1,19 @@
+[Unit]
+Description=Consultorio Backend (Spring Boot)
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=%h/consultorio
+EnvironmentFile=%h/consultorio/.env
+Environment=JAVA_TOOL_OPTIONS=-XX:+UseSerialGC -XX:MaxMetaspaceSize=96m -Dspring.backgroundpreinitializer.ignore=true
+ExecStart=/usr/bin/java -Xms48m -Xmx192m -jar %h/consultorio/app.jar
+StandardOutput=append:%h/consultorio/logs/backend.log
+StandardError=append:%h/consultorio/logs/backend.log
+Restart=always
+RestartSec=15
+TimeoutStopSec=30
+KillSignal=SIGTERM
+
+[Install]
+WantedBy=default.target

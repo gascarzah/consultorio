@@ -92,7 +92,11 @@ public final class DotenvLoader {
     String host = portColon >= 0 ? hostPort.substring(0, portColon) : hostPort;
     String port = portColon >= 0 ? hostPort.substring(portColon + 1) : "5432";
 
-    properties.put("DB_URL", "jdbc:postgresql://" + host + ":" + port + "/" + database);
+    String schema = properties.getOrDefault("DB_SCHEMA", "consultorio");
+    properties.putIfAbsent("DB_SCHEMA", schema);
+    properties.put(
+        "DB_URL",
+        "jdbc:postgresql://" + host + ":" + port + "/" + database + "?currentSchema=" + schema);
     properties.put("DB_USERNAME", user);
     properties.put("DB_PASSWORD", pass);
   }

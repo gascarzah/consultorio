@@ -1,0 +1,34 @@
+# Perfil local / desarrollo (SPRING_PROFILES_ACTIVE=dev)
+spring:
+  jpa:
+    show-sql: ${JPA_SHOW_SQL:true}
+    hibernate:
+      ddl-auto: ${JPA_DDL_AUTO:update}
+  flyway:
+    clean-disabled: ${FLYWAY_CLEAN_DISABLED:false}
+
+springdoc:
+  swagger-ui:
+    enabled: true
+  api-docs:
+    enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+# Solo para desarrollo (NO usar en producción)
+app:
+  seed:
+    demo-enabled: false
+    super-gafah:
+      enabled: true
+      email: ga@correo.com
+      password: super-gafah-admin
+      empresa: gafah
+      nombres: GIOVANNI
+      apellido-paterno: ASCARZA
+      apellido-materno: HINOSTROZA
+      numero-documento: "41181764"
