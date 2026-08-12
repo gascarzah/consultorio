@@ -27,7 +27,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RestController
 @RequestMapping("/historiasClinicas")
 @AllArgsConstructor
-@PreAuthorize("@authz.isSuperOrAdmin()")
+@PreAuthorize("@authz.canAccessApp()")
 @Tag(name = "HistoriaClinica", description = "Operaciones sobre historias clínicas")
 public class HistoriaClinicaController {
 
@@ -131,9 +131,8 @@ public class HistoriaClinicaController {
 		} else {
 			paginas = iHistoriaClinicaService.listarPageable(pageable);
 		}
-		if (paginas.isEmpty()) {
-			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-		}
-		return new ResponseEntity<Page<HistoriaClinicaResponse>>(paginas, HttpStatus.OK);
+		// Siempre 200 con Page (aunque content esté vacío) para que el frontend
+		// pueda leer totalElements sin tratar 204 como lista rota.
+		return new ResponseEntity<>(paginas, HttpStatus.OK);
 	}
 }

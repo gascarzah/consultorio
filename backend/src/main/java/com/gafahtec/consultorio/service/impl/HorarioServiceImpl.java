@@ -60,7 +60,9 @@ public class HorarioServiceImpl implements IHorarioService {
 				.filter(Horario::getActivo)
 				.orElseThrow(() -> new IllegalArgumentException("Horario no encontrado: " + request.getIdHorario()));
 		horario.setDescripcion(request.getDescripcion());
-		horario.setIdEmpresa(request.getIdEmpresa());
+		if (request.getIdEmpresa() != null) {
+			horario.setIdEmpresa(request.getIdEmpresa());
+		}
 		var obj = iHorarioRepository.save(horario);
 
 		log.info("objeto creado {}", obj);

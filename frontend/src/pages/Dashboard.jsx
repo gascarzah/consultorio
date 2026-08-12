@@ -104,7 +104,6 @@ const Dashboard = () => {
 
   return (
     <PageContainer 
-      title="Dashboard"
       actionButton={
         <button
           type="button"

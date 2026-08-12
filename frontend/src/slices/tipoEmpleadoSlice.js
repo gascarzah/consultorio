@@ -49,8 +49,9 @@ export const getTipoEmpleado = asyncThunkCreator('tipoEmpleados/get',
 
 export const getTipoEmpleados = createAsyncThunk('tipoEmpleados/getAll', async (params, { rejectWithValue }) => {
   try {
-    const { data } = await clienteAxios.get('/tipo-empleados');
-    return data;
+    const response = await clienteAxios.get('/tipo-empleados');
+    if (response.status === 204 || !response.data) return [];
+    return Array.isArray(response.data) ? response.data : [];
   } catch (error) {
     console.error('Error en getTipoEmpleados:', error);
     return rejectWithValue(error.response?.data || { message: 'Error desconocido', status: 500 });

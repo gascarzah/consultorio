@@ -1,3 +1,4 @@
+import { VALIDATION_MESSAGES } from "../../utils/ValidationMessages";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import {HistoriaClinicaForm} from "../../components";
@@ -29,7 +30,13 @@ const EditarHistoriaClinica = () => {
         if (isMounted) setHistoriaClinica(resultado);
       })
       .catch((err) => {
-        if (isMounted) setError(err?.message || "No se pudo cargar la historia clínica.");
+        if (isMounted) {
+          const msg =
+            typeof err === "string"
+              ? err
+              : err?.message || VALIDATION_MESSAGES.ERROR.NO_SE_PUDO_CARGAR;
+          setError(msg);
+        }
       })
       .finally(() => {
         if (isMounted) setLoading(false);
@@ -47,15 +54,7 @@ const EditarHistoriaClinica = () => {
     return <div className="text-center py-10 text-red-600">{error}</div>;
   }
 
-  return (
-    <>
-      <h1 className=" text-sky-600 font-black text-3xl capitalize text-center">
-        Editar HistoriaClinica
-      </h1>
-
-      <HistoriaClinicaForm historiaclinica={historiaclinica} />
-    </>
-  );
+  return <HistoriaClinicaForm historiaclinica={historiaclinica} />;
 };
 
 export default EditarHistoriaClinica;

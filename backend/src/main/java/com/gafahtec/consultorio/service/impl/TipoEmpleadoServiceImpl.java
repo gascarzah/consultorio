@@ -28,8 +28,12 @@ public class TipoEmpleadoServiceImpl implements ITipoEmpleadoService {
 
     @Override
     public TipoEmpleadoResponse registrar(TipoEmpleadoRequest request) {
+        String nombre = request.getNombre() != null ? request.getNombre().trim() : null;
+        if (nombre != null && iTipoEmpleadoRepository.existsByActivoTrueAndNombreIgnoreCase(nombre)) {
+            throw new IllegalArgumentException("Ya existe un tipo de empleado activo con el nombre: " + nombre);
+        }
         var obj = iTipoEmpleadoRepository.save(TipoEmpleado.builder()
-                .nombre(request.getNombre())
+                .nombre(nombre)
                 .descripcion(request.getDescripcion())
                 .activo(request.getActivo() != null ? request.getActivo() : true)
                 .build());
@@ -38,13 +42,20 @@ public class TipoEmpleadoServiceImpl implements ITipoEmpleadoService {
 
     @Override
     public TipoEmpleadoResponse modificar(TipoEmpleadoRequest request) {
-        var obj = iTipoEmpleadoRepository.save(TipoEmpleado.builder()
-                .idTipoEmpleado(request.getIdTipoEmpleado())
-                .nombre(request.getNombre())
-                .descripcion(request.getDescripcion())
-                .activo(request.getActivo())
-                .build());
-        return entityToResponse(obj);
+        String nombre = request.getNombre() != null ? request.getNombre().trim() : null;
+        if (nombre != null && iTipoEmpleadoRepository
+                .existsByActivoTrueAndNombreIgnoreCaseAndIdTipoEmpleadoNot(nombre, request.getIdTipoEmpleado())) {
+            throw new IllegalArgumentException("Ya existe un tipo de empleado activo con el nombre: " + nombre);
+        }
+        var existente = iTipoEmpleadoRepository.findById(request.getIdTipoEmpleado())
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Tipo de empleado no encontrado con ID: " + request.getIdTipoEmpleado()));
+        existente.setNombre(nombre);
+        existente.setDescripcion(request.getDescripcion());
+        if (request.getActivo() != null) {
+            existente.setActivo(request.getActivo());
+        }
+        return entityToResponse(iTipoEmpleadoRepository.save(existente));
     }
 
     @Override

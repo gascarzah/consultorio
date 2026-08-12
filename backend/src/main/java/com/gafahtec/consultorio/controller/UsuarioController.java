@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.gafahtec.consultorio.dto.request.UsuarioRequest;
 import com.gafahtec.consultorio.exception.ResourceNotFoundException;
 import com.gafahtec.consultorio.model.auth.Usuario;
+import com.gafahtec.consultorio.security.CurrentUserService;
 import com.gafahtec.consultorio.service.IUsuarioService;
 
 import lombok.RequiredArgsConstructor;
@@ -33,11 +34,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/usuarios")
 @RequiredArgsConstructor
 @Log4j2
-@PreAuthorize("@authz.isSuperOrAdmin()")
 @Tag(name = "Usuario", description = "Operaciones sobre usuarios")
 public class UsuarioController {
 
     private final IUsuarioService iUsuarioService;
+    private final CurrentUserService currentUserService;
 
     @Operation(summary = "Registrar usuario", description = "Registra un nuevo usuario.")
     @ApiResponses({
@@ -46,6 +47,7 @@ public class UsuarioController {
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
     @PostMapping
+    @PreAuthorize("permitAll()")
     public ResponseEntity<Usuario> register(
             @RequestBody UsuarioRequest request) {
 
@@ -65,6 +67,7 @@ public class UsuarioController {
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
     @PutMapping
+    @PreAuthorize("@authz.isSuperOrAdmin()")
     public ResponseEntity<Usuario> modificar(@RequestBody UsuarioRequest usuarioRequest) throws Exception {
         Usuario obj = iUsuarioService.modificarUsuario(usuarioRequest);
 
@@ -76,18 +79,33 @@ public class UsuarioController {
         return new ResponseEntity<>(obj, HttpStatus.OK);
     }
 
+    @Operation(summary = "Obtener perfil del usuario autenticado", description = "Devuelve el usuario de la sesión actual.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Consulta exitosa"),
+            @ApiResponse(responseCode = "401", description = "No autenticado"),
+            @ApiResponse(responseCode = "404", description = "Usuario no encontrado")
+    })
+    @GetMapping("/me")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<Usuario> getMe() {
+        var obj = currentUserService.getCurrentUsuario()
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario de sesión no encontrado"));
+        return ResponseEntity.ok(obj);
+    }
+
     @Operation(summary = "Obtener usuario por email", description = "Obtiene un usuario por su email.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Consulta exitosa"),
             @ApiResponse(responseCode = "404", description = "Usuario no encontrado"),
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
-    @GetMapping("/{email}")
+    @GetMapping("/{email:.+}")
+    @PreAuthorize("@authz.isSuperOrAdmin() or @authz.isCurrentUser(#email)")
     public ResponseEntity<Usuario> getUsuarioPorEmail(@PathVariable("email") String email) throws Exception {
         var obj = iUsuarioService.findByEmail(email);
         log.info("===> obtien {}", obj);
         if (obj.isEmpty()) {
-            throw new RuntimeException("Email no encontrado " + email);
+            throw new ResourceNotFoundException("Email no encontrado " + email);
         }
 
         return new ResponseEntity<Usuario>(obj.get(), HttpStatus.OK);
@@ -100,6 +118,7 @@ public class UsuarioController {
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
     @DeleteMapping("/{id}")
+    @PreAuthorize("@authz.isSuperOrAdmin()")
     public ResponseEntity<Void> eliminar(@PathVariable("id") Integer id) throws Exception {
         iUsuarioService.eliminar(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -111,6 +130,7 @@ public class UsuarioController {
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
     @GetMapping("/pageable")
+    @PreAuthorize("@authz.isSuperOrAdmin()")
     public ResponseEntity<Page<Usuario>> listarPageable(
             @PageableDefault(sort = "idUsuario", direction = Sort.Direction.DESC) Pageable pageable,
             @RequestParam(required = false) String search) throws Exception {
@@ -133,11 +153,12 @@ public class UsuarioController {
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
     @GetMapping("/id/{id}")
+    @PreAuthorize("@authz.isSuperOrAdmin()")
     public ResponseEntity<Usuario> getUsuarioPorId(@PathVariable("id") Integer id) throws Exception {
         Usuario obj = iUsuarioService.getUsuarioPorId(id);
 
         if (obj.getEmail() == null) {
-            throw new RuntimeException("Email no encontrado " + id);
+            throw new ResourceNotFoundException("Email no encontrado " + id);
         }
 
         return new ResponseEntity<Usuario>(obj, HttpStatus.OK);

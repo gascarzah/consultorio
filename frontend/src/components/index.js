@@ -1,3 +1,4 @@
+export * from './VoiceDictationField';
 export * from './AtencionDetalleModal';
 export * from './Header';
 // export * from './MyCalendar';

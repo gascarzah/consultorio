@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.gafahtec.consultorio.dto.request.ProgramacionRequest;
 import com.gafahtec.consultorio.dto.response.ProgramacionResponse;
 import com.gafahtec.consultorio.exception.ResourceNotFoundException;
+import com.gafahtec.consultorio.security.CurrentUserService;
 import com.gafahtec.consultorio.service.IProgramacionService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -35,11 +36,12 @@ import lombok.extern.log4j.Log4j2;
 @RequestMapping("/programaciones")
 @AllArgsConstructor
 @Log4j2
-@PreAuthorize("@authz.isSuperOrAdmin()")
+@PreAuthorize("@authz.canAccessApp()")
 @Tag(name = "Programacion", description = "Operaciones sobre programaciones")
 public class ProgramacionController {
 
     private IProgramacionService iProgramacionService;
+    private CurrentUserService currentUserService;
 
     @Operation(summary = "Listar programaciones", description = "Obtiene todas las programaciones registradas.")
     @ApiResponses({
@@ -80,8 +82,15 @@ public class ProgramacionController {
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
     @GetMapping("/activo")
-    public ResponseEntity<ProgramacionResponse> programacionActivo() throws Exception {
-        var list = iProgramacionService.programacionActivo().stream().findFirst()
+    public ResponseEntity<ProgramacionResponse> programacionActivo(
+            @RequestParam(required = false) Integer idEmpresa) throws Exception {
+        Integer empresaFiltro = idEmpresa;
+        if (empresaFiltro == null) {
+            empresaFiltro = currentUserService.getEmpresaRestringidaParaAdmin();
+        } else {
+            currentUserService.assertCanAccessEmpresa(empresaFiltro);
+        }
+        var list = iProgramacionService.programacionActivo(empresaFiltro).stream().findFirst()
                 .orElseThrow(() -> new ResourceNotFoundException("programacion activa no encontrado "));
 
         return new ResponseEntity<>(list, HttpStatus.OK);

@@ -15,9 +15,9 @@ import { VALIDATION_MESSAGES } from "../../utils/ValidationMessages";
 const categoriaMenuSchema = Yup.object().shape({
   nombre: Yup.string().required(VALIDATION_MESSAGES.REQUIRED.NOMBRE),
   orden: Yup.number()
-    .typeError("El orden debe ser numérico")
-    .integer("El orden debe ser un número entero")
-    .required("El orden es obligatorio"),
+    .typeError(VALIDATION_MESSAGES.FORMAT.ORDEN_NUMERICO)
+    .integer(VALIDATION_MESSAGES.FORMAT.ORDEN_ENTERO)
+    .required(VALIDATION_MESSAGES.REQUIRED.ORDEN),
 });
 
 const CategoriaMenuForm = ({ categoriaMenu }) => {
@@ -36,7 +36,7 @@ const CategoriaMenuForm = ({ categoriaMenu }) => {
           navigate("/dashboard/listar-categoria-menu");
         })
         .catch((errores) => {
-          SweetCrud("Error", errores.message || "No se pudo guardar");
+          SweetCrud(VALIDATION_MESSAGES.ERROR.TITULO, errores.message || VALIDATION_MESSAGES.ERROR.NO_SE_PUDO_GUARDAR);
         });
     } else {
       dispatch(modificarCategoriaMenu(payload))
@@ -47,7 +47,7 @@ const CategoriaMenuForm = ({ categoriaMenu }) => {
           navigate("/dashboard/listar-categoria-menu");
         })
         .catch((errores) => {
-          SweetCrud("Error", errores.message || "No se pudo modificar");
+          SweetCrud(VALIDATION_MESSAGES.ERROR.TITULO, errores.message || VALIDATION_MESSAGES.ERROR.NO_SE_PUDO_MODIFICAR);
         });
     }
     setSubmitting(false);
@@ -66,9 +66,6 @@ const CategoriaMenuForm = ({ categoriaMenu }) => {
     >
       {({ isSubmitting }) => (
         <Form className="my-10 bg-white shadow rounded p-10 flex flex-col w-2/5">
-          <h1 className="text-sky-500 font-black text-3xl capitalize text-center mb-8">
-            {categoriaMenu?.idCategoria ? "Editar Categoría" : "Registrar Categoría"}
-          </h1>
           <div className="my-3">
             <label htmlFor="nombre" className="uppercase text-gray-600 block font-bold">
               Nombre

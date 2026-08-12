@@ -21,7 +21,7 @@ const EditarProgramacion = () => {
   }, [dispatch, id]);
 
   return (
-    <div className="flex justify-center items-center min-h-screen flex-col">
+    <div className="flex justify-center items-center flex-col">
       <ProgramacionForm programacion={programacion} />
     </div>
   );

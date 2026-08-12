@@ -1,3 +1,4 @@
+import { VALIDATION_MESSAGES } from "../../utils/ValidationMessages";
 import { useState, useEffect } from "react";
 
 import { useParams } from "react-router-dom";
@@ -28,7 +29,7 @@ const EditarHorario = () => {
         if (isMounted) setHorario(resultado);
       })
       .catch((err) => {
-        if (isMounted) setError(err?.message || "No se pudo cargar el horario.");
+        if (isMounted) setError(err?.message || VALIDATION_MESSAGES.ERROR.NO_SE_PUDO_CARGAR);
       })
       .finally(() => {
         if (isMounted) setLoading(false);

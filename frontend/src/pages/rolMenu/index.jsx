@@ -50,7 +50,7 @@ const MantenimientoRolMenu = () => {
         navigate("/dashboard");
       })
       .catch((error_) => {
-        SweetCrud('Error', error_?.message || 'No se pudo guardar');
+        SweetCrud(VALIDATION_MESSAGES.ERROR.TITULO, error_?.message || VALIDATION_MESSAGES.ERROR.NO_SE_PUDO_GUARDAR);
       });
   };
 
@@ -79,10 +79,7 @@ const MantenimientoRolMenu = () => {
       onSubmit={handleOnSubmit}
     >
       {({ setFieldValue }) => (
-        <Form className="my-10 bg-white shadow rounded flex-col w-full">
-          <h1 className="text-sky-500 font-black text-3xl capitalize text-center mb-8">
-            Asignar Menús por Rol
-          </h1>
+        <Form className="bg-white shadow-sm border border-gray-200 rounded-lg p-6 md:p-8 flex-col w-full">
             <div className="my-5">
               <label htmlFor="idRol" className="uppercase text-gray-600 block font-bold">
                 Rol
@@ -93,9 +90,7 @@ const MantenimientoRolMenu = () => {
                 className="w-full mt-3 p-3 border rounded-xl bg-gray-50"
                 onChange={(e) => handleOnChange(e, setFieldValue)}
               >
-                <option value="" label="Selecciona un rol">
-                  Select un Rol
-                </option>
+                <option value="">Selecciona un rol</option>
 
                 {roles?.map((role) => (
                   <option key={role.idRol} value={role.idRol}>

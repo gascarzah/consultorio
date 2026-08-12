@@ -10,13 +10,15 @@ import { getUsuario, modificarUsuario, registrarUsuario } from "../../slices/usu
 import { VALIDATION_MESSAGES } from "../../utils/ValidationMessages";
 import { SWEET_GUARDO, SWEET_MODIFICO, SWEET_SUCESS, SweetCrud } from "../../utils";
 
-// Esquema de validación con Yup
-const usuarioSchema = Yup.object().shape({
-  email: Yup.string().email("Email no válido").required("El email es obligatorio"),
-  idEmpresa: Yup.string().required(VALIDATION_MESSAGES.REQUIRED.EMPRESA),
-  idRol: Yup.string().required(VALIDATION_MESSAGES.REQUIRED.ROL),
-  idEmpleado: Yup.string().required(VALIDATION_MESSAGES.REQUIRED.MEDICO),
-});
+const buildUsuarioSchema = (isSuper) =>
+  Yup.object().shape({
+    email: Yup.string().email(VALIDATION_MESSAGES.FORMAT.EMAIL_INVALID).required(VALIDATION_MESSAGES.REQUIRED.EMAIL),
+    idEmpresa: isSuper
+      ? Yup.string().required(VALIDATION_MESSAGES.REQUIRED.EMPRESA)
+      : Yup.string().nullable(),
+    idRol: Yup.string().required(VALIDATION_MESSAGES.REQUIRED.ROL),
+    idEmpleado: Yup.string().required(VALIDATION_MESSAGES.REQUIRED.EMPLEADO),
+  });
 
 const UsuarioForm = ({ usuario }) => {
   const { roles } = useSelector((state) => state.rol);
@@ -57,7 +59,7 @@ const UsuarioForm = ({ usuario }) => {
   const handleOnSubmit = (values) => {
     const idEmpresaToSend = isSuper ? Number(values.idEmpresa) : Number(user?.idEmpresa || values.idEmpresa);
     if (!idEmpresaToSend) {
-      SweetCrud("Error", "No se pudo determinar la empresa del usuario ADMIN");
+      SweetCrud(VALIDATION_MESSAGES.ERROR.TITULO, VALIDATION_MESSAGES.ERROR.EMPRESA_NO_DETERMINADA);
       return;
     }
     const request = {
@@ -77,7 +79,7 @@ const UsuarioForm = ({ usuario }) => {
       })
       .catch((error_) => {
         const message = typeof error_ === "string" ? error_ : error_?.message;
-        SweetCrud("Error", "error", message || "No se pudo guardar");
+        SweetCrud(VALIDATION_MESSAGES.ERROR.TITULO, message || VALIDATION_MESSAGES.ERROR.NO_SE_PUDO_GUARDAR);
       });
   };
 
@@ -89,15 +91,12 @@ const UsuarioForm = ({ usuario }) => {
         idRol: String(usuario?.idRol ?? usuario?.roles?.[0]?.idRol ?? ""),
         idEmpleado: String(usuario?.idEmpleado ?? usuario?.empleado?.idEmpleado ?? "")
       }}
-      validationSchema={usuarioSchema}
+      validationSchema={buildUsuarioSchema(isSuper)}
       onSubmit={handleOnSubmit}
       enableReinitialize
     >
       {({ setFieldValue }) => (
         <Form className="my-10 bg-white shadow rounded p-10">
-          <h1 className="text-sky-500 font-black text-3xl capitalize text-center mb-8">
-            {usuario?.idUsuario ? "Editar Usuario" : "Registrar Usuario"}
-          </h1>
           <div className="my-3">
             <label
               htmlFor="email"
@@ -159,20 +158,23 @@ const UsuarioForm = ({ usuario }) => {
               htmlFor="idEmpleado"
               className="uppercase text-gray-600 block font-bold"
             >
-              Médico
+              Empleado
             </label>
             <Field
               as="select"
               name="idEmpleado"
               className="w-full mt-3 p-3 border rounded-xl bg-gray-50"
             >
-              <option value="">Selecciona un Médico</option>
-              {empleados?.map((empleado) => (
+              <option value="">Selecciona un Empleado</option>
+              {(Array.isArray(empleados) ? empleados : []).map((empleado) => (
                 <option
                   key={empleado.idEmpleado}
                   value={empleado.idEmpleado}
                 >
                   {empleado.apellidoPaterno} {empleado.apellidoMaterno}, {empleado.nombres}
+                  {empleado.tipoEmpleadoNombre || empleado.tipoEmpleado?.nombre
+                    ? ` (${empleado.tipoEmpleadoNombre || empleado.tipoEmpleado?.nombre})`
+                    : ""}
                 </option>
               ))}
             </Field>

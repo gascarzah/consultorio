@@ -88,11 +88,11 @@ export const getRoles = createAsyncThunk(
     'getRoles',
     async (values, { rejectWithValue }) => {
         try {
-            const { data } = await clienteAxios.get(`/roles`);
-            return data
+            const response = await clienteAxios.get(`/roles`);
+            if (response.status === 204 || !response.data) return [];
+            return Array.isArray(response.data) ? response.data : [];
         } catch (error) {
-
-            return rejectWithValue(error.response.data)
+            return rejectWithValue(error.response?.data || error.message)
         }
     }
 )

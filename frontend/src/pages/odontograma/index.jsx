@@ -1,3 +1,4 @@
+import { VALIDATION_MESSAGES } from "../../utils/ValidationMessages";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -24,12 +25,12 @@ const OdontogramaPage = () => {
 
   const handleSaveOdontograma = () => {
     // Aquí se implementaría la lógica para guardar el odontograma
-    toast.success('Odontograma guardado exitosamente');
+    toast.success(VALIDATION_MESSAGES.SUCCESS.ODONTOGRAMA_GUARDADO);
   };
 
   const handleExportPDF = () => {
     // Aquí se implementaría la lógica para exportar a PDF
-    toast.success('Exportando a PDF...');
+    toast.success(VALIDATION_MESSAGES.SUCCESS.EXPORTANDO_PDF);
   };
 
   const handlePrint = () => {
@@ -37,31 +38,23 @@ const OdontogramaPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="mb-8">
-          <div className="flex justify-between items-center">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">Odontograma Profesional</h1>
-              <p className="text-gray-600 mt-2">Sistema de registro dental completo</p>
-            </div>
-            <div className="flex gap-3">
-              <Link
-                to="/dashboard"
-                className="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition-colors"
-              >
-                Volver al Dashboard
-              </Link>
-            </div>
-          </div>
-        </div>
+    <div className="w-full">
+      <div className="mb-6 flex justify-between items-start gap-4">
+        <p className="text-sm text-gray-600">Sistema de registro dental completo</p>
+        <Link
+          to="/dashboard"
+          className="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition-colors text-sm"
+        >
+          Volver al Dashboard
+        </Link>
+      </div>
 
         {/* Información del Paciente */}
         <div className="bg-white rounded-lg shadow-md p-6 mb-6">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-semibold text-gray-800">Información del Paciente</h2>
             <button
+              type="button"
               onClick={() => setShowPatientForm(!showPatientForm)}
               className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors"
             >
@@ -194,24 +187,28 @@ const OdontogramaPage = () => {
         <div className="bg-white rounded-lg shadow-md p-6">
           <div className="flex flex-wrap gap-4 justify-center">
             <button
+              type="button"
               onClick={handleSaveOdontograma}
               className="bg-green-500 text-white px-6 py-3 rounded-md hover:bg-green-600 transition-colors font-medium"
             >
               Guardar Odontograma
             </button>
             <button
+              type="button"
               onClick={handleExportPDF}
               className="bg-red-500 text-white px-6 py-3 rounded-md hover:bg-red-600 transition-colors font-medium"
             >
               Exportar PDF
             </button>
             <button
+              type="button"
               onClick={handlePrint}
               className="bg-blue-500 text-white px-6 py-3 rounded-md hover:bg-blue-600 transition-colors font-medium"
             >
               Imprimir
             </button>
             <button
+              type="button"
               onClick={() => setIsEditing(!isEditing)}
               className="bg-purple-500 text-white px-6 py-3 rounded-md hover:bg-purple-600 transition-colors font-medium"
             >
@@ -219,7 +216,6 @@ const OdontogramaPage = () => {
             </button>
           </div>
         </div>
-      </div>
     </div>
   );
 };

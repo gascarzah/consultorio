@@ -21,7 +21,8 @@ public class CurrentUserService {
 		if (authentication == null || authentication.getName() == null) {
 			return Optional.empty();
 		}
-		return usuarioRepository.findByEmail(authentication.getName());
+		return usuarioRepository.findByEmailWithEmpresa(authentication.getName())
+				.or(() -> usuarioRepository.findByEmail(authentication.getName()));
 	}
 
 	public boolean hasAuthority(String roleName) {
@@ -32,7 +33,11 @@ public class CurrentUserService {
 				.orElse(false);
 	}
 
-	/** {@code null} si el usuario es SUPER (sin restricción de empresa). */
+	/**
+	 * Empresa a la que queda restringido el usuario.
+	 * {@code null} = SUPER (sin restricción) o usuario sin empresa asociada.
+	 * Cualquier rol distinto de SUPER (ADMIN, Médico, etc.) se limita a su empresa.
+	 */
 	public Integer getEmpresaRestringidaParaAdmin() {
 		var userOpt = getCurrentUsuario();
 		if (userOpt.isEmpty() || userOpt.get().getRoles() == null) {
@@ -45,9 +50,7 @@ public class CurrentUserService {
 			return null;
 		}
 
-		boolean isAdmin = userOpt.get().getRoles().stream()
-				.anyMatch(r -> "ADMIN".equalsIgnoreCase(r.getNombre()));
-		if (!isAdmin || userOpt.get().getEmpleado() == null
+		if (userOpt.get().getEmpleado() == null
 				|| userOpt.get().getEmpleado().getEmpresa() == null) {
 			return null;
 		}

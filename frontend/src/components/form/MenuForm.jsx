@@ -13,8 +13,8 @@ import { VALIDATION_MESSAGES } from "../../utils/ValidationMessages";
 const menuSchema = Yup.object().shape({
   nombre: Yup.string().required(VALIDATION_MESSAGES.REQUIRED.NOMBRE),
   path: Yup.string().required(VALIDATION_MESSAGES.REQUIRED.PATH),
-  idCategoria: Yup.number().typeError("Seleccione una categoría").required("La categoría es obligatoria"),
-  orden: Yup.number().typeError("El orden debe ser numérico").required("El orden es obligatorio"),
+  idCategoria: Yup.number().typeError(VALIDATION_MESSAGES.FORMAT.CATEGORIA_NUMERICA).required(VALIDATION_MESSAGES.REQUIRED.CATEGORIA),
+  orden: Yup.number().typeError(VALIDATION_MESSAGES.FORMAT.ORDEN_NUMERICO).required(VALIDATION_MESSAGES.REQUIRED.ORDEN),
 });
 
 const MenuForm = ({ menu }) => {
@@ -34,7 +34,7 @@ const MenuForm = ({ menu }) => {
           navigate("/dashboard/listar-menu");
         })
         .catch((errores) => {
-          SweetCrud('Error', errores.message || 'No se pudo guardar');
+          SweetCrud(VALIDATION_MESSAGES.ERROR.TITULO, errores.message || VALIDATION_MESSAGES.ERROR.NO_SE_PUDO_GUARDAR);
         });
     } else {
       dispatch(modificarMenu(payload))
@@ -45,7 +45,7 @@ const MenuForm = ({ menu }) => {
           navigate("/dashboard/listar-menu");
         })
         .catch((errores) => {
-          SweetCrud('Error', errores.message || 'No se pudo modificar');
+          SweetCrud(VALIDATION_MESSAGES.ERROR.TITULO, errores.message || VALIDATION_MESSAGES.ERROR.NO_SE_PUDO_MODIFICAR);
         });
     }
     setSubmitting(false);
@@ -78,9 +78,6 @@ const MenuForm = ({ menu }) => {
         {({ errors, touched, isSubmitting }) => {
           return (
             <Form className="my-10 bg-white shadow rounded p-10 flex flex-col w-2/5">
-              <h1 className="text-sky-500 font-black text-3xl capitalize text-center mb-8">
-                {menu?.idMenu ? "Editar Menú" : "Registrar Menú"}
-              </h1>
               <div className="my-3">
                 <label htmlFor="nombre" className="uppercase text-gray-600 block font-bold">
                   Nombre

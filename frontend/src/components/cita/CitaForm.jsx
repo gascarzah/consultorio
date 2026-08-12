@@ -14,7 +14,7 @@ import {
 } from "../../slices/citaSlice";
 import { getOdontologosPorEmpresa } from "../../slices/empleadoSlice";
 import { getProgramacionDetalles } from "../../slices/programacionDetalleSlice";
-import { getHorarios } from "../../slices/horarioSlice";
+import { getHorariosDisponibles } from "../../slices/horarioSlice";
 import { getHistoriaClinicas } from "../../slices/historiaClinicaSlice";
 import { getUsuario } from "../../slices/usuarioSlice";
 
@@ -28,7 +28,7 @@ const nuevaCitaSchema = Yup.object().shape({
   numeroDocumento: Yup.string().required(VALIDATION_MESSAGES.REQUIRED.MEDICO),
   idProgramacionDetalle: Yup.string().required(VALIDATION_MESSAGES.REQUIRED.DIA),
   idHorario: Yup.string().required(VALIDATION_MESSAGES.REQUIRED.HORARIO),
-  idHistoriaClinica: Yup.string().required(VALIDATION_MESSAGES.REQUIRED.NOMBRE_HISTORIA_CLINICA),
+  idHistoriaClinica: Yup.string().required(VALIDATION_MESSAGES.REQUIRED.CLIENTE),
 });
 
 export const CitaForm = ({ cita }) => {
@@ -92,7 +92,7 @@ export const CitaForm = ({ cita }) => {
         })
         .catch((error) => {
           console.error("Error al obtener datos del usuario:", error);
-          toast.error("Error al obtener datos del usuario");
+          toast.error(VALIDATION_MESSAGES.ERROR.ERROR_OBTENER_USUARIO);
         });
     }
   }, [email, dispatch]);
@@ -107,14 +107,21 @@ export const CitaForm = ({ cita }) => {
         .catch((errores) => {
           console.error("Error al obtener empleados:", errores);
           setListaEmpleados([]);
-          toast.error(errores.message || "Error al obtener la lista de empleados");
+          toast.error(errores.message || VALIDATION_MESSAGES.ERROR.ERROR_OBTENER_EMPLEADOS);
         });
     } else {
     }
   }, [user?.idEmpresa, dispatch]);
 
-  useEffect(() => {
-    dispatch(getHorarios())
+  const cargarHorariosDisponibles = useCallback((idProgramacionDetalle) => {
+    if (!idProgramacionDetalle || !user?.idEmpresa) {
+      setListaHorarios([]);
+      return;
+    }
+    dispatch(getHorariosDisponibles({
+      idProgramacionDetalle,
+      idEmpresa: user.idEmpresa,
+    }))
       .unwrap()
       .then((resultado) => {
         setListaHorarios(normalizeToArray(resultado));
@@ -122,9 +129,9 @@ export const CitaForm = ({ cita }) => {
       .catch((errores) => {
         console.error("Error al obtener horarios:", errores);
         setListaHorarios([]);
-        toast.error(errores.message || "Error al obtener horarios");
+        toast.error(errores.message || VALIDATION_MESSAGES.ERROR.ERROR_OBTENER_HORARIOS);
       });
-  }, [dispatch]);
+  }, [dispatch, user?.idEmpresa]);
 
   const getHistoriasClinicas = useCallback(() => {
     dispatch(getHistoriaClinicas())
@@ -186,11 +193,18 @@ export const CitaForm = ({ cita }) => {
     if (idHistoriaClinica) {
       setHandleSelectHistoriaClinica({ id: idHistoriaClinica });
     }
+
+    const idProgramacionDetalle = cita?.programacionDetalle?.idProgramacionDetalle;
+    if (idProgramacionDetalle) {
+      cargarHorariosDisponibles(idProgramacionDetalle);
+    }
   }, [
     cita?.historiaClinica?.idHistoriaClinica,
     cita?.idCita,
     cita?.programacionDetalle?.empleado?.numeroDocumento,
+    cita?.programacionDetalle?.idProgramacionDetalle,
     handleProgramacionDetallada,
+    cargarHorariosDisponibles,
     user?.idEmpresa
   ]);
 
@@ -198,7 +212,7 @@ export const CitaForm = ({ cita }) => {
   const handleSubmit = (values, resetForm) => {
     const idHistoriaClinicaSeleccionada = values.idHistoriaClinica || handleSelectHistoriaClinica?.id;
     if (!idHistoriaClinicaSeleccionada) {
-      toast.error("Debe seleccionar un cliente de la lista");
+      toast.error(VALIDATION_MESSAGES.ERROR.CLIENTE_LISTA);
       return;
     }
 
@@ -311,9 +325,6 @@ export const CitaForm = ({ cita }) => {
           
           return (
             <Form className="my-10 bg-white shadow rounded p-10 w-2/5 flex flex-col "> 
-              <h1 className="text-sky-500 font-black text-3xl capitalize text-center mb-8">
-                {cita?.idCita ? "Editar Cita" : "Registrar Cita"}
-              </h1>
               <div className="my-3">
                 <label
                   htmlFor="numeroDocumento"
@@ -382,7 +393,9 @@ export const CitaForm = ({ cita }) => {
                   onChange={async (e) => {
                     const { value } = e.target;
                     setFieldValue("idProgramacionDetalle", value);
+                    setFieldValue("idHorario", "");
                     handleCitas(value);
+                    cargarHorariosDisponibles(value);
                   }}
                 >
                   <option value="" label="Selecciona dia">
@@ -431,7 +444,6 @@ export const CitaForm = ({ cita }) => {
                   onChange={async (e) => {
                     const { value } = e.target;
                     setFieldValue("idHorario", value);
-                    handleCitas(value);
                   }}
                 >
                   <option value="" label="Selecciona horario">
@@ -473,9 +485,7 @@ export const CitaForm = ({ cita }) => {
                       }}
                       className="w-full mt-3 p-3 border rounded-xl bg-gray-50"
                     >
-                      <option value="" label="Selecciona un cliente">
-                        Select un Cliente{" "}
-                      </option>
+                      <option value="">Selecciona un cliente</option>
                       
                       {listaHistoriaClinicas?.map((item, index) => {
                         return (

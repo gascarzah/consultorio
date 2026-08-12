@@ -1,7 +1,6 @@
-import { createAsyncThunk, createSlice, isRejectedWithValue } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import historiaclinicaAxios from '../config/axios';
 
-// Estado inicial
 const initialState = {
   loading: false,
   historiaClinica: {},
@@ -14,20 +13,28 @@ const initialState = {
   numberPage: 0,
 };
 
-// Función de utilidad para manejo de errores
 const getErrorMessage = (error) => {
-  if (error.response && error.response.data) {
-    return error.response.data.message || error.response.data;
+  const data = error?.response?.data;
+  if (typeof data === 'string' && data.trim()) return data;
+  if (data?.message) return data.message;
+  if (typeof data === 'object' && data !== null) {
+    return data.error || data.title || JSON.stringify(data);
   }
-  return error.message || 'Error desconocido';
+  return error?.message || 'Error desconocido';
 };
 
-// Crear thunks
+const emptyPage = { content: [], totalElements: 0, first: true, last: true, number: 0 };
+
 export const registrarHistoriaClinica = createAsyncThunk(
   'registrarHistoriaClinica',
   async (values, { rejectWithValue }) => {
     try {
-      const { data } = await historiaclinicaAxios.post("/historiasClinicas", values);
+      const { idHistoriaClinica, ...rest } = values || {};
+      const payload =
+        idHistoriaClinica === '' || idHistoriaClinica == null
+          ? rest
+          : { ...rest, idHistoriaClinica };
+      const { data } = await historiaclinicaAxios.post('/historiasClinicas', payload);
       return data;
     } catch (error) {
       return rejectWithValue(getErrorMessage(error));
@@ -39,7 +46,7 @@ export const modificarHistoriaClinica = createAsyncThunk(
   'modificarHistoriaClinica',
   async (values, { rejectWithValue }) => {
     try {
-      const { data } = await historiaclinicaAxios.put("/historiasClinicas", values);
+      const { data } = await historiaclinicaAxios.put('/historiasClinicas', values);
       return data;
     } catch (error) {
       return rejectWithValue(getErrorMessage(error));
@@ -63,8 +70,9 @@ export const getHistoriaClinicas = createAsyncThunk(
   'getHistoriaClinicas',
   async (_, { rejectWithValue }) => {
     try {
-      const { data } = await historiaclinicaAxios.get(`/historiasClinicas`);
-      return data;
+      const response = await historiaclinicaAxios.get(`/historiasClinicas`);
+      if (response.status === 204 || !response.data) return [];
+      return response.data;
     } catch (error) {
       return rejectWithValue(getErrorMessage(error));
     }
@@ -79,14 +87,14 @@ export const getHistoriaClinicasPaginado = createAsyncThunk(
         page: values.page,
         size: values.size,
       };
-      
-      // Agregar filtro de búsqueda si existe
+
       if (values.search && values.search.trim()) {
         params.search = values.search.trim();
       }
-      
-      const { data } = await historiaclinicaAxios.get(`/historiasClinicas/pageable`, { params });
-      return data;
+
+      const response = await historiaclinicaAxios.get(`/historiasClinicas/pageable`, { params });
+      if (response.status === 204 || !response.data) return emptyPage;
+      return response.data;
     } catch (error) {
       return rejectWithValue(getErrorMessage(error));
     }
@@ -105,7 +113,6 @@ export const eliminarHistoriaClinica = createAsyncThunk(
   }
 );
 
-// Slice
 const historiaClinicaSlice = createSlice({
   name: 'historiaClinica',
   initialState,
@@ -115,72 +122,68 @@ const historiaClinicaSlice = createSlice({
       .addCase(registrarHistoriaClinica.pending, (state) => {
         state.loading = true;
       })
-      .addCase(registrarHistoriaClinica.fulfilled, (state, { payload }) => {
+      .addCase(registrarHistoriaClinica.fulfilled, (state) => {
         state.loading = false;
-        state.code = payload.status;
-        state.message = payload.message;
+        state.code = 201;
+        state.message = 'Historia clínica registrada';
       })
       .addCase(registrarHistoriaClinica.rejected, (state, { payload }) => {
         state.loading = false;
-        state.code = payload.status;
-        state.message = payload.message;
+        state.code = 400;
+        state.message = typeof payload === 'string' ? payload : payload?.message;
       })
       .addCase(modificarHistoriaClinica.pending, (state) => {
         state.loading = true;
       })
-      .addCase(modificarHistoriaClinica.fulfilled, (state, { payload }) => {
+      .addCase(modificarHistoriaClinica.fulfilled, (state) => {
         state.loading = false;
-        state.code = payload.status;
-        state.message = payload.message;
+        state.code = 200;
+        state.message = 'Historia clínica modificada';
       })
       .addCase(modificarHistoriaClinica.rejected, (state, { payload }) => {
         state.loading = false;
-        state.code = payload.status;
-        state.message = payload.message;
+        state.code = 400;
+        state.message = typeof payload === 'string' ? payload : payload?.message;
       })
       .addCase(getHistoriaClinica.fulfilled, (state, { payload }) => {
         state.loading = false;
-        state.code = 201;
+        state.code = 200;
         state.message = 'HistoriaClinica encontrado';
-        state.historiaclinica = {
-          id: payload.idHistoriaClinica,
-          email: payload.email,
-          nombreCompleto: `${payload.apellidoPaterno} ${payload.apellidoMaterno}, ${payload.nombres}`,
-        };
+        state.historiaClinica = payload;
       })
       .addCase(getHistoriaClinica.rejected, (state, { payload }) => {
         state.loading = false;
-        state.code = payload.status;
-        state.message = payload.message;
+        state.code = 404;
+        state.message = typeof payload === 'string' ? payload : payload?.message;
       })
       .addCase(getHistoriaClinicas.fulfilled, (state, { payload }) => {
         state.loading = false;
-        state.code = 201;
+        state.code = 200;
         state.message = 'HistoriaClinicas encontrados';
-        state.historiaClinicas = payload;
+        state.historiaClinicas = payload || [];
       })
       .addCase(getHistoriaClinicas.rejected, (state, { payload }) => {
         state.loading = false;
-        state.code = payload.status;
-        state.message = payload.message;
+        state.code = 400;
+        state.message = typeof payload === 'string' ? payload : payload?.message;
       })
       .addCase(getHistoriaClinicasPaginado.pending, (state) => {
         state.loading = true;
       })
       .addCase(getHistoriaClinicasPaginado.fulfilled, (state, { payload }) => {
         state.loading = false;
-        state.code = 201;
+        state.code = 200;
         state.message = 'HistoriaClinicas encontrados';
-        state.historiaClinicas = payload.content || [];
-        state.total = payload.totalElements || 0;
-        state.prev = payload.first;
-        state.next = payload.last;
-        state.numberPage = payload.number;
+        state.historiaClinicas = payload?.content || [];
+        state.total = payload?.totalElements || 0;
+        state.prev = payload?.first;
+        state.next = payload?.last;
+        state.numberPage = payload?.number ?? 0;
       })
       .addCase(getHistoriaClinicasPaginado.rejected, (state, { payload }) => {
         state.loading = false;
-        state.code = payload.status;
-        state.message = payload.message;
+        state.code = 400;
+        state.message = typeof payload === 'string' ? payload : payload?.message;
         state.historiaClinicas = [];
         state.total = 0;
       })
@@ -197,14 +200,14 @@ const historiaClinicaSlice = createSlice({
       })
       .addCase(eliminarHistoriaClinica.rejected, (state, { payload }) => {
         state.loading = false;
-        state.code = payload?.status || 500;
-        state.message = payload?.message || 'No se pudo eliminar la historia clínica';
+        state.code = 500;
+        state.message =
+          (typeof payload === 'string' ? payload : payload?.message) ||
+          'No se pudo eliminar la historia clínica';
       });
   },
 });
 
-// Acción para restablecer el estado
 export const { resetState } = historiaClinicaSlice.actions;
 
-// Reducer del slice
 export default historiaClinicaSlice.reducer;

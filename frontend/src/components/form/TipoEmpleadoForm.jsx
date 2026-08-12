@@ -10,7 +10,8 @@ import { SWEET_GUARDO, SWEET_MODIFICO, SWEET_SUCESS, SweetCrud } from "../../uti
 import { VALIDATION_MESSAGES } from "../../utils/ValidationMessages";
 
 const tipoEmpleadoSchema = Yup.object().shape({
-  descripcion: Yup.string().required(VALIDATION_MESSAGES.REQUIRED.DESCRIPCION),
+  nombre: Yup.string().required(VALIDATION_MESSAGES.REQUIRED.NOMBRE),
+  descripcion: Yup.string().nullable(),
 });
 
 const TipoEmpleadoForm = ({ tipoEmpleado }) => {
@@ -18,8 +19,13 @@ const TipoEmpleadoForm = ({ tipoEmpleado }) => {
   const navigate = useNavigate();
 
   const handleOnSubmit = (values, { setSubmitting }) => {
+    const payload = {
+      ...values,
+      nombre: values.nombre?.trim(),
+      descripcion: values.descripcion?.trim() || values.nombre?.trim(),
+    };
     if (!values.idTipoEmpleado) {
-      dispatch(registrarTipoEmpleado(values))
+      dispatch(registrarTipoEmpleado(payload))
         .unwrap()
         .then(() => {
           dispatch(resetState());
@@ -27,11 +33,11 @@ const TipoEmpleadoForm = ({ tipoEmpleado }) => {
           navigate("/dashboard/listar-tipo-empleado");
         })
         .catch((errores) => {
-          SweetCrud('Error', errores.message || 'No se pudo guardar');
+          SweetCrud(VALIDATION_MESSAGES.ERROR.TITULO, errores.message || VALIDATION_MESSAGES.ERROR.NO_SE_PUDO_GUARDAR);
           
         });
     } else {
-      dispatch(modificarTipoEmpleado(values))
+      dispatch(modificarTipoEmpleado(payload))
         .unwrap()
         .then(() => {
           dispatch(resetState());
@@ -39,7 +45,7 @@ const TipoEmpleadoForm = ({ tipoEmpleado }) => {
           navigate("/dashboard/listar-tipo-empleado");
         })
         .catch((errores) => {
-          SweetCrud('Error', errores.message || 'No se pudo modificar');
+          SweetCrud(VALIDATION_MESSAGES.ERROR.TITULO, errores.message || VALIDATION_MESSAGES.ERROR.NO_SE_PUDO_MODIFICAR);
           
         });
     }
@@ -50,16 +56,35 @@ const TipoEmpleadoForm = ({ tipoEmpleado }) => {
     <>
 
       <Formik
-        initialValues={{ idTipoEmpleado: tipoEmpleado?.idTipoEmpleado || "", descripcion: tipoEmpleado?.descripcion || "" }}
+        initialValues={{
+          idTipoEmpleado: tipoEmpleado?.idTipoEmpleado || "",
+          nombre: tipoEmpleado?.nombre || "",
+          descripcion: tipoEmpleado?.descripcion || "",
+        }}
         validationSchema={tipoEmpleadoSchema}
         onSubmit={handleOnSubmit}
         enableReinitialize
       >
         {({ errors, touched, isSubmitting }) => (
           <Form className="my-10 bg-white shadow rounded p-10 flex flex-col w-2/5">
-            <h1 className="text-sky-500 font-black text-3xl capitalize text-center mb-8">
-              {tipoEmpleado?.idTipoEmpleado ? "Editar Tipo de Empleado" : "Registrar Tipo de Empleado"}
-            </h1>
+            <div className="my-3">
+              <label htmlFor="nombre" className="uppercase text-gray-600 block font-bold">
+                Nombre
+              </label>
+              <Field
+                id="nombre"
+                type="text"
+                placeholder="Ej. Médico, Enfermero"
+                className="w-full mt-3 p-3 border rounded-xl bg-gray-50"
+                name="nombre"
+              />
+              <ErrorMessage
+                name="nombre"
+                component="div"
+                className="text-red-500 text-sm mt-1"
+              />
+            </div>
+
             <div className="my-3">
               <label htmlFor="descripcion" className="uppercase text-gray-600 block font-bold">
                 Descripción

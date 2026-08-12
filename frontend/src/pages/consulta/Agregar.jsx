@@ -1,3 +1,4 @@
+import { VALIDATION_MESSAGES } from "../../utils/ValidationMessages";
 import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -6,15 +7,49 @@ import Modal from "react-modal";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
 import dayjs from "dayjs";
-import { Pagination, AtencionDetalleModal } from "../../components";
+// En consultorio-frontend (main) este import “sin uso” habilitaba el motor de speech.
 import regeneratorRuntime from "regenerator-runtime";
-import SpeechRecognition, {
-  useSpeechRecognition,
-} from "react-speech-recognition";
+import { Pagination, AtencionDetalleModal, VoiceDictationField } from "../../components";
 import { getCita, getHistorialCitas, editarCita } from "../../slices/citaSlice";
+import { modificarHistoriaClinica } from "../../slices/historiaClinicaSlice";
 import { ITEMS_POR_PAGINA } from "../../utils";
-import { VALIDATION_MESSAGES } from "../../utils/ValidationMessages";
 import { Odontograma } from "../../components/Odontograma/Odontograma";
+import { useChromeSpeech } from "../../hooks/useChromeSpeech";
+
+void regeneratorRuntime;
+
+const buildHistoriaClinicaPayload = (hc, { motivo, diagnostico, informe }) => {
+  if (!hc?.idHistoriaClinica) return null;
+
+  const motivoParts = [motivo?.trim() || hc.motivo || ""].filter(Boolean);
+  if (informe?.trim()) {
+    motivoParts.push(`Informe de consulta:\n${informe.trim()}`);
+  }
+
+  let antecedentes = hc.antecedentesMedicos || "";
+  if (diagnostico?.trim()) {
+    const dxLine = `Diagnóstico: ${diagnostico.trim()}`;
+    antecedentes = antecedentes ? `${antecedentes}\n${dxLine}` : dxLine;
+  }
+
+  return {
+    idHistoriaClinica: hc.idHistoriaClinica,
+    idEmpresa: hc.empresa?.idEmpresa ?? hc.idEmpresa,
+    nombres: hc.nombres,
+    apellidoPaterno: hc.apellidoPaterno,
+    apellidoMaterno: hc.apellidoMaterno,
+    tipoDocumento: hc.tipoDocumento,
+    numeroDocumento: hc.numeroDocumento,
+    email: hc.email,
+    direccion: hc.direccion,
+    telefono: hc.telefono,
+    celular: hc.celular,
+    alergia: hc.alergia,
+    ectoscopia: hc.ectoscopia,
+    motivo: motivoParts.join("\n\n"),
+    antecedentesMedicos: antecedentes,
+  };
+};
 
 const customStyles = {
   content: {
@@ -29,13 +64,12 @@ const customStyles = {
 
 Modal.setAppElement("#root");
 const nuevoClienteSchema = Yup.object().shape({
-  nombres: Yup.string().required(VALIDATION_MESSAGES.REQUIRED.NOMBRE_CLIENTE),
-  apellidoPaterno: Yup.string().required(VALIDATION_MESSAGES.REQUIRED.APELLIDO_PATERNO),
-  apellidoMaterno: Yup.string().required(VALIDATION_MESSAGES.REQUIRED.APELLIDO_MATERNO),
-  numeroDocumento: Yup.string()
-    .max(8, VALIDATION_MESSAGES.FORMAT.DNI_LENGTH)
-    .required(VALIDATION_MESSAGES.REQUIRED.DNI)
-    .matches(/^[0-9]+$/, VALIDATION_MESSAGES.FORMAT.DNI_NUMBERS),
+  nombres: Yup.string(),
+  apellidoPaterno: Yup.string(),
+  apellidoMaterno: Yup.string(),
+  numeroDocumento: Yup.string(),
+  motivo: Yup.string().trim().required(VALIDATION_MESSAGES.REQUIRED.MOTIVO_CONSULTA),
+  diagnostico: Yup.string().trim().required(VALIDATION_MESSAGES.REQUIRED.DIAGNOSTICO),
 });
 
 const AgregarConsulta = () => {
@@ -54,8 +88,6 @@ const AgregarConsulta = () => {
 
   const { cita, historiales, prev, next, total } = useSelector((state) => state.cita);
 
-  const [play, setPlay] = useState(false);
-
   const [listaHistorial, setListaHistorial] = useState([]);
 
   const [currentPage, setCurrentPage] = useState(0);
@@ -64,6 +96,8 @@ const AgregarConsulta = () => {
   const [disabledPrev, setDisabledPrev] = useState(false);
   const [disabledNext, setDisabledNext] = useState(false);
   const [informe, setInforme] = useState();
+  const [play, setPlay] = useState(false);
+  const [syncHistoriaClinica, setSyncHistoriaClinica] = useState(true);
 
   const [modal, setModal] = useState(false);
 
@@ -79,10 +113,13 @@ const AgregarConsulta = () => {
     listening,
     resetTranscript,
     browserSupportsSpeechRecognition,
-  } = useSpeechRecognition({
-    continuous: true,
-    language: 'es-PE'
-  });
+    startListening,
+    stopListening,
+  } = useChromeSpeech("es-PE");
+
+  useEffect(() => {
+    setPlay(listening);
+  }, [listening]);
 
   const toggleSection = (section) => {
     setOpenSections(prev => ({
@@ -117,16 +154,48 @@ const AgregarConsulta = () => {
     }
   }, [historiales, prev, next, currentPage]);
 
-  useEffect(() => {
-    setPlay(listening);
-  }, [listening]);
+  const handleStartRecord = () => {
+    try {
+      resetTranscript();
+      startListening({
+        continuous: true,
+        language: "es-PE",
+      });
+    } catch (error) {
+      console.error("Error al iniciar la grabación:", error);
+      toast.error(error.message || VALIDATION_MESSAGES.ERROR.ERROR_INICIAR_GRABACION);
+    }
+  };
 
-  const handleSubmit = (values, resetForm) => {
+  const handleStopRecord = () => {
+    try {
+      stopListening();
+    } catch (error) {
+      console.error("Error al detener la grabación:", error);
+      toast.error(VALIDATION_MESSAGES.ERROR.ERROR_DETENER_GRABACION);
+    }
+  };
+
+  const handleResetScript = () => {
+    try {
+      stopListening();
+      resetTranscript();
+      setPlay(false);
+    } catch (error) {
+      console.error("Error al reiniciar la grabación:", error);
+      toast.error(VALIDATION_MESSAGES.ERROR.ERROR_REINICIAR_GRABACION);
+    }
+  };
+
+  const handleSubmit = (values) => {
     const c = values.cita;
     if (!c?.idCita || !c?.historiaClinica?.idHistoriaClinica || !c?.horario?.idHorario || !c?.programacionDetalle?.idProgramacionDetalle) {
-      toast.error("Faltan datos de la cita o del paciente. Vuelva a abrir desde la lista de consultas.");
+      toast.error(VALIDATION_MESSAGES.ERROR.CONSULTA_DATOS_FALTANTES);
       return;
     }
+
+    // Como en main 06: el informe dictado vive en `transcript`
+    const informeFinal = (transcript || "").trim() || null;
 
     dispatch(
       editarCita({
@@ -134,55 +203,36 @@ const AgregarConsulta = () => {
         idHistoriaClinica: c.historiaClinica.idHistoriaClinica,
         idHorario: c.horario.idHorario,
         idProgramacionDetalle: c.programacionDetalle.idProgramacionDetalle,
-        informe: transcript?.trim() || null,
+        informe: informeFinal,
         motivo: values.motivo?.trim() || null,
         diagnostico: values.diagnostico?.trim() || null,
         atendido: true,
       })
     )
       .unwrap()
-
-      .then((resultado) => {
-
-        toast.success(resultado.message);
+      .then(async (resultado) => {
+        if (syncHistoriaClinica) {
+          const payload = buildHistoriaClinicaPayload(c.historiaClinica, {
+            motivo: values.motivo,
+            diagnostico: values.diagnostico,
+            informe: informeFinal,
+          });
+          if (payload) {
+            try {
+              await dispatch(modificarHistoriaClinica(payload)).unwrap();
+            } catch (error) {
+              toast.warn(error?.message || VALIDATION_MESSAGES.ERROR.CONSULTA_HC_PARCIAL);
+              navigate("/dashboard/listar-consulta");
+              return;
+            }
+          }
+        }
+        toast.success(resultado.message || VALIDATION_MESSAGES.SUCCESS.CONSULTA_REGISTRADA);
         navigate("/dashboard/listar-consulta");
       })
       .catch((errores) => {
         toast.error(errores.message);
       });
-  };
-
-  const handleStartRecord = () => {
-    try {
-      resetTranscript(); // Limpiar transcripción anterior
-      SpeechRecognition.startListening({
-        continuous: true,
-        language: 'es-PE'
-      });
-    } catch (error) {
-      console.error('Error al iniciar la grabación:', error);
-      toast.error('Error al iniciar la grabación');
-    }
-  };
-
-  const handleStopRecord = () => {
-    try {
-      SpeechRecognition.stopListening();
-    } catch (error) {
-      console.error('Error al detener la grabación:', error);
-      toast.error('Error al detener la grabación');
-    }
-  };
-
-  const handleResetScript = () => {
-    try {
-      SpeechRecognition.stopListening();
-      resetTranscript();
-      setPlay(false);
-    } catch (error) {
-      console.error('Error al reiniciar la grabación:', error);
-      toast.error('Error al reiniciar la grabación');
-    }
   };
 
   const handlePrev = () => {
@@ -222,7 +272,7 @@ const AgregarConsulta = () => {
     return (
       <div className="container mx-auto px-4 py-8 max-w-3xl">
         <div className="rounded-lg border border-amber-200 bg-amber-50 p-6 text-amber-900">
-          <h1 className="text-lg font-semibold mb-2">Faltan datos en la URL</h1>
+          <h2 className="text-lg font-semibold mb-2">Faltan datos en la URL</h2>
           <p className="mb-4">
             Para registrar una consulta debe abrir esta pantalla desde la lista de consultas del día o el dashboard,
             con la ruta <code className="text-sm bg-white px-1 rounded">/dashboard/agregar-consulta/&lt;idCita&gt;/&lt;numeroDocumento&gt;</code>.
@@ -241,18 +291,14 @@ const AgregarConsulta = () => {
   return (
     <>
       <div className="container mx-auto px-4 py-8 max-w-5xl">
-        {!browserSupportsSpeechRecognition && (
-          <div className="mb-4 rounded-md border border-amber-200 bg-amber-50 p-4 text-amber-900 text-sm">
-            Tu navegador no soporta bien el dictado por voz; el resto del formulario funciona con normalidad.
-          </div>
-        )}
         {/* Acordeón de Registrar Consulta */}
         <div className="mb-4">
           <button
+            type="button"
             onClick={() => toggleSection('consulta')}
             className="w-full bg-white p-4 flex justify-between items-center rounded-lg shadow-md hover:bg-gray-50 transition-colors"
           >
-            <h2 className="text-xl font-semibold text-gray-800">Registrar Consulta</h2>
+            <span className="text-lg font-semibold text-gray-800">Datos de la consulta</span>
             <svg
               className={`w-6 h-6 transform transition-transform ${openSections.consulta ? 'rotate-180' : ''}`}
               fill="none"
@@ -281,7 +327,7 @@ const AgregarConsulta = () => {
                 }}
                 validationSchema={nuevoClienteSchema}
               >
-                {({ errors, touched }) => (
+                {({ errors, touched, values, setFieldValue }) => (
                   <Form className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
@@ -299,7 +345,7 @@ const AgregarConsulta = () => {
                           disabled={true}
                         />
                         {errors.numeroDocumento && touched.numeroDocumento && (
-                          <div className="text-sm text-red-600">{errors.numeroDocumento}</div>
+                          <div className="text-red-500 text-sm mt-1">{errors.numeroDocumento}</div>
                         )}
                       </div>
 
@@ -318,50 +364,47 @@ const AgregarConsulta = () => {
                           disabled={true}
                         />
                         {errors.nombres && touched.nombres && (
-                          <div className="text-sm text-red-600">{errors.nombres}</div>
-                        )}
-                      </div>
-
-                      <div>
-                        <label
-                          htmlFor="motivo"
-                          className="block text-sm font-medium text-gray-700 mb-1"
-                        >
-                          Motivo de la Consulta
-                        </label>
-                        <Field
-                          as="textarea"
-                          id="motivo"
-                          name="motivo"
-                          rows="4"
-                          className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-sky-500 focus:border-transparent bg-gray-50"
-                          placeholder="Describa el motivo de la consulta"
-                        />
-                        {errors.motivo && touched.motivo && (
-                          <div className="text-sm text-red-600">{errors.motivo}</div>
-                        )}
-                      </div>
-
-                      <div>
-                        <label
-                          htmlFor="diagnostico"
-                          className="block text-sm font-medium text-gray-700 mb-1"
-                        >
-                          Diagnóstico
-                        </label>
-                        <Field
-                          as="textarea"
-                          id="diagnostico"
-                          name="diagnostico"
-                          rows="4"
-                          className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-sky-500 focus:border-transparent bg-gray-50"
-                          placeholder="Ingrese el diagnóstico"
-                        />
-                        {errors.diagnostico && touched.diagnostico && (
-                          <div className="text-sm text-red-600">{errors.diagnostico}</div>
+                          <div className="text-red-500 text-sm mt-1">{errors.nombres}</div>
                         )}
                       </div>
                     </div>
+
+                    <VoiceDictationField
+                      id="motivo-consulta"
+                      label="Motivo de la Consulta"
+                      rows={4}
+                      value={values.motivo || ""}
+                      onChange={(text) => setFieldValue("motivo", text)}
+                      placeholder="Dicte o escriba el motivo de la consulta"
+                    />
+                    {errors.motivo && touched.motivo && (
+                      <div className="text-red-500 text-sm mt-1">{errors.motivo}</div>
+                    )}
+
+                    <VoiceDictationField
+                      id="diagnostico-consulta"
+                      label="Diagnóstico"
+                      rows={4}
+                      value={values.diagnostico || ""}
+                      onChange={(text) => setFieldValue("diagnostico", text)}
+                      placeholder="Dicte o escriba el diagnóstico"
+                    />
+                    {errors.diagnostico && touched.diagnostico && (
+                      <div className="text-red-500 text-sm mt-1">{errors.diagnostico}</div>
+                    )}
+
+                    <label className="flex items-start gap-2 text-sm text-gray-700">
+                      <input
+                        type="checkbox"
+                        className="mt-1"
+                        checked={syncHistoriaClinica}
+                        onChange={(e) => setSyncHistoriaClinica(e.target.checked)}
+                      />
+                      <span>
+                        Al guardar, actualizar también la <strong>historia clínica</strong> con
+                        motivo, diagnóstico e informe dictado.
+                      </span>
+                    </label>
 
                     <div>
                       <input
@@ -420,62 +463,59 @@ const AgregarConsulta = () => {
           
           <div className={`mt-2 transition-all duration-200 ease-in-out ${openSections.informe ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
             <div className="bg-white shadow-lg rounded-lg p-6">
-              <div className="space-y-6">
-                <div className="flex items-center gap-4">
-                  {play ? (
-                    <button
-                      type="button"
-                      onClick={handleStopRecord}
-                      className="flex-1 px-4 py-2 rounded-md font-medium bg-red-500 text-white hover:bg-red-600 transition-colors flex items-center justify-center gap-2"
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M10 3a1 1 0 00-1 1v12a1 1 0 002 0V4a1 1 0 00-1-1z" />
-                      </svg>
-                      Detener Dictado
-                    </button>
-                  ) : (
-                    <button
-                      type="button"
-                      onClick={handleStartRecord}
-                      className="flex-1 px-4 py-2 rounded-md font-medium bg-green-500 text-white hover:bg-green-600 transition-colors flex items-center justify-center gap-2"
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path fillRule="evenodd" d="M7 4a3 3 0 016 0v4a3 3 0 11-6 0V4zm4 10.93A7.001 7.001 0 0017 8a1 1 0 10-2 0A5 5 0 015 8a1 1 0 00-2 0 7.001 7.001 0 006 6.93V17H6a1 1 0 100 2h8a1 1 0 100-2h-3v-2.07z" clipRule="evenodd" />
-                      </svg>
-                      Iniciar Dictado
-                    </button>
-                  )}
-                  <button
-                    type="button"
-                    onClick={handleResetScript}
-                    className="px-4 py-2 rounded-md font-medium bg-gray-500 text-white hover:bg-gray-600 transition-colors flex items-center justify-center gap-2"
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clipRule="evenodd" />
-                    </svg>
-                    Limpiar
-                  </button>
+              {!browserSupportsSpeechRecognition ? (
+                <div className="mb-4 text-center p-4 bg-yellow-100 text-yellow-800 rounded-md">
+                  Tu navegador no soporta el reconocimiento de voz. Use Chrome.
                 </div>
-
-                <div className="relative">
-                  <div className={`absolute -top-3 right-2 flex items-center gap-2 ${play ? 'text-red-500' : 'text-gray-400'}`}>
-                    {play && (
-                      <span className="flex h-3 w-3">
-                        <span className="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-red-400 opacity-75"></span>
-                        <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
-                      </span>
+              ) : (
+                <div className="space-y-4">
+                  <div className="flex gap-2">
+                    {play ? (
+                      <button
+                        type="button"
+                        onClick={handleStopRecord}
+                        className="flex-1 px-4 py-2 rounded-md font-medium bg-red-500 text-white hover:bg-red-600 transition-colors"
+                      >
+                        Detener Dictado
+                      </button>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={handleStartRecord}
+                        className="flex-1 px-4 py-2 rounded-md font-medium bg-green-500 text-white hover:bg-green-600 transition-colors"
+                      >
+                        Iniciar Dictado
+                      </button>
                     )}
-                    <span className="text-sm">{play ? 'Dictando...' : 'Dictado detenido'}</span>
+                    <button
+                      type="button"
+                      onClick={handleResetScript}
+                      className="px-4 py-2 rounded-md font-medium bg-gray-500 text-white hover:bg-gray-600 transition-colors"
+                    >
+                      Limpiar
+                    </button>
                   </div>
-                  <textarea
-                    className="w-full p-4 border border-gray-300 rounded-md focus:ring-2 focus:ring-sky-500 focus:border-transparent bg-gray-50 mt-2"
-                    value={transcript}
-                    placeholder="Escriba o dicte el informe aquí..."
-                    rows="10"
-                    readOnly
-                  />
+
+                  <div className="relative">
+                    <div className={`absolute -top-3 right-2 flex items-center gap-2 ${play ? "text-red-500" : "text-gray-400"}`}>
+                      {play && (
+                        <span className="flex h-3 w-3">
+                          <span className="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-red-400 opacity-75" />
+                          <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500" />
+                        </span>
+                      )}
+                      <span className="text-sm">{play ? "Dictando..." : "Dictado detenido"}</span>
+                    </div>
+                    <textarea
+                      className="w-full p-4 border border-gray-300 rounded-md focus:ring-2 focus:ring-sky-500 focus:border-transparent bg-gray-50 mt-2"
+                      value={transcript}
+                      placeholder="Escriba o dicte el informe aquí..."
+                      rows={10}
+                      readOnly
+                    />
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </div>

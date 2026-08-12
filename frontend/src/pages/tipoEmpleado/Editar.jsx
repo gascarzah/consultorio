@@ -1,3 +1,4 @@
+import { VALIDATION_MESSAGES } from "../../utils/ValidationMessages";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -29,7 +30,7 @@ const EditarTipoEmpleado = () => {
         if (isMounted) setTipoEmpleado(resultado);
       })
       .catch((err) => {
-        if (isMounted) setError(err?.message || "No se pudo cargar el tipo de empleado.");
+        if (isMounted) setError(err?.message || VALIDATION_MESSAGES.ERROR.NO_SE_PUDO_CARGAR);
       })
       .finally(() => {
         if (isMounted) setLoading(false);

@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.7",
+    "@xenova/transformers": "^2.17.2",
     "axios": "^1.16.1",
     "dayjs": "^1.11.21",
     "formik": "^2.4.9",

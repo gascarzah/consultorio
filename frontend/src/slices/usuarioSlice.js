@@ -60,10 +60,20 @@ export const getUsuario = createAsyncThunk(
   'getUsuario',
   async (email, { rejectWithValue }) => {
     try {
-      const { data } = await clienteAxios.get(`/usuarios/${encodeURIComponent(email)}`);
+      // Perfil de sesión: no requiere rol SUPER/ADMIN
+      const { data } = await clienteAxios.get('/usuarios/me');
       return data
     } catch (error) {
-      return rejectWithValue(error.response.data)
+      // Fallback por email (auto o admin consultando otro usuario)
+      try {
+        if (email) {
+          const { data } = await clienteAxios.get(`/usuarios/${encodeURIComponent(email)}`);
+          return data;
+        }
+      } catch (fallbackError) {
+        return rejectWithValue(fallbackError.response?.data || fallbackError.message);
+      }
+      return rejectWithValue(error.response?.data || error.message);
     }
   }
 )
@@ -176,14 +186,16 @@ const usuarioSlice = createSlice({
         state.code = 201
         state.message = 'se encontro'
 
+        const emp = payload?.empleado;
+        const empresa = emp?.empresa;
         state.user = {
           id: payload.idUsuario,
           email: payload.email,
-          nombreCompleto: payload.empleado.apellidoPaterno + ' ' +
-            payload.empleado.apellidoMaterno + ', ' +
-            payload.empleado.nombres,
-          idEmpleado: payload.empleado.idEmpleado,
-          idEmpresa: payload.empleado.empresa.idEmpresa
+          nombreCompleto: emp
+            ? `${emp.apellidoPaterno || ''} ${emp.apellidoMaterno || ''}, ${emp.nombres || ''}`.trim()
+            : payload.email,
+          idEmpleado: emp?.idEmpleado ?? null,
+          idEmpresa: empresa?.idEmpresa ?? null,
         }
       })
       .addCase(getUsuario.rejected, (state, { payload }) => {

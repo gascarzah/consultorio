@@ -1,7 +1,6 @@
 package com.gafahtec.consultorio.controller;
 
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.gafahtec.consultorio.dto.request.RolRequest;
 import com.gafahtec.consultorio.dto.response.RolResponse;
 import com.gafahtec.consultorio.exception.ResourceNotFoundException;
-import com.gafahtec.consultorio.model.auth.Rol;
 import com.gafahtec.consultorio.service.IRolService;
 
 import jakarta.validation.Valid;
@@ -35,7 +33,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RestController
 @RequestMapping("/roles")
 @AllArgsConstructor
-@PreAuthorize("@authz.isSuperOrAdmin()")
 @Tag(name = "Rol", description = "Operaciones sobre roles")
 public class RolController {
 
@@ -48,6 +45,7 @@ public class RolController {
 			@ApiResponse(responseCode = "500", description = "Error interno del servidor")
 	})
 	@GetMapping
+	@PreAuthorize("@authz.isSuperOrAdmin()")
 	public ResponseEntity<List<RolResponse>> listar() throws Exception {
 		var lista = iRolService.listar();
 		if (lista.isEmpty()) {
@@ -56,13 +54,14 @@ public class RolController {
 		return new ResponseEntity<>(lista, HttpStatus.OK);
 	}
 
-	@Operation(summary = "Obtener rol por ID", description = "Obtiene un rol por su identificador único.")
+	@Operation(summary = "Obtener rol por ID", description = "Obtiene un rol por su identificador único. El usuario puede leer su propio rol.")
 	@ApiResponses({
 			@ApiResponse(responseCode = "200", description = "Consulta exitosa"),
 			@ApiResponse(responseCode = "404", description = "Rol no encontrado"),
 			@ApiResponse(responseCode = "500", description = "Error interno del servidor")
 	})
 	@GetMapping("/{id}")
+	@PreAuthorize("@authz.canReadRole(#id)")
 	public ResponseEntity<RolResponse> listarPorId(@PathVariable("id") Integer id) throws Exception {
 		var obj = iRolService.listarPorId(id);
 
@@ -80,6 +79,7 @@ public class RolController {
 			@ApiResponse(responseCode = "500", description = "Error interno del servidor")
 	})
 	@PostMapping
+	@PreAuthorize("@authz.isSuperOrAdmin()")
 	public ResponseEntity<RolResponse> registrar(@Valid @RequestBody RolRequest p) throws Exception {
 		var obj = iRolService.registrar(p);
 		return new ResponseEntity<>(obj, HttpStatus.CREATED);
@@ -92,6 +92,7 @@ public class RolController {
 			@ApiResponse(responseCode = "500", description = "Error interno del servidor")
 	})
 	@PutMapping
+	@PreAuthorize("@authz.isSuperOrAdmin()")
 	public ResponseEntity<RolResponse> modificar(@Valid @RequestBody RolRequest p) throws Exception {
 		var obj = iRolService.modificar(p);
 		return new ResponseEntity<>(obj, HttpStatus.OK);
@@ -104,6 +105,7 @@ public class RolController {
 			@ApiResponse(responseCode = "500", description = "Error interno del servidor")
 	})
 	@DeleteMapping("/{id}")
+	@PreAuthorize("@authz.isSuperOrAdmin()")
 	public ResponseEntity<Void> eliminar(@PathVariable("id") Integer id) throws Exception {
 		var obj = iRolService.listarPorId(id);
 
@@ -112,7 +114,7 @@ public class RolController {
 		}
 
 		iRolService.eliminar(id);
-		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 
 	@Operation(summary = "Listar roles paginados", description = "Obtiene roles paginados. Opcionalmente puede incluir un parámetro de búsqueda para filtrar por nombre del rol.")
@@ -122,6 +124,7 @@ public class RolController {
 			@ApiResponse(responseCode = "500", description = "Error interno del servidor")
 	})
 	@GetMapping("/pageable")
+	@PreAuthorize("@authz.isSuperOrAdmin()")
 	public ResponseEntity<Page<RolResponse>> listarPageable(@PageableDefault(sort = "nombre") Pageable pageable,
 			@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "5") int size,

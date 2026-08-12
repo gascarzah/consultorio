@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { Formik, Form, Field } from "formik";
+import { useState } from "react";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -20,15 +20,7 @@ const cambiarPasswordSchema = Yup.object().shape({
     .required(VALIDATION_MESSAGES.REQUIRED.PASSWORD_CONFIRMACION),
 });
 
-function CambiarPasswordInner({ errors, touched, isSubmitting, navigate }) {
-  useEffect(() => {
-    Object.keys(errors).forEach((key) => {
-      if (errors[key] && touched[key]) {
-        toast.error(errors[key]);
-      }
-    });
-  }, [errors, touched]);
-
+function CambiarPasswordInner({ isSubmitting, navigate }) {
   return (
     <Form className="space-y-6">
       <div>
@@ -42,6 +34,7 @@ function CambiarPasswordInner({ errors, touched, isSubmitting, navigate }) {
           placeholder="••••••••"
           className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent"
         />
+        <ErrorMessage name="passwordActual" component="div" className="text-red-500 text-sm mt-1" />
       </div>
 
       <div>
@@ -55,6 +48,7 @@ function CambiarPasswordInner({ errors, touched, isSubmitting, navigate }) {
           placeholder="••••••••"
           className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent"
         />
+        <ErrorMessage name="nuevaPassword" component="div" className="text-red-500 text-sm mt-1" />
         <p className="text-gray-500 text-xs mt-1">
           Mínimo 6 caracteres
         </p>
@@ -71,6 +65,7 @@ function CambiarPasswordInner({ errors, touched, isSubmitting, navigate }) {
           placeholder="••••••••"
           className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent"
         />
+        <ErrorMessage name="confirmarPassword" component="div" className="text-red-500 text-sm mt-1" />
       </div>
 
       <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
@@ -105,49 +100,35 @@ function CambiarPasswordInner({ errors, touched, isSubmitting, navigate }) {
 }
 
 const CambiarPassword = () => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { user } = useSelector((state) => state.usuario);
-  const email = useSelector((state) => state.auth.email);
-
-  useEffect(() => {
-    if (email && !user?.id) {
-      dispatch(getUsuario(email));
-    }
-  }, [dispatch, email, user?.id]);
+  const { email } = useSelector((state) => state.auth);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (values, { resetForm }) => {
     setIsSubmitting(true);
-    
     try {
-      await dispatch(cambiarPassword({
-        passwordActual: values.passwordActual,
-        nuevaPassword: values.nuevaPassword,
-        idUsuario: user?.id,
-      })).unwrap();
-      
-      SweetCrud('Contraseña Cambiada', 'Su contraseña ha sido actualizada exitosamente');
+      await dispatch(
+        cambiarPassword({
+          email,
+          passwordActual: values.passwordActual,
+          nuevaPassword: values.nuevaPassword,
+        })
+      ).unwrap();
+      SweetCrud("Contraseña actualizada", SWEET_SUCESS);
       resetForm();
+      dispatch(getUsuario(email));
       navigate("/dashboard");
     } catch (error) {
-      const msg =
-        typeof error === "string"
-          ? error
-          : error?.message || VALIDATION_MESSAGES.ERROR.ERROR_CAMBIAR_PASSWORD;
-      toast.error(msg);
+      toast.error(error?.message || VALIDATION_MESSAGES.ERROR.ERROR_CAMBIAR_PASSWORD);
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-50">
-      <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md">
-        <h1 className="text-sky-600 font-black text-3xl capitalize text-center mb-8">
-          Cambiar Contraseña
-        </h1>
-        
+    <div className="flex justify-center">
+      <div className="bg-white shadow-sm border border-gray-200 rounded-lg p-6 md:p-8 w-full max-w-md">
         <Formik
           initialValues={{
             passwordActual: "",
@@ -166,4 +147,4 @@ const CambiarPassword = () => {
   );
 };
 
-export default CambiarPassword; 
+export default CambiarPassword;

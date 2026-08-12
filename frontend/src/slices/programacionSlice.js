@@ -24,12 +24,17 @@ const handleFulfilled = (state, action, message) => {
   state.code = SUCCESS_CODE;
   state.message = message;
   if (action.payload) {
-    state.programaciones = action.payload.content || state.programaciones;
-    state.programacion = action.payload || state.programacion;
-    state.total = action.payload.totalElements || state.total;
-    state.prev = action.payload.first || state.prev;
-    state.next = action.payload.last || state.next;
-    state.numberPage = action.payload.number || state.numberPage;
+    state.programaciones = action.payload.content ?? [];
+    if (action.payload.content === undefined && !('totalElements' in (action.payload || {}))) {
+      state.programacion = action.payload;
+    }
+    state.total = action.payload.totalElements ?? 0;
+    state.prev = action.payload.first ?? null;
+    state.next = action.payload.last ?? null;
+    state.numberPage = action.payload.number ?? 0;
+  } else {
+    state.programaciones = [];
+    state.total = 0;
   }
 };
 
@@ -58,24 +63,20 @@ export const getProgramacionesPaginado = createAsyncThunk(
   'getProgramacionesPaginado',
   async (values, { rejectWithValue }) => {
     try {
-      
-      const { data } = await clienteAxios.get(`/programaciones/${values.idEmpresa}/pageable`, {
+      const response = await clienteAxios.get(`/programaciones/${values.idEmpresa}/pageable`, {
         params: {
           page: values.page,
           size: values.size,
           ...(values.search ? { search: values.search } : {}),
         },
       });
-      
-      
-      return data;
+      if (response.status === 204 || !response.data) {
+        return { content: [], totalElements: 0, first: true, last: true, number: 0 };
+      }
+      return response.data;
     } catch (error) {
       console.error('=== ERROR EN GET PROGRAMACIONES PAGINADO ===');
       console.error('Error completo:', error);
-      console.error('Error message:', error.message);
-      console.error('Error response:', error.response);
-      console.error('Error response data:', error.response?.data);
-      console.error('Error status:', error.response?.status);
       return rejectWithValue(error.response?.data || error.message);
     }
   }
@@ -83,9 +84,11 @@ export const getProgramacionesPaginado = createAsyncThunk(
 
 export const getProgramacionActivo = createAsyncThunk(
   'getProgramacionActivo',
-  async (_, { rejectWithValue }) => {
+  async (idEmpresa, { rejectWithValue }) => {
     try {
-      const { data } = await clienteAxios.get(`/programaciones/activo`);
+      const { data } = await clienteAxios.get(`/programaciones/activo`, {
+        params: idEmpresa ? { idEmpresa } : {},
+      });
       return data;
     } catch (error) {
       console.error('Error en getProgramacionActivo:', error);

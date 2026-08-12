@@ -13,6 +13,15 @@ public interface IUsuarioRepository extends IGenericRepository<Usuario, Integer>
 	Optional<Usuario> findByEmail(String email);
 
 	@Query("""
+			SELECT DISTINCT u FROM Usuario u
+			LEFT JOIN FETCH u.empleado e
+			LEFT JOIN FETCH e.empresa
+			LEFT JOIN FETCH u.roles
+			WHERE u.email = :email
+			""")
+	Optional<Usuario> findByEmailWithEmpresa(@Param("email") String email);
+
+	@Query("""
 			Select u from Usuario u where u.empleado.idEmpleado = :idEmpleado
 			and (u.empleado.activo IS NULL OR u.empleado.activo = true)
 			""")

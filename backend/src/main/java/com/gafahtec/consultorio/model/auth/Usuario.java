@@ -15,6 +15,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
@@ -43,7 +44,7 @@ public class Usuario implements UserDetails {
 
 	private static final long serialVersionUID = -5523361576521428556L;
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idUsuario;
 	@Column(unique = true)
 	private String email;
@@ -51,6 +52,7 @@ public class Usuario implements UserDetails {
 	private String password;
 
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "empleado_id")
 	private Empleado empleado;
 
 	@ManyToMany(fetch = FetchType.EAGER)

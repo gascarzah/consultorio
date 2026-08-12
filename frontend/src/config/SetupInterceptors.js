@@ -10,7 +10,7 @@ const SetupInterceptors = async (navigate) => {
     },
     (err) => {
       if (err.response) {
-        if (err.response.status === 403 || err.response.status === 401) {
+        if (err.response.status === 401) {
           store.dispatch(logout());
           store.dispatch(resetState());
           navigate("/");

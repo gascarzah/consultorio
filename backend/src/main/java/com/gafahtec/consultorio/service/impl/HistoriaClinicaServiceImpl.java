@@ -37,7 +37,8 @@ public class HistoriaClinicaServiceImpl implements IHistoriaClinicaService {
 		var empresa = iEmpresaRepository.findById(idEmpresa)
 				.orElseThrow(() -> new EntityNotFoundException("Empresa no encontrada con ID: " + idEmpresa));
 
-		var historiaClinica = HistoriaClinicaMapper.INSTANCE.historiaClinicaDtoToEntity(request);
+		var historiaClinica = HistoriaClinicaMapper.toEntity(request);
+		historiaClinica.setIdHistoriaClinica(null);
 		historiaClinica.setActivo(Boolean.TRUE);
 		historiaClinica.setEmpresa(empresa);
 
@@ -48,7 +49,7 @@ public class HistoriaClinicaServiceImpl implements IHistoriaClinicaService {
 	@Override
 	public HistoriaClinicaResponse modificar(HistoriaClinicaRequest request) {
 		var historiaClinica = loadAndAuthorize(request.getIdHistoriaClinica());
-		BeanUtils.copyProperties(request, historiaClinica, "activo", "empresa", "citas");
+		BeanUtils.copyProperties(request, historiaClinica, "activo", "empresa", "citas", "idHistoriaClinica");
 		var obj = iHistoriaClinicaRepository.save(historiaClinica);
 		return entityToResponse(obj);
 	}
@@ -108,10 +109,6 @@ public class HistoriaClinicaServiceImpl implements IHistoriaClinicaService {
 	}
 
 	private HistoriaClinicaResponse entityToResponse(HistoriaClinica entity) {
-		var response = HistoriaClinicaMapper.INSTANCE.historiaClinicaEntityToDto(entity);
-		if (entity.getEmpresa() != null) {
-			response.setIdEmpresa(entity.getEmpresa().getIdEmpresa());
-		}
-		return response;
+		return HistoriaClinicaMapper.toResponse(entity);
 	}
 }

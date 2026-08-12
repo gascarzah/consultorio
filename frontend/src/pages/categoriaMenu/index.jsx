@@ -1,3 +1,4 @@
+import { VALIDATION_MESSAGES } from "../../utils/ValidationMessages";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -63,13 +64,13 @@ const ListarCategoriaMenu = () => {
         await dispatch(eliminarCategoriaMenu(id)).unwrap();
         recargar();
       } catch (error) {
-        toast.error(error?.message || "No se pudo eliminar la categoría");
+        toast.error(error?.message || VALIDATION_MESSAGES.ERROR.NO_SE_PUDO_ELIMINAR);
       }
     });
   };
 
   return (
-    <Card title="Lista de Categorías de Menú" className="mt-4">
+    <Card className="shadow-sm border border-gray-200">
       <div className="mb-6 p-6 rounded-xl border shadow-sm">
         <div className="flex justify-between items-center">
           <div className="flex-1 max-w-lg">

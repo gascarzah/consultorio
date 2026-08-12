@@ -39,11 +39,9 @@ export  const Header = () => {
             Consultorio
           </h2>
           <p className="text-xl font-bold">
-            {user?.empleado?.apellidoPaterno +
-              " " +
-              user?.empleado?.apellidoMaterno +
-              " " +
-              user?.empleado?.nombres}
+            {user?.empleado
+              ? `${user.empleado.apellidoPaterno || ""} ${user.empleado.apellidoMaterno || ""}, ${user.empleado.nombres || ""}`.trim()
+              : (user?.email || "")}
           </p>
         </div>
         <div className="flex flex-col md:flex-row items-center gap-4">

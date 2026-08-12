@@ -1,3 +1,4 @@
+import { VALIDATION_MESSAGES } from "../../utils/ValidationMessages";
 import { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // import Modal from "react-modal";
@@ -82,7 +83,7 @@ const ListarEmpresa = () => {
         await dispatch(eliminarEmpresa(id)).unwrap();
         fetchEmpresas();
       } catch (error) {
-        toast.error(error?.message || "No se pudo eliminar la empresa");
+        toast.error(error?.message || VALIDATION_MESSAGES.ERROR.NO_SE_PUDO_ELIMINAR);
       }
     });
   };
@@ -91,7 +92,7 @@ const ListarEmpresa = () => {
     <>
 
         {/* PrimeReact DataTable */}
-        <Card title="Lista de Empresas" className="mt-4">
+        <Card className="shadow-sm border border-gray-200">
           {/* Barra de búsqueda */}
           <div className="mb-6 p-6 bg-gradient-to-r  rounded-xl border  shadow-sm">
             <div className="flex justify-between items-center">

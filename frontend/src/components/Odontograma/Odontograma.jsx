@@ -1,3 +1,4 @@
+import { VALIDATION_MESSAGES } from "../../utils/ValidationMessages";
 import { useState } from "react";
 import './Odontograma.css';
 import { toast, Toaster } from 'react-hot-toast';
@@ -65,14 +66,14 @@ export const Odontograma = () => {
 
   const handleProcedureClick = (procedureId) => {
     if (!selectedTooth) {
-      toast.error('Por favor seleccione un diente primero');
+      toast.error(VALIDATION_MESSAGES.ERROR.SELECCIONAR_DIENTE);
       return;
     }
 
     const procedure = procedures_list.find(p => p.id === procedureId);
       
     if (procedure.surfaces && !activeSurface) {
-      toast.error('Por favor seleccione una superficie del diente');
+      toast.error(VALIDATION_MESSAGES.ERROR.SELECCIONAR_SUPERFICIE);
       return;
     }
 

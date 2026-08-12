@@ -34,8 +34,9 @@ export const getEmpleadosPorEmpresa = createAsyncThunk(
   'empleado/getPorEmpresa',
   async (value, { rejectWithValue }) => {
     try {
-      const { data } = await clienteAxios.get(`/empleados/empresa/${value}`);
-      return data;
+      const response = await clienteAxios.get(`/empleados/empresa/${value}`);
+      if (response.status === 204 || !response.data) return [];
+      return Array.isArray(response.data) ? response.data : [];
     } catch (error) {
       console.error('Error al obtener empleados por empresa:', error);
       return rejectWithValue(error?.response?.data || 'Error desconocido');
@@ -48,8 +49,9 @@ export const getOdontologosPorEmpresa = createAsyncThunk(
   'empleado/getOdontologosPorEmpresa',
   async (value, { rejectWithValue }) => {
     try {
-      const { data } = await clienteAxios.get(`/empleados/empresa/${value}/odontologos`);
-      return data;
+      const response = await clienteAxios.get(`/empleados/empresa/${value}/odontologos`);
+      if (response.status === 204 || !response.data) return [];
+      return Array.isArray(response.data) ? response.data : [];
     } catch (error) {
       console.error('Error al obtener odontólogos por empresa:', error);
       return rejectWithValue(error?.response?.data || 'Error desconocido');
@@ -133,18 +135,19 @@ const empleadoSlice = createSlice({
         state.loading = false;
         state.code = 200; // Asegurarse de asignar un código de estado adecuado
         state.message = 'Empleados obtenidos con éxito';
-        state.empleados = payload;
+        state.empleados = Array.isArray(payload) ? payload : [];
       })
       .addCase(getEmpleadosPorEmpresa.rejected, (state, { payload }) => {
         state.loading = false;
         state.code = payload?.status || 500; // Asignar un valor predeterminado de código de error
         state.message = payload?.message || 'Error al obtener empleados';
+        state.empleados = [];
       })
       .addCase(getOdontologosPorEmpresa.fulfilled, (state, { payload }) => {
         state.loading = false;
         state.code = 200;
         state.message = 'Odontólogos obtenidos con éxito';
-        state.empleados = payload;
+        state.empleados = Array.isArray(payload) ? payload : [];
       })
       .addCase(getOdontologosPorEmpresa.rejected, (state, { payload }) => {
         state.loading = false;

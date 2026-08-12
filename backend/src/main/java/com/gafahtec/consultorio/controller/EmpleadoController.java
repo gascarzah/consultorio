@@ -22,7 +22,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/empleados")
-@PreAuthorize("@authz.isSuperOrAdmin()")
+@PreAuthorize("@authz.canAccessApp()")
 @AllArgsConstructor
 @Log4j2
 @Tag(name = "Empleado", description = "Operaciones sobre empleados")

@@ -24,4 +24,8 @@ public interface ITipoEmpleadoRepository extends JpaRepository<TipoEmpleado, Int
     Page<TipoEmpleado> findByActivoTrue(Pageable pageable);
     java.util.List<TipoEmpleado> findByActivoTrue();
 
+    boolean existsByActivoTrueAndNombreIgnoreCase(String nombre);
+
+    boolean existsByActivoTrueAndNombreIgnoreCaseAndIdTipoEmpleadoNot(String nombre, Integer idTipoEmpleado);
+
 }

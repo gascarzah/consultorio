@@ -56,7 +56,15 @@ public interface IEmpleadoRepository extends IGenericRepository<Empleado, Intege
 					LOWER(te.nombre) LIKE '%odontolog%' OR
 					LOWER(te.nombre) LIKE '%odontólogo%' OR
 					LOWER(te.nombre) LIKE '%medico%' OR
-					LOWER(te.nombre) LIKE '%médico%'
+					LOWER(te.nombre) LIKE '%médico%' OR
+					LOWER(te.nombre) LIKE '%doctor%'
+				)) OR
+				(te.descripcion IS NOT NULL AND (
+					LOWER(te.descripcion) LIKE '%odontolog%' OR
+					LOWER(te.descripcion) LIKE '%odontólogo%' OR
+					LOWER(te.descripcion) LIKE '%medico%' OR
+					LOWER(te.descripcion) LIKE '%médico%' OR
+					LOWER(te.descripcion) LIKE '%doctor%'
 				)) OR
 				EXISTS (
 					SELECT 1 FROM Usuario u
@@ -66,7 +74,8 @@ public interface IEmpleadoRepository extends IGenericRepository<Empleado, Intege
 						LOWER(r.nombre) LIKE '%odontolog%' OR
 						LOWER(r.nombre) LIKE '%odontólogo%' OR
 						LOWER(r.nombre) LIKE '%medico%' OR
-						LOWER(r.nombre) LIKE '%médico%'
+						LOWER(r.nombre) LIKE '%médico%' OR
+						LOWER(r.nombre) LIKE '%doctor%'
 					)
 				)
 			)

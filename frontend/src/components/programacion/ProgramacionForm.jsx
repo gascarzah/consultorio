@@ -10,7 +10,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import es from "date-fns/locale/es";
 import { useDispatch, useSelector } from "react-redux";
 import { modificarProgramacion, registrarProgramacion } from "../../slices/programacionSlice";
-// import { getEmpleadosPorEmpresa } from "../../slices/empleadoSlice";
+import { getEmpresas } from "../../slices/empresaSlice";
 import { LISTAR_PROGRAMACION, MENSAJE_GUARDADO_EXITOSO, MENSAJE_MODIFICADO_EXITOSO, SWEET_GUARDO, SweetCrud } from "../../utils";
 import { SWEET_MODIFICO, SWEET_SUCESS } from "../../utils";
 import { toast } from "react-toastify";
@@ -19,17 +19,22 @@ import { VALIDATION_MESSAGES } from "../../utils/ValidationMessages";
 // Register the Spanish locale
 registerLocale("es", es);
 
-const programacionSchema = Yup.object().shape({
-  fechaInicial: Yup.date()
-    .required(VALIDATION_MESSAGES.REQUIRED.FECHA_INICIAL)
-    .max(new Date(), "La fecha inicial no puede ser futura"),
-  fechaFinal: Yup.date()
-    .required(VALIDATION_MESSAGES.REQUIRED.FECHA_FINAL)
-    .min(Yup.ref('fechaInicial'), "La fecha final debe ser posterior a la fecha inicial"),
-});
+const buildProgramacionSchema = (isSuper) =>
+  Yup.object().shape({
+    fechaInicial: Yup.date().required(VALIDATION_MESSAGES.REQUIRED.FECHA_INICIAL),
+    fechaFinal: Yup.date()
+      .required(VALIDATION_MESSAGES.REQUIRED.FECHA_FINAL)
+      .min(Yup.ref('fechaInicial'), VALIDATION_MESSAGES.FORMAT.FECHA_FINAL_POSTERIOR),
+    idEmpresa: isSuper
+      ? Yup.string().required(VALIDATION_MESSAGES.REQUIRED.EMPRESA)
+      : Yup.string().nullable(),
+  });
 
 export const ProgramacionForm = ({ programacion }) => {
   const { user } = useSelector((state) => state.usuario);
+  const { rol } = useSelector((state) => state.auth);
+  const { empresas } = useSelector((state) => state.empresa);
+  const isSuper = String(rol?.nombre || "").toUpperCase() === "SUPER";
   const [monday, setMonday] = useState();
   const [saturday, setSaturday] = useState();
   const [sunday, setSunday] = useState();
@@ -42,19 +47,25 @@ export const ProgramacionForm = ({ programacion }) => {
     getSundayOfCurrentWeek();
   }, []);
 
-  // useEffect(() => {
-  //   dispatch(getEmpleadosPorEmpresa(user?.idEmpresa));
-  // }, [dispatch]);
+  useEffect(() => {
+    if (isSuper) {
+      dispatch(getEmpresas());
+    }
+  }, [dispatch, isSuper]);
 
   const handleSubmit = (values) => {
-    if (!user?.idEmpresa) {
-      console.error("No se pudo obtener la empresa del usuario");
+    const idEmpresaToSend = isSuper
+      ? Number(values.idEmpresa)
+      : Number(user?.idEmpresa || values.idEmpresa);
+
+    if (!idEmpresaToSend) {
+      toast.error(VALIDATION_MESSAGES.ERROR.EMPRESA_USUARIO);
       return;
     }
 
     const payload = {
       ...values,
-      idEmpresa: user.idEmpresa,
+      idEmpresa: idEmpresaToSend,
     };
 
     const action = values.idProgramacion
@@ -71,7 +82,7 @@ export const ProgramacionForm = ({ programacion }) => {
         navigate(LISTAR_PROGRAMACION);
       })
       .catch((errores) => {
-        SweetCrud("Error", errores.message || "No se pudo guardar");
+        SweetCrud(VALIDATION_MESSAGES.ERROR.TITULO, errores.message || VALIDATION_MESSAGES.ERROR.NO_SE_PUDO_GUARDAR);
       });
   };
 
@@ -104,6 +115,7 @@ export const ProgramacionForm = ({ programacion }) => {
       <Formik
         initialValues={{
           idProgramacion: programacion?.idProgramacion || null,
+          idEmpresa: String(programacion?.idEmpresa ?? (isSuper ? "" : user?.idEmpresa ?? "")),
           fechaInicial: programacion?.fechaInicial
             ? String(programacion.fechaInicial).split("T")[0]
             : (monday ? monday.toISOString().split("T")[0] : ""),
@@ -111,15 +123,35 @@ export const ProgramacionForm = ({ programacion }) => {
             ? String(programacion.fechaFinal).split("T")[0]
             : (sunday ? sunday.toISOString().split("T")[0] : ""),
         }}
-        validationSchema={programacionSchema}
+        validationSchema={buildProgramacionSchema(isSuper)}
         onSubmit={(values) => handleSubmit(values)}
         enableReinitialize
       >
         {({ errors, touched }) => (
           <Form className="my-10 bg-white shadow rounded p-10 flex flex-col w-2/5">
-            <h1 className="text-sky-500 font-black text-3xl capitalize text-center mb-8">
-              {programacion?.idProgramacion ? "Editar Programación" : "Registrar Programación"}
-            </h1>
+            {isSuper && (
+              <div className="my-3">
+                <label htmlFor="idEmpresa" className="uppercase text-gray-600 block font-bold">Empresa</label>
+                <Field
+                  as="select"
+                  id="idEmpresa"
+                  name="idEmpresa"
+                  className="w-full mt-3 p-3 border rounded-xl bg-gray-50"
+                >
+                  <option value="">Selecciona una Empresa</option>
+                  {empresas?.map((empresa) => (
+                    <option key={empresa.idEmpresa} value={empresa.idEmpresa}>
+                      {empresa.nombre}
+                    </option>
+                  ))}
+                </Field>
+                <ErrorMessage
+                  name="idEmpresa"
+                  component="div"
+                  className="text-red-500 text-sm mt-1"
+                />
+              </div>
+            )}
             <div className="my-3">
               <label htmlFor="fechaInicial" className="uppercase text-gray-600 block font-bold">Fecha Inicial</label>
               <Field

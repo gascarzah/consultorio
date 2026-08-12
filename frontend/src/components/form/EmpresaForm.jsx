@@ -27,7 +27,7 @@ const EmpresaForm = ({ empresa }) => {
           navigate("/dashboard/listar-empresa");
         })
         .catch((errores) => {
-          SweetCrud('Error', errores.message || 'No se pudo guardar');
+          SweetCrud(VALIDATION_MESSAGES.ERROR.TITULO, errores.message || VALIDATION_MESSAGES.ERROR.NO_SE_PUDO_GUARDAR);
         });
     } else {
       dispatch(modificarEmpresa(values))
@@ -38,7 +38,7 @@ const EmpresaForm = ({ empresa }) => {
           navigate("/dashboard/listar-empresa");
         })
         .catch((errores) => {
-          SweetCrud('Error', errores.message || 'No se pudo modificar');
+          SweetCrud(VALIDATION_MESSAGES.ERROR.TITULO, errores.message || VALIDATION_MESSAGES.ERROR.NO_SE_PUDO_MODIFICAR);
         });
     }
     setSubmitting(false);
@@ -55,9 +55,6 @@ const EmpresaForm = ({ empresa }) => {
         {({ errors, touched, isSubmitting }) => {
           return (
             <Form className="my-10 bg-white shadow rounded p-10 flex flex-col w-2/5">
-              <h1 className="text-sky-500 font-black text-3xl capitalize text-center mb-8">
-                {empresa?.idEmpresa ? "Editar Empresa" : "Registrar Empresa"}
-              </h1>
               <div className="my-3">
                 <label htmlFor="nombre" className="uppercase text-gray-600 block font-bold">
                   Nombre

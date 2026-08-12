@@ -55,31 +55,49 @@ public class ProgramacionServiceImpl implements IProgramacionService {
 
     @Override
     public ProgramacionResponse registrar(ProgramacionRequest request) {
+        ProgramacionResponse existente = buscarPorRango(request);
+        if (existente != null) {
+            throw new IllegalArgumentException("Ya existe una programacion para el rango: " + existente.getRango());
+        }
+        return crear(request);
+    }
 
+    @Override
+    public ProgramacionResponse registrarSiNoExiste(ProgramacionRequest request) {
+        ProgramacionResponse existente = buscarPorRango(request);
+        if (existente != null) {
+            return existente;
+        }
+        return crear(request);
+    }
+
+    private ProgramacionResponse buscarPorRango(ProgramacionRequest request) {
+        String rango = rangoDe(request);
+        List<Programacion> listaProgramacion = iProgramacionRepository.findByRango(rango);
+        if (CollectionUtils.isEmpty(listaProgramacion)) {
+            return null;
+        }
+        return entityToResponse(listaProgramacion.get(0));
+    }
+
+    private ProgramacionResponse crear(ProgramacionRequest request) {
         String strFechaInicial = Utils.getFecha2String(request.getFechaInicial());
         String strFechaFinal = Utils.getFecha2String(request.getFechaFinal());
-
-
         String rango = strFechaInicial + " - " + strFechaFinal;
 
-        List<Programacion> listaProgramacion = iProgramacionRepository.findByRango(rango);
+        var programacion = new Programacion();
+        BeanUtils.copyProperties(request, programacion);
+        programacion.setRango(rango);
+        programacion.setActivo(Constants.ACTIVO);
+        programacion.setStrFechaFinal(strFechaFinal);
+        programacion.setStrFechaInicial(strFechaInicial);
 
-        if(CollectionUtils.isEmpty(listaProgramacion)){
+        return entityToResponse(iProgramacionRepository.save(programacion));
+    }
 
-            var programacion = new Programacion();
-            BeanUtils.copyProperties(request, programacion);
-            programacion.setRango(rango);
-            programacion.setActivo(Constants.ACTIVO);
-            programacion.setStrFechaFinal(strFechaFinal);
-            programacion.setStrFechaInicial(strFechaInicial);
-
-            var obj = iProgramacionRepository.save(programacion);
-            return entityToResponse(obj);
-        }
-
-        throw new IllegalArgumentException("Ya existe una programacion para el rango: " + rango);
-
-
+    private String rangoDe(ProgramacionRequest request) {
+        return Utils.getFecha2String(request.getFechaInicial()) + " - "
+                + Utils.getFecha2String(request.getFechaFinal());
     }
 
 
@@ -134,8 +152,14 @@ public class ProgramacionServiceImpl implements IProgramacionService {
 
     @Override
     public List<ProgramacionResponse> programacionActivo() {
+        return programacionActivo(null);
+    }
 
-        List<Programacion> programacionActiva = programacionEntityActivo();
+    @Override
+    public List<ProgramacionResponse> programacionActivo(Integer idEmpresa) {
+        List<Programacion> programacionActiva = idEmpresa != null
+                ? iProgramacionRepository.findByActivoAndIdEmpresaOrderByFechaInicial(Constants.ACTIVO, idEmpresa)
+                : programacionEntityActivo();
         if (!programacionActiva.isEmpty()) {
             Programacion programacion = programacionActiva.iterator().next();
             var response = entityToResponse(programacion);

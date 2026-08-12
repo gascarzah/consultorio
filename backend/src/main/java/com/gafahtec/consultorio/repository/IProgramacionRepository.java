@@ -19,8 +19,11 @@ public interface IProgramacionRepository extends IGenericRepository<Programacion
     
 
     
-    @Query("Select p from Programacion p  " )
-//    @Query("Select p from Programacion p where p.idEmpresa = :idEmpresa " )
+    @Query("""
+            SELECT p FROM Programacion p
+            WHERE p.activo = true
+            AND p.idEmpresa = :idEmpresa
+            """)
     Page<Programacion> listarProgramacionPageable(@Param("idEmpresa") Integer idEmpresa, Pageable pageable);
 
     Page<Programacion> findByActivoTrue(Pageable pageable);
@@ -42,8 +45,9 @@ public interface IProgramacionRepository extends IGenericRepository<Programacion
     @Query("SELECT p FROM Programacion p WHERE p.activo = :activo ORDER BY p.fechaInicial, p.fechaFinal ")
     List<Programacion> findByActivoOrderByFechaInicial(@Param("activo") Boolean activo);
 
-//    // Ordenar por fechaFinal (ascendente)
-//    @Query("SELECT p FROM Programacion p WHERE p.activo = :activo ORDER BY p.fechaFinal ")
-//    Set<Programacion> findByActivoOrderByFechaFinal(@Param("activo") Boolean activo);
-    
+    @Query("SELECT p FROM Programacion p WHERE p.activo = :activo AND p.idEmpresa = :idEmpresa ORDER BY p.fechaInicial, p.fechaFinal")
+    List<Programacion> findByActivoAndIdEmpresaOrderByFechaInicial(
+            @Param("activo") Boolean activo,
+            @Param("idEmpresa") Integer idEmpresa);
+
 }

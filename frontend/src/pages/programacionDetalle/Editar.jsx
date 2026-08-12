@@ -1,3 +1,4 @@
+import { VALIDATION_MESSAGES } from "../../utils/ValidationMessages";
 import { useState, useEffect, useRef } from "react";
 
 import { useParams } from "react-router-dom";
@@ -40,7 +41,7 @@ const EditarProgramacionDetalle = () => {
           setError(err?.message || "No existe programación detalle para este ID.");
           return;
         }
-        setError(err?.message || "No se pudo cargar la programación detalle.");
+        setError(err?.message || VALIDATION_MESSAGES.ERROR.NO_SE_PUDO_CARGAR);
       })
       .finally(() => {
         if (isMounted) setLoading(false);

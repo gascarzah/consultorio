@@ -188,9 +188,7 @@ public class EmpleadoServiceImpl implements IEmpleadoService {
 			return null;
 		}
 
-		boolean isAdmin = userOpt.get().getRoles().stream()
-				.anyMatch(r -> "ADMIN".equalsIgnoreCase(r.getNombre()));
-		if (!isAdmin || userOpt.get().getEmpleado() == null || userOpt.get().getEmpleado().getEmpresa() == null) {
+		if (userOpt.get().getEmpleado() == null || userOpt.get().getEmpleado().getEmpresa() == null) {
 			return null;
 		}
 		return userOpt.get().getEmpleado().getEmpresa().getIdEmpresa();

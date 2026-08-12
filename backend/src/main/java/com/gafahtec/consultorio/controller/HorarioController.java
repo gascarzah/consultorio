@@ -35,7 +35,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/horarios")
 @AllArgsConstructor
 @Log4j2
-@PreAuthorize("@authz.isSuperOrAdmin()")
+@PreAuthorize("@authz.canAccessApp()")
 @Tag(name = "Horario", description = "Operaciones sobre horarios")
 public class HorarioController {
 

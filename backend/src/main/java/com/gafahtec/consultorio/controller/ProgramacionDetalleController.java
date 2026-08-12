@@ -37,7 +37,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/programacionesDetalladas")
 @AllArgsConstructor
 @Log4j2
-@PreAuthorize("@authz.isSuperOrAdmin()")
+@PreAuthorize("@authz.canAccessApp()")
 @Tag(name = "ProgramacionDetalle", description = "Operaciones sobre los detalles de programación")
 public class ProgramacionDetalleController {
 

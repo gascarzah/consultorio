@@ -1,3 +1,4 @@
+import { VALIDATION_MESSAGES } from "../utils/ValidationMessages";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -55,7 +56,7 @@ const PersistenciaSesion = () => {
         toast.success(`Configuración ${key} actualizada`);
       })
       .catch((error) => {
-        toast.error(error.message || 'Error al actualizar configuración');
+        toast.error(error.message || VALIDATION_MESSAGES.ERROR.ERROR_ACTUALIZAR_CONFIG);
       });
   };
 
@@ -63,10 +64,10 @@ const PersistenciaSesion = () => {
     dispatch(refreshSession())
       .unwrap()
       .then(() => {
-        toast.success("Sesión refrescada exitosamente");
+        toast.success(VALIDATION_MESSAGES.SUCCESS.SESION_REFRESCADA);
       })
       .catch((error) => {
-        toast.error(error.message || 'Error al refrescar sesión');
+        toast.error(error.message || VALIDATION_MESSAGES.ERROR.ERROR_REFRESCAR_SESION);
       });
   };
 
@@ -74,10 +75,10 @@ const PersistenciaSesion = () => {
     dispatch(terminateSession(sessionId))
       .unwrap()
       .then(() => {
-        toast.success("Sesión terminada exitosamente");
+        toast.success(VALIDATION_MESSAGES.SUCCESS.SESION_TERMINADA);
       })
       .catch((error) => {
-        toast.error(error.message || 'Error al terminar sesión');
+        toast.error(error.message || VALIDATION_MESSAGES.ERROR.ERROR_TERMINAR_SESION);
       });
   };
 
@@ -88,7 +89,7 @@ const PersistenciaSesion = () => {
         SweetCrud('Sesiones Terminadas', 'Todas las sesiones excepto la actual han sido terminadas');
       })
       .catch((error) => {
-        toast.error(error.message || 'Error al terminar sesiones');
+        toast.error(error.message || VALIDATION_MESSAGES.ERROR.ERROR_TERMINAR_SESIONES);
       });
   };
 
@@ -112,26 +113,18 @@ const PersistenciaSesion = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-sky-500"></div>
+      <div className="flex items-center justify-center py-16">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sky-500" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-sky-600 font-black text-3xl capitalize text-center mb-4">
-            Gestión de Sesión
-          </h1>
-          <p className="text-gray-600 text-center">
-            Administra la persistencia de tu sesión y monitorea la actividad
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <div className="w-full">
+      <p className="text-sm text-gray-600 mb-6">
+        Administra la persistencia de tu sesión y monitorea la actividad
+      </p>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Panel de Estado de Sesión */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
@@ -148,7 +141,7 @@ const PersistenciaSesion = () => {
                 </div>
                 
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium text-gray-600">Última actividad:</span>
+                  <span className="text-sm font-medium text-gray-600">��ltima actividad:</span>
                   <span className="text-sm text-gray-900">
                     {formatTimeAgo(sessionInfo.lastActivity)}
                   </span>
@@ -309,7 +302,7 @@ const PersistenciaSesion = () => {
                       </div>
                       
                       <div className="text-xs text-gray-600 mb-2">
-                        {session.location} • Última actividad: {formatTimeAgo(session.lastActivity)}
+                        {session.location} ��� ��ltima actividad: {formatTimeAgo(session.lastActivity)}
                       </div>
                       
                       {!session.isCurrent && (
@@ -339,20 +332,20 @@ const PersistenciaSesion = () => {
             <div>
               <h3 className="text-sm font-medium text-gray-900 mb-2">Beneficios de la Persistencia:</h3>
               <ul className="text-sm text-gray-600 space-y-1">
-                <li>• Evita pérdida de trabajo por cierres inesperados</li>
-                <li>• Reduce tiempos de reconexión</li>
-                <li>• Mantiene continuidad del trabajo clínico</li>
-                <li>• Mejora la experiencia del usuario</li>
+                <li>��� Evita pérdida de trabajo por cierres inesperados</li>
+                <li>��� Reduce tiempos de reconexión</li>
+                <li>��� Mantiene continuidad del trabajo clínico</li>
+                <li>��� Mejora la experiencia del usuario</li>
               </ul>
             </div>
             
             <div>
               <h3 className="text-sm font-medium text-gray-900 mb-2">Medidas de Seguridad:</h3>
               <ul className="text-sm text-gray-600 space-y-1">
-                <li>• Validación automática de token</li>
-                <li>• Registro de actividad del usuario</li>
-                <li>• Cierre automático por inactividad</li>
-                <li>• Monitoreo de sesiones múltiples</li>
+                <li>��� Validación automática de token</li>
+                <li>��� Registro de actividad del usuario</li>
+                <li>��� Cierre automático por inactividad</li>
+                <li>��� Monitoreo de sesiones múltiples</li>
               </ul>
             </div>
           </div>
@@ -370,7 +363,7 @@ const PersistenciaSesion = () => {
           <button
             onClick={() => {
               // Aquí se implementaría el cierre de sesión
-              toast.success("Sesión cerrada exitosamente");
+              toast.success(VALIDATION_MESSAGES.SUCCESS.SESION_CERRADA);
               navigate("/");
             }}
             className="bg-red-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-red-700 transition-colors"
@@ -378,7 +371,6 @@ const PersistenciaSesion = () => {
             Cerrar Sesión
           </button>
         </div>
-      </div>
     </div>
   );
 };

@@ -55,9 +55,7 @@ export const loadAuthProfile = createAsyncThunk(
         return rejectWithValue('Email no disponible');
       }
 
-      const { data: usuario } = await clienteAxios.get(
-        `/usuarios/${encodeURIComponent(userEmail)}`
-      );
+      const { data: usuario } = await clienteAxios.get('/usuarios/me');
       const roleFromUser = firstRoleFromUsuario(usuario);
 
       if (roleFromUser?.idRol) {

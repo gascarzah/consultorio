@@ -13,26 +13,25 @@ import { LISTAR_EMPLEADO } from "../../utils";
 import { SWEET_GUARDO, SWEET_MODIFICO, SWEET_SUCESS, SweetCrud } from "../../utils";
 import { VALIDATION_MESSAGES } from "../../utils/ValidationMessages";
 
-const empleadoSchema = Yup.object().shape({
-  nombres: Yup.string().required(VALIDATION_MESSAGES.REQUIRED.NOMBRE_EMPLEADO),
-  apellidoPaterno: Yup.string().required(VALIDATION_MESSAGES.REQUIRED.APELLIDO_PATERNO),
-  apellidoMaterno: Yup.string().required(VALIDATION_MESSAGES.REQUIRED.APELLIDO_MATERNO),
-  numeroDocumento: Yup.string()
-    .max(8, VALIDATION_MESSAGES.FORMAT.DNI_LENGTH)
-    .required(VALIDATION_MESSAGES.REQUIRED.DNI)
-    .matches(/^[0-9]+$/, VALIDATION_MESSAGES.FORMAT.DNI_NUMBERS),
-
-  direccion: Yup.string().required(VALIDATION_MESSAGES.REQUIRED.DIRECCION),
-  idTipoEmpleado: Yup.string().required(VALIDATION_MESSAGES.REQUIRED.TIPO_EMPLEADO),
-  idEmpresa: Yup.string().required(VALIDATION_MESSAGES.REQUIRED.EMPRESA),
-});
+const buildEmpleadoSchema = (isSuper) =>
+  Yup.object().shape({
+    nombres: Yup.string().required(VALIDATION_MESSAGES.REQUIRED.NOMBRE_EMPLEADO),
+    apellidoPaterno: Yup.string().required(VALIDATION_MESSAGES.REQUIRED.APELLIDO_PATERNO),
+    apellidoMaterno: Yup.string().required(VALIDATION_MESSAGES.REQUIRED.APELLIDO_MATERNO),
+    numeroDocumento: Yup.string()
+      .required(VALIDATION_MESSAGES.REQUIRED.DNI)
+      .matches(/^[0-9]+$/, VALIDATION_MESSAGES.FORMAT.DNI_NUMBERS)
+      .length(8, VALIDATION_MESSAGES.FORMAT.DNI_LENGTH),
+    direccion: Yup.string().required(VALIDATION_MESSAGES.REQUIRED.DIRECCION),
+    idTipoEmpleado: Yup.string().required(VALIDATION_MESSAGES.REQUIRED.TIPO_EMPLEADO),
+    idEmpresa: isSuper
+      ? Yup.string().required(VALIDATION_MESSAGES.REQUIRED.EMPRESA)
+      : Yup.string().nullable(),
+  });
 
 function EmpleadoFormInner({ errors, touched, values, setFieldValue, tipoEmpleados, empresas, handleSubmit, empleado, isSuper }) {
   return (
     <Form className="my-10 bg-white shadow rounded p-10 flex flex-col w-2/5">
-      <h1 className="text-sky-500 font-black text-3xl capitalize text-center mb-8">
-        {empleado?.idEmpleado ? "Editar Empleado" : "Registrar Empleado"}
-      </h1>
       <div className="my-3">
         <label htmlFor="nombres" className="uppercase text-gray-600 block font-bold">
           Nombres
@@ -136,9 +135,14 @@ function EmpleadoFormInner({ errors, touched, values, setFieldValue, tipoEmplead
           className="w-full mt-3 p-3 border rounded-xl bg-gray-50"
         >
           <option value="">Selecciona un tipo de empleado</option>
-          {tipoEmpleados && tipoEmpleados.map((tipoEmpleado) => (
+          {tipoEmpleados
+            ?.filter((tipo, index, list) =>
+              tipo?.idTipoEmpleado != null &&
+              list.findIndex((item) => item.idTipoEmpleado === tipo.idTipoEmpleado) === index
+            )
+            .map((tipoEmpleado) => (
             <option key={tipoEmpleado.idTipoEmpleado} value={tipoEmpleado.idTipoEmpleado}>
-              {tipoEmpleado.descripcion}
+              {tipoEmpleado.nombre || tipoEmpleado.descripcion}
             </option>
           ))}
         </Field>
@@ -212,7 +216,7 @@ export const EmpleadoForm = ({ empleado }) => {
   const handleSubmit = (values, resetForm) => {
     const idEmpresaToSend = isSuper ? Number(values.idEmpresa) : Number(user?.idEmpresa || values.idEmpresa);
     if (!idEmpresaToSend) {
-      SweetCrud('Error', 'No se pudo determinar la empresa del usuario ADMIN');
+      SweetCrud(VALIDATION_MESSAGES.ERROR.TITULO, VALIDATION_MESSAGES.ERROR.EMPRESA_NO_DETERMINADA);
       return;
     }
     const payload = {
@@ -229,7 +233,7 @@ export const EmpleadoForm = ({ empleado }) => {
           navigate(LISTAR_EMPLEADO);
         })
         .catch((errores) => {
-          SweetCrud('Error', errores.message || 'No se pudo guardar');
+          SweetCrud(VALIDATION_MESSAGES.ERROR.TITULO, errores.message || VALIDATION_MESSAGES.ERROR.NO_SE_PUDO_GUARDAR);
         });
     } else {
       dispatch(modificarEmpleado(payload))
@@ -240,7 +244,7 @@ export const EmpleadoForm = ({ empleado }) => {
           navigate(LISTAR_EMPLEADO);
         })
         .catch((errores) => {
-          SweetCrud('Error', errores.message || 'No se pudo modificar');
+          SweetCrud(VALIDATION_MESSAGES.ERROR.TITULO, errores.message || VALIDATION_MESSAGES.ERROR.NO_SE_PUDO_MODIFICAR);
         });
     }
   };
@@ -262,7 +266,7 @@ export const EmpleadoForm = ({ empleado }) => {
         onSubmit={(values, { resetForm }) => {
           handleSubmit(values, resetForm);
         }}
-        validationSchema={empleadoSchema}
+        validationSchema={buildEmpleadoSchema(isSuper)}
       >
         {(formikProps) => (
           <EmpleadoFormInner

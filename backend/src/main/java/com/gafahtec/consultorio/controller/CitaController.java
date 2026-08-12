@@ -31,7 +31,7 @@ import java.util.Set;
 @RequestMapping("/citas")
 @AllArgsConstructor
 @Log4j2
-@PreAuthorize("@authz.isSuperOrAdmin()")
+@PreAuthorize("@authz.canAccessApp()")
 @Tag(name = "Cita", description = "Operaciones sobre citas médicas")
 public class CitaController {
 

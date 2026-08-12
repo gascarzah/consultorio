@@ -37,7 +37,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RestController
 @RequestMapping("/rolMenus")
 @AllArgsConstructor
-@PreAuthorize("@authz.isSuperOrAdmin()")
 @Tag(name = "RolMenu", description = "Operaciones sobre la relación entre roles y menús")
 public class RolMenuController {
 
@@ -50,6 +49,7 @@ public class RolMenuController {
 			@ApiResponse(responseCode = "500", description = "Error interno del servidor")
 	})
 	@GetMapping("/{id}")
+	@PreAuthorize("@authz.canReadRole(#id)")
 	public ResponseEntity<List<MenusPorRolResponse>> listarPorId(@PathVariable("id") Integer id) throws Exception {
 		var obj = iRolMenuService.listarPorId(id);
 
@@ -67,6 +67,7 @@ public class RolMenuController {
 			@ApiResponse(responseCode = "500", description = "Error interno del servidor")
 	})
 	@PostMapping
+	@PreAuthorize("@authz.isSuperOrAdmin()")
 	public ResponseEntity<RolMenuResponse> registrar(@Valid @RequestBody RolMenuRequest rolMenuRequest)
 			throws Exception {
 		var obj = iRolMenuService.registrar(rolMenuRequest);
@@ -80,6 +81,7 @@ public class RolMenuController {
 			@ApiResponse(responseCode = "500", description = "Error interno del servidor")
 	})
 	@GetMapping("/pageable/{idRol}")
+	@PreAuthorize("@authz.isSuperOrAdmin()")
 	public ResponseEntity<Page<RolMenuResponse>> listarPageable(Pageable pageable,
 			@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "5") int size, @PathVariable("idRol") Integer idRol) throws Exception {
@@ -93,13 +95,14 @@ public class RolMenuController {
 		return new ResponseEntity<>(paginas, HttpStatus.OK);
 	}
 
-	@Operation(summary = "Listar menús por ID de rol", description = "Obtiene los menús asociados a un ID de rol.")
+	@Operation(summary = "Listar menús por ID de rol", description = "Obtiene los menús asociados a un ID de rol. El usuario puede leer los menús de su propio rol.")
 	@ApiResponses({
 			@ApiResponse(responseCode = "200", description = "Consulta exitosa"),
 			@ApiResponse(responseCode = "404", description = "Rol no encontrado"),
 			@ApiResponse(responseCode = "500", description = "Error interno del servidor")
 	})
 	@GetMapping("/menus/{id}")
+	@PreAuthorize("@authz.canReadRole(#id)")
 	public ResponseEntity<List<RolMenuResponse>> listarRolIdMenus(@PathVariable("id") Integer id) throws Exception {
 		var obj = iRolMenuService.listarRolPorMenus(id);
 

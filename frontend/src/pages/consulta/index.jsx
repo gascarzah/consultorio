@@ -1,3 +1,4 @@
+import { VALIDATION_MESSAGES } from "../../utils/ValidationMessages";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -69,7 +70,7 @@ const ListarConsulta = () => {
         })
         .catch((error) => {
           console.error("Error al obtener usuario:", error);
-          toast.error("Error al obtener datos del usuario");
+          toast.error(VALIDATION_MESSAGES.ERROR.ERROR_OBTENER_USUARIO);
         });
     }
   }, [email, dispatch]);
@@ -88,20 +89,14 @@ const ListarConsulta = () => {
         await dispatch(eliminarCita({ idCita: rowData.idCita })).unwrap();
         recargarConsultas();
       } catch (error) {
-        toast.error(error?.message || "No se pudo eliminar la consulta");
+        toast.error(error?.message || VALIDATION_MESSAGES.ERROR.NO_SE_PUDO_ELIMINAR);
       }
     });
   };
 
   return (
-    <>
-      <div className="container mx-auto px-4 py-8">
-        <div className="bg-white shadow-lg rounded-lg overflow-hidden">
-          <div className="p-6">
-            {/* PrimeReact DataTable */}
-            <Card className="mt-4">
-              <div className="flex justify-between items-center mb-6">
-                <h1 className="text-2xl font-bold text-gray-800">Lista de Consultas</h1>
+    <Card className="shadow-sm border border-gray-200">
+              <div className="flex justify-end items-center mb-6">
                 <div className="text-sm text-gray-600 font-medium">
                   {weekday[new Date().getDay()]} {format(new Date())}
                 </div>
@@ -254,10 +249,6 @@ const ListarConsulta = () => {
                 ></Column>
               </DataTable>
             </Card>
-          </div>
-        </div>
-      </div>
-    </>
   );
 };
 

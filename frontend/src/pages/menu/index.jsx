@@ -1,3 +1,4 @@
+import { VALIDATION_MESSAGES } from "../../utils/ValidationMessages";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -61,7 +62,7 @@ const ListarMenu = () => {
         await dispatch(eliminarMenu(id)).unwrap();
         recargarMenus();
       } catch (error) {
-        toast.error(error?.message || "No se pudo eliminar el menú");
+        toast.error(error?.message || VALIDATION_MESSAGES.ERROR.NO_SE_PUDO_ELIMINAR);
       }
     });
   };
@@ -70,7 +71,7 @@ const ListarMenu = () => {
     <>
 
         {/* PrimeReact DataTable */}
-        <Card title="Lista de Menús" className="mt-4">
+        <Card className="shadow-sm border border-gray-200">
           {/* Barra de búsqueda */}
           <div className="mb-6 p-6 bg-gradient-to-r  rounded-xl border  shadow-sm">
             <div className="flex justify-between items-center">

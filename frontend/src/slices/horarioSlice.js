@@ -78,12 +78,28 @@ export const getHorarios = createAsyncThunk(
   'getHorarios',
   async (value, { rejectWithValue }) => {
     try {
-      const { data } = await clienteAxios.get(`/horarios`);
-      return data;
+      const response = await clienteAxios.get(`/horarios`);
+      if (response.status === 204 || !response.data) return [];
+      return Array.isArray(response.data) ? response.data : [];
     } catch (error) {
       console.error('error');
-      console.error(error.response.data.message);
-      return rejectWithValue(error.response.data);
+      console.error(error.response?.data?.message);
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
+
+export const getHorariosDisponibles = createAsyncThunk(
+  'getHorariosDisponibles',
+  async ({ idProgramacionDetalle, idEmpresa }, { rejectWithValue }) => {
+    try {
+      const response = await clienteAxios.get(
+        `/horarios/dia/${idProgramacionDetalle}/${idEmpresa}`
+      );
+      if (response.status === 204 || !response.data) return [];
+      return Array.isArray(response.data) ? response.data : [];
+    } catch (error) {
+      return rejectWithValue(error.response?.data || error.message);
     }
   }
 );

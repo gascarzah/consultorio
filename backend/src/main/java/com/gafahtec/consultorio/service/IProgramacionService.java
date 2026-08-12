@@ -25,9 +25,13 @@ public interface IProgramacionService extends ICRUD<ProgramacionRequest, Program
 
     List<ProgramacionResponse> programacionActivo();
 
+    List<ProgramacionResponse> programacionActivo(Integer idEmpresa);
+
     public List<Programacion> programacionEntityActivo();
     
     public Programacion modificarEntity(Programacion request);
 
+	/** Crea la programación solo si el rango no existe; si existe, la devuelve sin error. */
+	ProgramacionResponse registrarSiNoExiste(ProgramacionRequest request);
 
 }

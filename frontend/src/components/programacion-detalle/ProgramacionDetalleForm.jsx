@@ -8,8 +8,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import es from "date-fns/locale/es";
 import { useDispatch, useSelector } from "react-redux";
 
-import { getEmpleadosPorEmpresa,  } from "../../slices/empleadoSlice";
+import { getEmpleadosPorEmpresa, getOdontologosPorEmpresa } from "../../slices/empleadoSlice";
 import { getUsuario } from "../../slices/usuarioSlice";
+import { getEmpresas } from "../../slices/empresaSlice";
 
 import {
   modificarProgramacionDetalle,
@@ -31,10 +32,15 @@ const programacionDetalleSchema = Yup.object().shape({
 
 export const ProgramacionDetalleForm = ({ programacionDetalle }) => {
   const { empleados } = useSelector((state) => state.empleado);
+  const { empresas } = useSelector((state) => state.empresa);
   const { user } = useSelector((state) => state.usuario);
-  const { email } = useSelector((state) => state.auth);
+  const { email, rol } = useSelector((state) => state.auth);
+  const isSuper = String(rol?.nombre || "").toUpperCase() === "SUPER";
+  const empresaIdUsuario = user?.idEmpresa ?? null;
+  const medicos = Array.isArray(empleados) ? empleados : [];
   const arrChecked = programacionDetalle?.listaDias ?? "";
   const [programacion, setProgramacion] = useState();
+  const [idEmpresaSeleccionada, setIdEmpresaSeleccionada] = useState("");
   const [dias, setDias] = useState([]);
   const [checkedLunes, setCheckedLunes] = useState(false);
   const [checkedMartes, setCheckedMartes] = useState(false);
@@ -49,6 +55,20 @@ export const ProgramacionDetalleForm = ({ programacionDetalle }) => {
   const estado = true;
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const cargarMedicos = (idEmpresa) => {
+    if (!idEmpresa) return;
+    dispatch(getOdontologosPorEmpresa(idEmpresa))
+      .unwrap()
+      .then((lista) => {
+        if (Array.isArray(lista) && lista.length > 0) return;
+        return dispatch(getEmpleadosPorEmpresa(idEmpresa)).unwrap();
+      })
+      .catch(() => {
+        dispatch(getEmpleadosPorEmpresa(idEmpresa));
+      });
+  };
+
   const handleChangeLunes = (checked) => {
     setCheckedLunes(checked);
   };
@@ -67,16 +87,35 @@ export const ProgramacionDetalleForm = ({ programacionDetalle }) => {
   const handleChangeSabado = (checked) => {
     setCheckedSabado(checked);
   };
+  const detalleProgramacion = programacionDetalle?.programacionDetalles?.[0]?.programacion;
+  const idProgramacionResuelta =
+    detalleProgramacion?.idProgramacion
+    ?? programacionDetalle?.programacionDetalles?.[0]?.programacion?.idProgramacion
+    ?? programacion?.idProgramacion;
+  const fechasProgramacion = {
+    strFechaInicial: detalleProgramacion?.strFechaInicial || programacion?.strFechaInicial,
+    strFechaFinal: detalleProgramacion?.strFechaFinal || programacion?.strFechaFinal,
+  };
+
   useEffect(() => {
-    dispatch(getProgramacionActivo())
+    const empresaParaActivo = isSuper
+      ? (idEmpresaSeleccionada ? Number(idEmpresaSeleccionada) : null)
+      : empresaIdUsuario;
+    dispatch(getProgramacionActivo(empresaParaActivo || undefined))
       .unwrap()
       .then((resultado) => {
-        setProgramacion(resultado);
+        if (!detalleProgramacion) {
+          setProgramacion(resultado);
+        }
       })
-      .catch((errores) => {
-        // Manejo de errores silencioso
-      });
-  }, [dispatch]);
+      .catch(() => {});
+  }, [dispatch, empresaIdUsuario, isSuper, idEmpresaSeleccionada, detalleProgramacion]);
+
+  useEffect(() => {
+    if (detalleProgramacion) {
+      setProgramacion(detalleProgramacion);
+    }
+  }, [detalleProgramacion]);
 
   useEffect(() => {
     if (email) {
@@ -85,10 +124,22 @@ export const ProgramacionDetalleForm = ({ programacionDetalle }) => {
   }, [dispatch, email]);
 
   useEffect(() => {
-    if (user?.idEmpresa) {
-      dispatch(getEmpleadosPorEmpresa(user.idEmpresa));
+    if (isSuper) {
+      dispatch(getEmpresas());
     }
-  }, [dispatch, user?.idEmpresa]);
+  }, [dispatch, isSuper]);
+
+  useEffect(() => {
+    if (isSuper) {
+      if (idEmpresaSeleccionada) {
+        cargarMedicos(Number(idEmpresaSeleccionada));
+      }
+      return;
+    }
+    if (empresaIdUsuario) {
+      cargarMedicos(empresaIdUsuario);
+    }
+  }, [dispatch, empresaIdUsuario, isSuper, idEmpresaSeleccionada]);
 
   useEffect(() => {
     if (arrChecked) {
@@ -102,8 +153,12 @@ export const ProgramacionDetalleForm = ({ programacionDetalle }) => {
   }, [arrChecked]);
 
   const handleSubmit = (values, resetForm) => {
-    if (!user?.idEmpresa) {
-      toast.error("No se pudo obtener la empresa del usuario");
+    const idEmpresaToSend = isSuper
+      ? Number(idEmpresaSeleccionada || values.idEmpresa)
+      : Number(empresaIdUsuario);
+
+    if (!idEmpresaToSend) {
+      toast.error(VALIDATION_MESSAGES.ERROR.EMPRESA_USUARIO);
       return;
     }
 
@@ -116,9 +171,15 @@ export const ProgramacionDetalleForm = ({ programacionDetalle }) => {
       checkedSabado ? 5 : "",
     ];
 
+    const diasSeleccionados = values.checked.filter((d) => d !== "");
+    if (diasSeleccionados.length === 0) {
+      toast.error(VALIDATION_MESSAGES.REQUIRED.DIAS);
+      return;
+    }
+
     if (!programacionDetalle) {
       dispatch(
-        registrarProgramacionDetalle({ ...values, idEmpresa: user.idEmpresa })
+        registrarProgramacionDetalle({ ...values, idEmpresa: idEmpresaToSend })
       )
         .unwrap()
         .then((resultado) => {
@@ -128,11 +189,11 @@ export const ProgramacionDetalleForm = ({ programacionDetalle }) => {
           navigate(LISTAR_PROGRAMACION_DETALLE);
         })
         .catch((errores) => {
-          SweetCrud('Error', errores.message || 'No se pudo guardar');
+          SweetCrud(VALIDATION_MESSAGES.ERROR.TITULO, errores.message || VALIDATION_MESSAGES.ERROR.NO_SE_PUDO_GUARDAR);
         });
     } else {
       dispatch(
-        modificarProgramacionDetalle({ ...values, idEmpresa: user.idEmpresa })
+        modificarProgramacionDetalle({ ...values, idEmpresa: idEmpresaToSend })
       )
         .unwrap()
         .then((resultado) => {
@@ -142,7 +203,7 @@ export const ProgramacionDetalleForm = ({ programacionDetalle }) => {
           navigate(LISTAR_PROGRAMACION_DETALLE);
         })
         .catch((errores) => {
-          SweetCrud('Error', errores.message || 'No se pudo modificar');
+          SweetCrud(VALIDATION_MESSAGES.ERROR.TITULO, errores.message || VALIDATION_MESSAGES.ERROR.NO_SE_PUDO_MODIFICAR);
         });
     }
   };
@@ -151,12 +212,12 @@ export const ProgramacionDetalleForm = ({ programacionDetalle }) => {
     <>
       <Formik
         initialValues={{
-          // numeroDocumento:
-          //   programacionDetalle?.empleado?.idEmpleado.numeroDocumento ?? "",
           idEmpleado: programacionDetalle?.empleado?.idEmpleado ?? "",
           checked: [],
-          idProgramacion: programacion?.idProgramacion,
-          idProgramacionDetalle: programacion?.idProgramacion,
+          idProgramacion: idProgramacionResuelta ?? "",
+          idProgramacionDetalle:
+            programacionDetalle?.programacionDetalles?.[0]?.idProgramacionDetalle
+            ?? "",
         }}
         enableReinitialize={true}
         onSubmit={(values, { resetForm }) => {
@@ -168,9 +229,6 @@ export const ProgramacionDetalleForm = ({ programacionDetalle }) => {
         {({ errors, touched, values, handleChange, setFieldValue }) => {
           return (
             <Form className="my-10 bg-white shadow rounded p-10 w-2/5  ">
-              <h1 className="text-sky-500 font-black text-3xl capitalize text-center mb-8">
-                {programacionDetalle?.idProgramacionDetalle ? "Editar Programación Detalle" : "Registrar Programación Detalle"}
-              </h1>
               <div className="flex flex-row gap-10">
                 <div className="my-3 flex flex-col justify-evenly ">
                   <label
@@ -182,13 +240,42 @@ export const ProgramacionDetalleForm = ({ programacionDetalle }) => {
                   <span className="flex flex-row gap-7 mt-6">
                     {"Del"}
                     <h3 className="font-bold">
-                      {programacion?.strFechaInicial}
+                      {fechasProgramacion?.strFechaInicial}
                     </h3>
                     {"al"}
-                    <h3 className="font-bold">{programacion?.strFechaFinal}</h3>
+                    <h3 className="font-bold">{fechasProgramacion?.strFechaFinal}</h3>
                   </span>
                 </div>
               </div>
+
+              {isSuper && (
+                <div className="my-3">
+                  <label
+                    htmlFor="idEmpresa"
+                    className="uppercase text-gray-600 block font-bold"
+                  >
+                    Empresa
+                  </label>
+                  <select
+                    name="idEmpresa"
+                    value={idEmpresaSeleccionada}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setIdEmpresaSeleccionada(value);
+                      setFieldValue("idEmpleado", "");
+                    }}
+                    className="w-full mt-3 p-3 border rounded-xl bg-gray-50"
+                  >
+                    <option value="">Selecciona una Empresa</option>
+                    {empresas?.map((empresa) => (
+                      <option key={empresa.idEmpresa} value={empresa.idEmpresa}>
+                        {empresa.nombre}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
+
               <div className="my-3">
                 <label
                   htmlFor="numeroDocumento"
@@ -211,10 +298,7 @@ export const ProgramacionDetalleForm = ({ programacionDetalle }) => {
                     Selecciona un Medico{" "}
                   </option>
 
-                  {empleados.length > 0 &&
-                    empleados?.map((empleado, index) => {
-                      
-                      return (
+                  {medicos.map((empleado) => (
                         <option
                           key={empleado.idEmpleado}
                           value={empleado.idEmpleado}
@@ -223,8 +307,7 @@ export const ProgramacionDetalleForm = ({ programacionDetalle }) => {
                           {empleado.apellidoMaterno},{" "}
                           {empleado.nombres}
                         </option>
-                      );
-                    })}
+                      ))}
                 </select>
                 <ErrorMessage
                   name="idEmpleado"

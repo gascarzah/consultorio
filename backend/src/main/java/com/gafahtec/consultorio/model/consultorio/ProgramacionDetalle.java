@@ -37,6 +37,7 @@ public class ProgramacionDetalle {
     private String strFecha;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "empleado_id")
     private Empleado empleado;
 
     @ManyToOne(fetch = FetchType.LAZY) // Cambié a LAZY
